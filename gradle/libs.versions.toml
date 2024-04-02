@@ -3,8 +3,10 @@
 java = "VERSION_1_8"
 
 # Build constants
+koinAndroid = "3.3.0"
 minSdk = "26"
 compileSdk = "34"
+retrofit = "2.9.0"
 targetSdk = "33"
 
 # Detekt
@@ -17,13 +19,6 @@ detektTwitterComposeRules ="0.0.26"
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-github-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroidGradlePlugin" }
-javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-room-ktx-2_5_2 = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
-room-runtime-2_5_2 = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 staticAnalysis-detektPlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 staticAnalysis-detektCli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
 staticAnalysis-detektApi = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }
@@ -47,42 +42,4 @@ unitTests-junit = "junit:junit:4.13.2"
 uiTests-junitExt = "androidx.test.ext:junit:1.1.5"
 uiTests-espressoCore = "androidx.test.espresso:espresso-core:3.5.1"
 
-#Koin
-koin = "io.insert-koin:koin-android:3.5.3"
-
-#Retrofit
-gson = "com.google.code.gson:gson:2.10.1"
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
-okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
-
-#Glide
-glide = "com.github.bumptech.glide:glide:4.15.1"
-compiler = "com.github.bumptech.glide:compiler:4.15.1"
-
-#Room
-room-runtime = "androidx.room:room-runtime:2.6.1"
-room-compiler = "androidx.room:room-compiler:2.6.1"
-room-ktx = "androidx.room:room-ktx:2.6.1"
-
-#Fragment and Navigation
-fragment-ktx = "androidx.fragment:fragment-ktx:1.6.2"
-viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
-navigation-fragment-ktx = "androidx.navigation:navigation-fragment-ktx:2.7.6"
-navigation-ui-ktx = "androidx.navigation:navigation-ui-ktx:2.7.6"
-fragments-navigationFragment = "androidx.navigation:navigation-fragment-ktx:2.7.5"
-fragments-navigationUi = "androidx.navigation:navigation-ui-ktx:2.7.5"
-fragments-fragmentKtx = "androidx.fragment:fragment-ktx:1.6.2"
-
-#Coroutines
-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
-
-#paging
-paging = "androidx.paging:paging-runtime:3.2.1"
-
-#SafeArgs
-safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5"
-
 [bundles]
-[plugins]
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }

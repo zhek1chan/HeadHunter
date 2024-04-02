@@ -40,6 +40,14 @@ android {
 }
 
 dependencies {
+
+    // Koin
+    implementation (libs.koin.android)
+
+    // Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
 

@@ -3,8 +3,10 @@
 java = "VERSION_1_8"
 
 # Build constants
+koinAndroid = "3.3.0"
 minSdk = "26"
 compileSdk = "34"
+retrofit = "2.9.0"
 targetSdk = "33"
 
 # Detekt
@@ -14,6 +16,9 @@ detektTwitterComposeRules ="0.0.26"
 [libraries]
 
 # Detekt
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 staticAnalysis-detektPlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 staticAnalysis-detektCli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = "detekt" }
 staticAnalysis-detektApi = { module = "io.gitlab.arturbosch.detekt:detekt-api", version.ref = "detekt" }

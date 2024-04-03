@@ -5,20 +5,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-fun <T> debounce(delayMillis: Long,
-                 coroutineScope: CoroutineScope,
-                 useLastParam: Boolean,
-                 action: (T) -> Unit): (T) -> Unit {
-    var debounceJob: Job? = null
-    return { param: T ->
-        if (useLastParam) {
-            debounceJob?.cancel()
+object Debounce {
+    fun debounce(
+        coroutineScope: CoroutineScope,
+        job: Job?,
+        function: () -> Unit,
+        milliseconds: Long = 2000
+    ): Job {
+        job?.cancel()
+        return coroutineScope.launch() {
+            delay(milliseconds)
+            function()
         }
-        if (debounceJob?.isCompleted != false || useLastParam) {
-            debounceJob = coroutineScope.launch {
-                delay(delayMillis)
-                action(param)
-            }
-        }
+
     }
+
 }

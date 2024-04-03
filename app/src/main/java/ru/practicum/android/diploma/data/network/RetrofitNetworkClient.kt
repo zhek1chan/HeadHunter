@@ -7,8 +7,8 @@ import ru.practicum.android.diploma.common.Constants
 import ru.practicum.android.diploma.data.dto.Response
 
 class RetrofitNetworkClient(
-    private val context : Context,
-    private val hhService : HhApi
+    private val context: Context,
+    private val hhService: HhApi
 ) : NetworkClient {
     override suspend fun doRequest(dto: Any): Response {
         try {
@@ -16,9 +16,8 @@ class RetrofitNetworkClient(
                 return Response().apply { resultCode = Constants.NO_CONNECTION }
             }
             return Response().apply { resultCode = Constants.BAD_REQUEST }
-        }
-        catch (e : Exception){
-            return Response().apply { resultCode=Constants.BAD_REQUEST }
+        } catch (e: Exception) {
+            return Response().apply { resultCode = Constants.BAD_REQUEST }
         }
     }
 

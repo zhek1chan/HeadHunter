@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.fragment.placeOfWork
+package ru.practicum.android.diploma.presentation.filters.fragment.placeofwork
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,9 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilterChoosePlaceOfWorkBinding.inflate(inflater, container, false)
         return binding.root
@@ -21,5 +23,10 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

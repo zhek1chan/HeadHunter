@@ -82,7 +82,7 @@
         android:label="ChooseIndustryFragment" />
     <fragment
         android:id="@+id/filterPlaceOfWorkFragment"
-        android:name="ru.practicum.android.diploma.presentation.filters.fragment.placeOfWork.FiltersPlaceOfWorkFragment"
+        android:name="ru.practicum.android.diploma.presentation.filters.fragment.placeofwork.FiltersPlaceOfWorkFragment"
         android:label="FilterPlaceOfWorkFragment" >
         <action
             android:id="@+id/action_filterPlaceOfWorkFragment_to_filtersCountryFragment"

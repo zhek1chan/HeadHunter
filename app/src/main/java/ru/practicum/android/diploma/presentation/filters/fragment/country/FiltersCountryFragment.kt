@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseCountryBinding
 
-
 class FiltersCountryFragment : Fragment() {
 
     private var _binding: FragmentFilterChooseCountryBinding? = null
@@ -24,5 +23,10 @@ class FiltersCountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -9,10 +9,6 @@ import ru.practicum.android.diploma.databinding.FragmentTeamBinding
 
 class TeamFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = TeamFragment()
-    }
-
     private var _binding: FragmentTeamBinding? = null
     private val binding get() = _binding!!
 
@@ -24,5 +20,10 @@ class TeamFragment : Fragment() {
         _binding = FragmentTeamBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -11,14 +11,10 @@ class RetrofitNetworkClient(
     private val hhService: HhApi
 ) : NetworkClient {
     override suspend fun doRequest(dto: Any): Response {
-        try {
-            if (!isConnected()) {
-                return Response().apply { resultCode = Constants.NO_CONNECTION }
-            }
-            return Response().apply { resultCode = Constants.BAD_REQUEST }
-        } catch (e: Exception) {
-            return Response().apply { resultCode = Constants.BAD_REQUEST }
+        if (!isConnected()) {
+            return Response().apply { resultCode = Constants.NO_CONNECTION }
         }
+        return Response().apply { resultCode = Constants.BAD_REQUEST }
     }
 
     private fun isConnected(): Boolean {

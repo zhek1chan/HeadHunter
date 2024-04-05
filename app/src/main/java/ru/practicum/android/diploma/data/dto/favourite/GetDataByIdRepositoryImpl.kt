@@ -7,7 +7,6 @@ import ru.practicum.android.diploma.data.dto.room.database.AppDatabase
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.favorite.GetDataByIdRepository
 
-
 class GetDataByIdRepositoryImpl(
     private val db: AppDatabase,
     private val networkClient: NetworkClient

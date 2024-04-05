@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.favorite.DeleteDataRepository
 import ru.practicum.android.diploma.domain.favorite.GetDataRepository
-import ru.practicum.android.diploma.presentation.favourite.state.FavouritesState
+import ru.practicum.android.diploma.presentation.favourite.FavouritesState
 import java.sql.SQLException
 
 class FavoriteViewModel(

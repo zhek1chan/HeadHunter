@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavouriteBinding
+import ru.practicum.android.diploma.presentation.favourite.FavouritesState
 import ru.practicum.android.diploma.presentation.favourite.adapter.VacancyAdapter
-import ru.practicum.android.diploma.presentation.favourite.state.FavouritesState
 import ru.practicum.android.diploma.presentation.favourite.viewmodel.FavoriteViewModel
 
 private const val ITEM_VIEW_WIDTH_DIVIDER = 3

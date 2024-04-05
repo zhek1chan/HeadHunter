@@ -204,7 +204,7 @@ class Convertors {
         if (i == 0) {
             return null
         }
-        return (listOf((keySkills?.map { it.name } ?: emptyList()).toString()))
+        return listOf((keySkills?.map { it.name } ?: emptyList()).toString())
     }
 
 }

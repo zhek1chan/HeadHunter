@@ -3,9 +3,10 @@ package ru.practicum.android.diploma.data.dto.favourite
 import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.common.Resource
 import ru.practicum.android.diploma.data.dto.room.VacancyDetails
-import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.dto.room.database.AppDatabase
+import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.domain.favorite.GetDataByIdRepository
+
 
 class GetDataByIdRepositoryImpl(
     private val db: AppDatabase,

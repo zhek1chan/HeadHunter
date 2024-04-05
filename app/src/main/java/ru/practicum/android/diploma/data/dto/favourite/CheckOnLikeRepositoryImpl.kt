@@ -17,6 +17,6 @@ class CheckOnLikeRepositoryImpl(val db: AppDatabase) : CheckOnLikeRepository {
     }
 
     override fun getVacancy(id: String): DetailVacancy {
-        return Convertors().convertorToDetailVacancyFromEntity((db.vacancyDao().getVacancyById(id)))
+        return Convertors().convertorToDetailVacancyFromEntity(db.vacancyDao().getVacancyById(id))
     }
 }

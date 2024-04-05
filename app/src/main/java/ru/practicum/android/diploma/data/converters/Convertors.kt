@@ -110,12 +110,12 @@ class Convertors {
         )
     }
 
-    fun convertorToArea(region: AreaDto): Area {
+    private fun convertorToArea(region: AreaDto): Area {
         return Area(
             id = region.id,
             name = region.name ?: "",
             parentId = region.parentId ?: "",
-            areas = region.areas.map { convertorToArea(it) } ?: emptyList()
+            areas = region.areas.map { convertorToArea(it) }
         )
     }
 
@@ -131,7 +131,7 @@ class Convertors {
         }
         return Industry(
             id = industry.id,
-            name = industry.name ?: "",
+            name = industry.name,
             industries = subindustries
         )
     }
@@ -160,11 +160,11 @@ class Convertors {
         var i = 0
         var phoneNum: String? = null
         var phoneNumList: List<String>? = null
-        number?.forEach {
-            if ((it != null) && (it != ',')) {
+        number.forEach {
+            if (it != ',') {
                 i = +1
                 phoneNum += it
-            } else if ((it != null) && (it == ',')) {
+            } else {
                 phoneNumList?.plus(phoneNum)
             }
         }
@@ -179,11 +179,11 @@ class Convertors {
         var i = 0
         var skill: String? = null
         var skillsList: List<String>? = null
-        kS?.forEach {
-            if ((it != null) && (it != ',')) {
+        kS.forEach {
+            if (it != ',') {
                 i = +1
                 skill += it
-            } else if ((it != null) && (it == ',')) {
+            } else {
                 skillsList?.plus(skill)
             }
         }
@@ -204,7 +204,7 @@ class Convertors {
         if (i == 0) {
             return null
         }
-        return (listOf((keySkills?.map { it.name } ?: emptyList()).toString()))!!
+        return (listOf((keySkills?.map { it.name } ?: emptyList()).toString()))
     }
 
 }

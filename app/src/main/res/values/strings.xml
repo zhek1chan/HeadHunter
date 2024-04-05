@@ -8,4 +8,10 @@
     <string name="name2">Маркович Никита</string>
     <string name="name3">Ермаков Сергей</string>
     <string name="name4">Сальников Артём</string>
+    <string name="vacancy_name">Название вакансии</string>
+    <string name="vacancy_description">Описание вакансии</string>
+    <string name="vacancy_company">Компания</string>
+    <string name="vacancy_money">Деньжата</string>
+    <string name="error_getting_vacancies">Не удалось получить список вакансий</string>
+    <string name="error_empty_list">Список пуст</string>
 </resources>

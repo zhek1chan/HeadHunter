@@ -6,11 +6,11 @@ class ConvertSalary {
     private fun formatSalary(salaryFrom: String?, salaryTo: String?): String {
         Log.d("formating salary", "$salaryFrom  and  $salaryTo")
         return when {
-            (salaryFrom != "null" && (salaryTo == "null"
-                || salaryTo == "0")) -> "от $salaryFrom"
+            salaryFrom != "null" && (salaryTo == "null"
+                || salaryTo == "0") -> "от $salaryFrom"
             (salaryFrom == "0" || salaryFrom == "null")
-                && (salaryTo != "null" && salaryTo != "0") -> "до $salaryTo"
-            (salaryFrom != "null") -> "от $salaryFrom до $salaryTo"
+                && salaryTo != "null" && salaryTo != "0" -> "до $salaryTo"
+            salaryFrom != "null" -> "от $salaryFrom до $salaryTo"
             else -> {
                 "Зарплата не указана"
             }

@@ -153,8 +153,7 @@ class VacancyDetailFragment : Fragment() {
                 phone.visibility = View.GONE
             }
             if (vacancy.contactsName.isNullOrEmpty()
-                and vacancy.contactsEmail.isNullOrEmpty()
-                and vacancy.contactsPhones.isNullOrEmpty()) {
+                and vacancy.contactsEmail.isNullOrEmpty() and vacancy.contactsPhones.isNullOrEmpty()) {
                 contactInformation.visibility = View.GONE
             }
         }

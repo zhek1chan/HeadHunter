@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/vacancyFragment"
-        android:name="ru.practicum.android.diploma.presentation.vacancy.fragment.VacancyFragment"
+        android:name="ru.practicum.android.diploma.presentation.vacancy.fragment.VacancyDetailFragment"
         android:label="VacancyFragment" >
     </fragment>
     <fragment

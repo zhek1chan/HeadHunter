@@ -19,6 +19,7 @@ targetSdk = "33"
 detekt = "1.23.3"
 detektTwitterComposeRules = "0.0.26"
 org-jetbrains-kotlin-android = "1.9.0"
+coordinatorlayout = "1.2.0"
 
 [libraries]
 
@@ -88,6 +89,7 @@ paging = "androidx.paging:paging-runtime:3.2.1"
 
 #SafeArgs
 safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:2.7.5"
+coordinatorlayout = { group = "androidx.coordinatorlayout", name = "coordinatorlayout", version.ref = "coordinatorlayout" }
 
 [bundles]
 [plugins]

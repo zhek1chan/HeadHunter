@@ -139,8 +139,7 @@ class VacancyDetailFragment : Fragment() {
             }
             if (vacancy.contactsPhones != null) {
                 var phones = ""
-                vacancy.contactsPhones.forEach { phone ->
-                    phones += " ${phone}\n"
+                vacancy.contactsPhones.forEach { phone -> phones += " ${phone}\n"
                 }
                 phoneDescription.text = phones
                 phoneDescription.setOnClickListener {

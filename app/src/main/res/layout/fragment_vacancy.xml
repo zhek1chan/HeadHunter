@@ -291,8 +291,8 @@
         style="@style/TextStyleToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:clickable="true"
         android:background="?attr/colorPrimaryVariant"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -308,8 +308,9 @@
             android:contentDescription="@string/todo"
             android:paddingEnd="@dimen/font_size_16"
             android:src="@drawable/ic_add_to_favorites"
-            tools:ignore="RtlSymmetry"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            tools:ignore="RtlSymmetry" />
+
         <ImageView
             android:id="@+id/button_delete_from_favorites"
             android:layout_width="wrap_content"
@@ -319,8 +320,8 @@
             android:contentDescription="@string/todo"
             android:paddingEnd="@dimen/font_size_16"
             android:src="@drawable/ic_added_to_favorites"
-            tools:ignore="RtlSymmetry"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:ignore="RtlSymmetry" />
 
         <ImageView
             android:id="@+id/button_share"
@@ -333,6 +334,7 @@
             tools:ignore="RtlSymmetry" />
 
     </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:id="@+id/server_error_layout"
         android:layout_width="match_parent"

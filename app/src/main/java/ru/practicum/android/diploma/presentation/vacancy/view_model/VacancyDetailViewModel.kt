@@ -37,15 +37,14 @@ class VacancyDetailViewModel(
     private fun renderState(state: VacancyState) {
         _vacancyState.postValue(state)
     }
+
     fun getVacancyDetail(id: String) {
         if (id.isNotEmpty()) {
             renderState(VacancyState.Loading)
             viewModelScope.launch {
-                vacancyInteractor
-                    .getDetailVacancy(id)
-                    .collect { resource ->
-                        processResult(resource)
-                    }
+                vacancyInteractor.getDetailVacancy(id).collect { resource ->
+                    processResult(resource)
+                }
             }
         }
     }
@@ -59,33 +58,25 @@ class VacancyDetailViewModel(
     }
 
     fun clickOnButton() {
-        val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+        val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
             throwable.printStackTrace()
         }
         if (vacancyState.value is VacancyState.Content) {
-            if (
-                (vacancyState.value as VacancyState.Content)
-                    .vacancy
-                    .isFavorite
-                    .isFavorite
-            ) {
-                _vacancyState.postValue(
-                    (_vacancyState.value as VacancyState.Content).apply {
-                        vacancy.isFavorite.isFavorite = false
-                    }
-                )
+            if ((vacancyState.value as VacancyState.Content).vacancy.isFavorite.isFavorite) {
+                _vacancyState.postValue((_vacancyState.value as VacancyState.Content).apply {
+                    vacancy.isFavorite.isFavorite = false
+                })
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-                    deleteVacancyRepository.delete((vacancyState.value as VacancyState.Content)
-                        .vacancy.id)
+                    deleteVacancyRepository.delete(
+                        (vacancyState.value as VacancyState.Content).vacancy.id
+                    )
                     Log.d("delete", "Deleted from fav")
                     //Log.d("deleted","${vacancyState.value as VacancyState.Content).vacancy.id}")
                 }
             } else {
-                _vacancyState.postValue(
-                    (_vacancyState.value as VacancyState.Content).apply {
-                        vacancy.isFavorite.isFavorite = true
-                    }
-                )
+                _vacancyState.postValue((_vacancyState.value as VacancyState.Content).apply {
+                    vacancy.isFavorite.isFavorite = true
+                })
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
                     Log.d(
                         "DetailsConverterJob: ",
@@ -105,10 +96,9 @@ class VacancyDetailViewModel(
             while (true) {
                 delay(BUTTON_PRESSING_DELAY)
                 v.let { id ->
-                    likeRepository.favouritesCheck(id)
-                        .collect { value ->
-                            likeIndicator.postValue(value)
-                        }
+                    likeRepository.favouritesCheck(id).collect { value ->
+                        likeIndicator.postValue(value)
+                    }
                 }
             }
         }

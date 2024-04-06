@@ -29,9 +29,7 @@ class VacancyDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModel<VacancyDetailViewModel>()
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVacancyBinding.inflate(inflater, container, false)
         binding.vacancyToolbars.setNavigationOnClickListener {
@@ -44,8 +42,7 @@ class VacancyDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         vacancyId = requireArguments().getString(ARGS_VACANCY)
-        @Suppress("DEPRECATION")
-        vacancyId = arguments?.getParcelable<Vacancy>("vacancyId")!!.id
+        @Suppress("DEPRECATION") vacancyId = arguments?.getParcelable<Vacancy>("vacancyId")!!.id
         viewModel.getVacancyDetail(vacancyId!!)
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
             render(state)
@@ -53,7 +50,7 @@ class VacancyDetailFragment : Fragment() {
         binding.buttonSimilar.setOnClickListener {
             val vacancyId = it.id.toString()
         }
-        if (vacancyId == null){
+        if (vacancyId == null) {
             onDestroy()
         }
         viewModel.onLikedCheck(vacancyId!!).observe(requireActivity()) { likeIndicator ->
@@ -91,17 +88,11 @@ class VacancyDetailFragment : Fragment() {
         _vacancy = vacancy
         with(binding) {
             job.text = vacancy.name
-            salary.text =
-                ConvertSalary().formatSalaryWithCurrency(
-                    vacancy.salaryFrom.toString(),
-                    vacancy.salaryTo.toString(),
-                    vacancy.salaryCurrency
-                )
+            salary.text = ConvertSalary().formatSalaryWithCurrency(
+                vacancy.salaryFrom.toString(), vacancy.salaryTo.toString(), vacancy.salaryCurrency
+            )
 
-            Glide.with(requireContext())
-                .load(vacancy.areaUrl)
-                .placeholder(R.drawable.ic_toast)
-                .fitCenter()
+            Glide.with(requireContext()).load(vacancy.areaUrl).placeholder(R.drawable.ic_toast).fitCenter()
                 .transform(RoundedCorners(requireContext().resources.getDimensionPixelSize(R.dimen.margin_8)))
                 .into(logo)
             company.text = vacancy.employerName
@@ -120,7 +111,7 @@ class VacancyDetailFragment : Fragment() {
             vacancy.keySkillsNames?.let { createSkills(it) }
             createSkills(vacancy.keySkillsNames!!)
             createContacts(vacancy)
-            if (vacancy.isFavorite.isFavorite){
+            if (vacancy.isFavorite.isFavorite) {
                 binding.buttonAddToFavorites.visibility = View.GONE
                 binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
             }
@@ -129,11 +120,7 @@ class VacancyDetailFragment : Fragment() {
 
     fun createContacts(vacancy: DetailVacancy) {
         with(binding) {
-            if (
-                vacancy.contactsName == null ||
-                vacancy.contactsEmail == null ||
-                vacancy.contactsPhones == null
-            ) {
+            if (vacancy.contactsName == null || vacancy.contactsEmail == null || vacancy.contactsPhones == null) {
                 contactInformation.visibility = View.GONE
                 contactPerson.visibility = View.GONE
                 contactInformation.visibility = View.GONE
@@ -160,16 +147,19 @@ class VacancyDetailFragment : Fragment() {
                 phoneDescription.setOnClickListener {
                     Intent(Intent.ACTION_DIAL).apply {
                         data = Uri.parse("tel:" + "$phones")
-                    }}
+                    }
+                }
             }
         }
     }
+
     private fun createDescription(description: String?) {
         binding.tvDescription.text = HtmlCompat.fromHtml(
             description?.replace(Regex("<li>\\s<p>|<li>"), "<li>\u00A0") ?: "",
             HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
         )
     }
+
     private fun createSkills(skills: List<String?>) {
         with(binding) {
             if (skills.isEmpty()) {
@@ -184,10 +174,12 @@ class VacancyDetailFragment : Fragment() {
             }
         }
     }
+
     private fun loading() {
         binding.progressBar.visibility = View.VISIBLE
         binding.fragmentNotifications.visibility = View.GONE
     }
+
     private fun content(data: DetailVacancy) {
         binding.progressBar.visibility = View.GONE
         initViews(data)
@@ -199,6 +191,7 @@ class VacancyDetailFragment : Fragment() {
         binding.progressBar.visibility = View.GONE
         binding.fragmentNotifications.visibility = View.GONE
     }
+
     private fun connectionError() {
         with(binding) {
             progressBar.visibility = View.GONE
@@ -207,13 +200,14 @@ class VacancyDetailFragment : Fragment() {
             ivServerError.visibility = View.VISIBLE
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
     companion object {
         const val ARGS_VACANCY = "vacancyId"
-        fun createArgs(vacancyId: String): Bundle =
-            bundleOf(ARGS_VACANCY to vacancyId)
+        fun createArgs(vacancyId: String): Bundle = bundleOf(ARGS_VACANCY to vacancyId)
     }
 }

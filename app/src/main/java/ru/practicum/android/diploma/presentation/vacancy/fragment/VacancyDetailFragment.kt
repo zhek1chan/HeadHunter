@@ -29,7 +29,9 @@ class VacancyDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModel<VacancyDetailViewModel>()
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVacancyBinding.inflate(inflater, container, false)
         binding.vacancyToolbars.setNavigationOnClickListener {
@@ -42,7 +44,7 @@ class VacancyDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         vacancyId = requireArguments().getString(ARGS_VACANCY)
-        @Suppress("DEPRECATION") vacancyId = arguments?.getParcelable<Vacancy>("vacancyId")!!.id
+        vacancyId = arguments?.getParcelable<Vacancy>("vacancyId")!!.id
         viewModel.getVacancyDetail(vacancyId!!)
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
             render(state)
@@ -91,7 +93,6 @@ class VacancyDetailFragment : Fragment() {
             salary.text = ConvertSalary().formatSalaryWithCurrency(
                 vacancy.salaryFrom.toString(), vacancy.salaryTo.toString(), vacancy.salaryCurrency
             )
-
             Glide.with(requireContext()).load(vacancy.areaUrl).placeholder(R.drawable.ic_toast).fitCenter()
                 .transform(RoundedCorners(requireContext().resources.getDimensionPixelSize(R.dimen.margin_8)))
                 .into(logo)
@@ -105,7 +106,6 @@ class VacancyDetailFragment : Fragment() {
                 experienceRequired.visibility = View.VISIBLE
                 experienceYears.visibility = View.VISIBLE
                 experienceYears.text = vacancy.experienceName
-
             }
             createDescription(vacancy.description)
             vacancy.keySkillsNames?.let { createSkills(it) }
@@ -120,15 +120,11 @@ class VacancyDetailFragment : Fragment() {
 
     fun createContacts(vacancy: DetailVacancy) {
         with(binding) {
-            if (vacancy.contactsName == null || vacancy.contactsEmail == null || vacancy.contactsPhones == null) {
-                contactInformation.visibility = View.GONE
-                contactPerson.visibility = View.GONE
-                contactInformation.visibility = View.GONE
-                email.visibility = View.GONE
-                phone.visibility = View.GONE
-            }
             if (vacancy.contactsName != null) {
                 contactPersonDescription.text = vacancy.contactsName
+            } else {
+                contactPerson.visibility = View.GONE
+                contactPersonDescription.visibility = View.GONE
             }
             if (vacancy.contactsEmail != null) {
                 emailDescription.text = vacancy.contactsEmail
@@ -137,6 +133,9 @@ class VacancyDetailFragment : Fragment() {
                         data = Uri.parse("mailto:" + "${vacancy.contactsEmail}")
                     }
                 }
+            } else {
+                email.visibility = View.GONE
+                emailDescription.visibility = View.GONE
             }
             if (vacancy.contactsPhones != null) {
                 var phones = ""
@@ -149,6 +148,12 @@ class VacancyDetailFragment : Fragment() {
                         data = Uri.parse("tel:" + "$phones")
                     }
                 }
+            } else {
+                phoneDescription.visibility = View.GONE
+                phone.visibility = View.GONE
+            }
+            if (vacancy.contactsName.isNullOrEmpty() and vacancy.contactsEmail.isNullOrEmpty() and vacancy.contactsPhones.isNullOrEmpty()) {
+                contactInformation.visibility = View.GONE
             }
         }
     }
@@ -185,7 +190,6 @@ class VacancyDetailFragment : Fragment() {
         initViews(data)
         binding.fragmentNotifications.visibility = View.VISIBLE
     }
-
 
     private fun defaultSearch() {
         binding.progressBar.visibility = View.GONE

@@ -71,7 +71,6 @@ class VacancyDetailViewModel(
                         (vacancyState.value as VacancyState.Content).vacancy.id
                     )
                     Log.d("delete", "Deleted from fav")
-                    //Log.d("deleted","${vacancyState.value as VacancyState.Content).vacancy.id}")
                 }
             } else {
                 _vacancyState.postValue((_vacancyState.value as VacancyState.Content).apply {

@@ -14,4 +14,22 @@
     <string name="vacancy_money">Деньжата</string>
     <string name="error_getting_vacancies">Не удалось получить список вакансий</string>
     <string name="error_empty_list">Список пуст</string>
+
+    <!-- Vacancy details -->
+    <string name="job">Работа</string>
+    <string name="salary">Заработная плата</string>
+    <string name="company">Компания</string>
+    <string name="experience">Опыт</string>
+    <string name="city">Город</string>
+    <string name="description">Описание</string>
+    <string name="skills">Навыки</string>
+    <string name="contacts">Контакты</string>
+    <string name="data">Данные</string>
+    <string name="email">Электронная почта</string>
+    <string name="phone">Телефон</string>
+    <string name="comment">Комментарий</string>
+    <string name="vacancy">Вакансия</string>
+    <string name="todo">Сделать</string>
+    <string name="error">Ошибка</string>
+    <string name="similar_vacancies">Похожие вакансии</string>
 </resources>

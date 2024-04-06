@@ -1,5 +1,7 @@
 package ru.practicum.android.diploma.presentation.vacancy.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -71,11 +73,8 @@ class VacancyDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun reRender(){
-        viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
-            render(state)
+        binding.buttonShare.setOnClickListener {
+            viewModel.shareVacancy()
         }
     }
 
@@ -117,9 +116,9 @@ class VacancyDetailFragment : Fragment() {
                 experienceYears.text = vacancy.experienceName
 
             }
-            createDiscription(vacancy.description)
-            vacancy.keySkillsNames?.let { createKeySkills(it) }
-            createKeySkills(vacancy.keySkillsNames!!)
+            createDescription(vacancy.description)
+            vacancy.keySkillsNames?.let { createSkills(it) }
+            createSkills(vacancy.keySkillsNames!!)
             createContacts(vacancy)
             if (vacancy.isFavorite.isFavorite){
                 binding.buttonAddToFavorites.visibility = View.GONE
@@ -146,6 +145,11 @@ class VacancyDetailFragment : Fragment() {
             }
             if (vacancy.contactsEmail != null) {
                 emailDescription.text = vacancy.contactsEmail
+                emailDescription.setOnClickListener {
+                    Intent(Intent.ACTION_SENDTO).apply {
+                        data = Uri.parse("mailto:" + "${vacancy.contactsEmail}")
+                    }
+                }
             }
             if (vacancy.contactsPhones != null) {
                 var phones = ""
@@ -153,23 +157,27 @@ class VacancyDetailFragment : Fragment() {
                     phones += " ${phone}\n"
                 }
                 phoneDescription.text = phones
+                phoneDescription.setOnClickListener {
+                    Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:" + "$phones")
+                    }}
             }
         }
     }
-    private fun createDiscription(description: String?) {
+    private fun createDescription(description: String?) {
         binding.tvDescription.text = HtmlCompat.fromHtml(
             description?.replace(Regex("<li>\\s<p>|<li>"), "<li>\u00A0") ?: "",
             HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
         )
     }
-    private fun createKeySkills(keySkills: List<String?>) {
+    private fun createSkills(skills: List<String?>) {
         with(binding) {
-            if (keySkills.isEmpty()) {
+            if (skills.isEmpty()) {
                 skillsRecyclerView.visibility = View.GONE
                 binding.skills.visibility = View.GONE
             } else {
                 var skills = ""
-                keySkills.forEach { skill ->
+                skills.forEach { skill ->
                     skills += "• ${skill}\n"
                 }
                 skillsRecyclerView.text = skills

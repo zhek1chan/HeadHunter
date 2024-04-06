@@ -14,6 +14,7 @@ import ru.practicum.android.diploma.common.Resource
 import ru.practicum.android.diploma.data.converters.DetailsConverter
 import ru.practicum.android.diploma.domain.favorite.CheckOnLikeRepository
 import ru.practicum.android.diploma.domain.favorite.DeleteDataRepository
+import ru.practicum.android.diploma.domain.favorite.ExternalNavigator
 import ru.practicum.android.diploma.domain.favorite.SaveDataRepository
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.search.VacancyInteractor
@@ -24,13 +25,12 @@ class VacancyDetailViewModel(
     private val deleteVacancyRepository: DeleteDataRepository,
     private val saveVacancyRepository: SaveDataRepository,
     private val convertor: DetailsConverter,
-    private val likeRepository: CheckOnLikeRepository
+    private val likeRepository: CheckOnLikeRepository,
+    private val externalNavigator: ExternalNavigator
 ) : ViewModel() {
 
     private val _vacancyState = MutableLiveData<VacancyState>()
     val vacancyState: LiveData<VacancyState> = _vacancyState
-    private var vacancy: DetailVacancy = DetailVacancy("","","","",false,"","", listOf(""),"","","","","","","",
-        listOf(""),"","",0,false,0,"","","","","","", "")
     private var likeIndicator = MutableLiveData<Boolean>()
     private var likeJob: Job? = null
 
@@ -113,6 +113,13 @@ class VacancyDetailViewModel(
             }
         }
         return likeIndicator
+    }
+
+    fun shareVacancy() {
+        if (vacancyState.value is VacancyState.Content) {
+            val screenState = vacancyState.value as VacancyState.Content
+            externalNavigator.share("https://hh.ru/vacancy/${screenState.vacancy!!.id}")
+        }
     }
 
     companion object {

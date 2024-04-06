@@ -12,6 +12,6 @@ val VacancyDetailModule = module {
         VacancyInteractorImpl(repository = get())
     }
     viewModel {
-        VacancyDetailViewModel(get(), get(), get(), get(), get())
+        VacancyDetailViewModel(get(), get(), get(), get(), get(), get())
     }
 }

@@ -4,7 +4,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.practicum.android.diploma.domain.search.VacancyInteractor
 import ru.practicum.android.diploma.domain.search.impl.VacancyInteractorImpl
-import ru.practicum.android.diploma.presentation.vacancy.view_model.VacancyDetailViewModel
+import ru.practicum.android.diploma.presentation.vacancy.viewmodel.VacancyDetailViewModel
 
 val VacancyDetailModule = module {
 

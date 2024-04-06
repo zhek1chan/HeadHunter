@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.vacancy.view_model
+package ru.practicum.android.diploma.presentation.vacancy.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -88,7 +88,6 @@ class VacancyDetailViewModel(
             }
         }
     }
-
 
     fun onLikedCheck(v: String): LiveData<Boolean> {
         likeJob = viewModelScope.launch {

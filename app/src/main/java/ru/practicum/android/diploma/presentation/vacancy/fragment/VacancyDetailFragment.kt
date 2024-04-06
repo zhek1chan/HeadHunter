@@ -18,7 +18,7 @@ import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.presentation.vacancy.state.VacancyState
-import ru.practicum.android.diploma.presentation.vacancy.view_model.VacancyDetailViewModel
+import ru.practicum.android.diploma.presentation.vacancy.viewmodel.VacancyDetailViewModel
 import ru.practicum.android.diploma.utils.ConvertSalary
 
 class VacancyDetailFragment : Fragment() {
@@ -152,7 +152,9 @@ class VacancyDetailFragment : Fragment() {
                 phoneDescription.visibility = View.GONE
                 phone.visibility = View.GONE
             }
-            if (vacancy.contactsName.isNullOrEmpty() and vacancy.contactsEmail.isNullOrEmpty() and vacancy.contactsPhones.isNullOrEmpty()) {
+            if (vacancy.contactsName.isNullOrEmpty()
+                and vacancy.contactsEmail.isNullOrEmpty()
+                and vacancy.contactsPhones.isNullOrEmpty()) {
                 contactInformation.visibility = View.GONE
             }
         }

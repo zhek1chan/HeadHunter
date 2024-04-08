@@ -15,9 +15,9 @@ import java.util.Locale
 class VacancyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val convertSalary = ConvertSalary()
     private val tvDescription: TextView = itemView.findViewById(R.id.tv_description)
-    private val tvCompanyName: TextView = itemView.findViewById(R.id.tv_name_company)
-    private val tvSalary: TextView = itemView.findViewById(R.id.tv_salary)
-    private val ivUrl100: ImageView = itemView.findViewById(R.id.iv_logo)
+    private val tvCompanyName: TextView = itemView.findViewById(R.id.department)
+    private val tvSalary: TextView = itemView.findViewById(R.id.salary)
+    private val ivUrl100: ImageView = itemView.findViewById(R.id.iv_company)
     private val radius = itemView.resources.getDimensionPixelSize(R.dimen.corner_radius_card_company_12)
 
     @SuppressLint("SetTextI18n")

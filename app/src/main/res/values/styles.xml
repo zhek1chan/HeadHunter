@@ -149,4 +149,18 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
+    <style name="SearchEditText" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:backgroundTint">@color/light_gray</item>
+        <item name="tint">@color/gray</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="colorAccent">@color/blue</item>
+    </style>
+
+    <style name="rounded_12">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/margin_12</item>
+    </style>
+
+    <color name="filter_icon_color">@color/black</color>
+
 </resources>

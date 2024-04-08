@@ -14,6 +14,11 @@
     <string name="vacancy_money">Деньжата</string>
     <string name="error_getting_vacancies">Не удалось получить список вакансий</string>
     <string name="error_empty_list">Список пуст</string>
+    <string name="search_vacancy">Поиск вакансий</string>
+    <string name="search_request">Введите запрос</string>
+    <string name="no_vacancy">Таких вакансий нет</string>
+    <string name="no_list_vacancies">Не удалось получить \n список вакансий</string>
+    <string name="no_internet">Нет интернета</string>
 
     <!-- Vacancy details -->
     <string name="job">Работа</string>

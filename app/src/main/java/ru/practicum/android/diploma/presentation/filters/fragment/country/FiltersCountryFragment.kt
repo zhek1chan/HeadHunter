@@ -15,7 +15,7 @@ class FiltersCountryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFilterChooseCountryBinding.inflate(inflater, container, false)
         return binding.root
     }

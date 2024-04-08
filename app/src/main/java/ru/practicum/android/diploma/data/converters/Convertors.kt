@@ -110,7 +110,7 @@ class Convertors {
         )
     }
 
-    private fun convertorToArea(region: AreaDto): Area {
+    fun convertorToArea(region: AreaDto): Area {
         return Area(
             id = region.id,
             name = region.name ?: "",

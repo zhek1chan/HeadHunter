@@ -5,8 +5,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import ru.practicum.android.diploma.di.DBModule
 import ru.practicum.android.diploma.di.FavouriteModule
+import ru.practicum.android.diploma.di.FiltersModule
+import ru.practicum.android.diploma.di.SearchModule
 import ru.practicum.android.diploma.di.VacancyDetailModule
-import ru.practicum.android.diploma.di.dataModule
 
 class App : Application() {
 
@@ -16,10 +17,11 @@ class App : Application() {
         startKoin {
             androidContext(this@App)
             modules(
-                dataModule,
                 DBModule,
                 FavouriteModule,
                 VacancyDetailModule,
+                SearchModule,
+                FiltersModule
             )
         }
     }

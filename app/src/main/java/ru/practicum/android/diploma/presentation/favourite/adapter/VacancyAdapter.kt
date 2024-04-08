@@ -11,7 +11,7 @@ class VacancyAdapter(private val clickListener: VacancyClickListener) : Recycler
     private var vacancyList = ArrayList<Vacancy>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.vacancy, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.vacancy_item, parent, false)
         return VacancyViewHolder(view)
     }
 

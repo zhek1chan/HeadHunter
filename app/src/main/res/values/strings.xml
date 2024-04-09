@@ -39,4 +39,7 @@
     <string name="similar_vacancies">Похожие вакансии</string>
     <string name="found_x_vacancies">Найдено %d вакансий</string>
     <string name="there_are_no_such_vacs">Таких вакансий нет</string>
+    <string name="uri_mailto">mailto:</string>
+    <string name="text_plain">text/plain</string>
+    <string name="tel">tel:%1$s</string>
 </resources>

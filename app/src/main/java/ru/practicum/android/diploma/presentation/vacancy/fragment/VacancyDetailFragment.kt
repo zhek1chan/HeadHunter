@@ -49,9 +49,6 @@ class VacancyDetailFragment : Fragment() {
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        binding.buttonSimilar.setOnClickListener {
-            val vacancyId = it.id.toString()
-        }
         if (vacancyId == null) {
             onDestroy()
         }

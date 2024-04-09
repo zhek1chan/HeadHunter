@@ -1,71 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/margin_9"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:paddingVertical="8dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card"
-        android:layout_width="@dimen/dimen_48"
-        android:layout_height="@dimen/dimen_48"
-        android:layout_marginEnd="@dimen/margin_12"
-        app:cardCornerRadius="@dimen/margin_12"
-        app:cardElevation="0dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <FrameLayout
+        android:layout_marginStart="16dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_company"
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_toast"
+            tools:src="@tools:sample/avatars" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/TextStyleMedium22_500"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:strokeWidth="@dimen/margin_1"
-            android:padding="@dimen/margin_1"
-            app:strokeColor="@color/light_gray"
-            android:scaleType="centerInside"
-            android:src="@drawable/placeholder_vacancy" />
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnPrimary"
+            tools:text="@string/description" />
 
-    <TextView
-        android:id="@+id/tv_vacancy_name"
-        style="@style/title_text"
-        android:textStyle="bold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_12"
-        android:ellipsize="end"
-        android:maxLines="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Разработчик на С++ в команду внутренних сервисов, Москва" />
+        <TextView
+            android:id="@+id/tv_name_company"
+            style="@style/TextStyleRegular16_400"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:textColor="?attr/colorOnPrimary"
+            tools:text="Yandex" />
 
-    <TextView
-        android:id="@+id/department"
-        style="@style/black_16_regular"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_12"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card"
-        app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name"
-        tools:text="Авто.ру" />
-
-    <TextView
-        android:id="@+id/salary"
-        style="@style/black_16_regular"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_12"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/card"
-        app:layout_constraintTop_toBottomOf="@id/department"
-        tools:text="от 40 000 до 80 000 ₽" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_salary"
+            style="@style/TextStyleRegular16_400"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:textColor="?attr/colorOnPrimary"
+            tools:text="от 100 500 $" />
+    </LinearLayout>
+</LinearLayout>

@@ -34,28 +34,33 @@
 
 
             <ImageView
-                android:id="@+id/filterImageView"
+                android:id="@+id/filtersOff"
                 android:layout_width="@dimen/margin_24"
                 android:layout_height="@dimen/margin_24"
                 android:layout_margin="@dimen/margin_12"
-                android:src="@drawable/filter_off__24px" />
+                android:src="@drawable/filter_off__24px"
+                android:visibility="visible"/>
+            <ImageView
+                android:id="@+id/filtersOn"
+                android:layout_width="@dimen/margin_24"
+                android:layout_height="@dimen/margin_24"
+                android:layout_margin="@dimen/margin_12"
+                android:src="@drawable/filter_on__24px"
+                android:visibility="gone"/>
 
         </FrameLayout>
 
 
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <LinearLayout
         android:id="@+id/searchContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16"
         android:layout_marginVertical="@dimen/margin_8"
         android:background="@drawable/shape_on_search_screen"
-        android:imeOptions="actionDone"
         app:boxStrokeColor="@color/light_gray"
-        app:endIconDrawable="@drawable/ic_search"
-        app:hintEnabled="false"
         app:endIconTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,39 +69,39 @@
 
         <EditText
             android:id="@+id/searchEditText"
+            style="@style/edit_text_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="@dimen/margin_16"
             android:layout_marginVertical="@dimen/margin_8"
-            android:drawableEnd="@drawable/ic_search"
             android:drawablePadding="@dimen/margin_16"
             android:hint="@string/search_request"
             android:imeOptions="actionDone|flagNoExtractUi"
             android:inputType="textNoSuggestions"
             android:maxLines="1"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:autofillHints="" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
-    <Button
+    <ImageView
         android:id="@+id/clearButton"
-        android:layout_width="@dimen/dimen_48"
-        android:layout_height="@dimen/dimen_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="8dp"
-        android:alpha="0"
-        android:enabled="false"
+        android:background="@drawable/search"
         app:layout_constraintBottom_toBottomOf="@id/searchContainer"
         app:layout_constraintEnd_toEndOf="@+id/searchContainer"
-        app:layout_constraintTop_toTopOf="@+id/searchContainer" />
+        app:layout_constraintTop_toTopOf="@+id/searchContainer"
+        android:visibility="visible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/margin_16"
         android:layout_marginTop="@dimen/margin_10"
         android:layout_marginEnd="@dimen/margin_16"
         android:clipToPadding="false"
@@ -134,7 +139,7 @@
         app:layout_constraintTop_toBottomOf="@id/searchContainer">
 
         <TextView
-            android:id="@+id/tv_rv_header"
+            android:id="@+id/message_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

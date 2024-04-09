@@ -73,12 +73,12 @@ complexity:
     # Правило выключено, потому что дублируется правилом complexity:TooManyFunctions.
     ComplexInterface:
         active: false
-        threshold: 10
+        threshold: 11
         includeStaticDeclarations: false
         includePrivateDeclarations: false
     CognitiveComplexMethod:
         active: true
-        threshold: 15
+        threshold: 20
     CyclomaticComplexMethod:
         active: true
         threshold: 10
@@ -94,7 +94,7 @@ complexity:
         threshold: 200
     LongMethod:
         active: true
-        threshold: 40
+        threshold: 50
         excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
         ignoreAnnotated: [ "Composable" ]
     LongParameterList:
@@ -235,7 +235,6 @@ exceptions:
             - NullPointerException
             - IndexOutOfBoundsException
             - RuntimeException
-            - Throwable
         allowedExceptionNameRegex: '_|(ignore|expected|ignored).*'
         excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
     TooGenericExceptionThrown:

@@ -26,8 +26,8 @@ import ru.practicum.android.diploma.domain.models.Vacancy
 import ru.practicum.android.diploma.domain.models.VacancyData
 import ru.practicum.android.diploma.domain.models.checkEmpty
 import ru.practicum.android.diploma.domain.search.SearchInteractor
-import ru.practicum.android.diploma.presentation.search.adapter.SearchPage
 import ru.practicum.android.diploma.presentation.search.SearchState
+import ru.practicum.android.diploma.presentation.search.adapter.SearchPage
 import ru.practicum.android.diploma.utils.debounce
 import java.net.ConnectException
 
@@ -44,7 +44,7 @@ class SearchViewModel(
     private var actualSearchString = ""
     private var newState: LoadState? = null
     val stateBottomFilters = MutableStateFlow(false)
-    lateinit var filters: Filters
+    var filters: Filters = Filters("", "", "", "", "", "", "", false)
 
     val stateVacancyData = actionStateFlow.flatMapLatest {
         actualSearchString = it

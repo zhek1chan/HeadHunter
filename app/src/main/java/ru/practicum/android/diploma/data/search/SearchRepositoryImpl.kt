@@ -24,13 +24,11 @@ class SearchRepositoryImpl(
 
     override suspend fun search(expression: String, page: Int): Resource<VacancyData> {
         val prefs = filtersStorageImpl.getPrefs()
-
         val countryId = prefs.countryId
         val regionId = prefs.regionId
         val industryId = prefs.industryId
         val salary = prefs.expectedSalary
         val salaryOnly = prefs.salaryOnlyCheckbox
-
         val options = mutableMapOf<String, String>()
 
         if (countryId.isNotEmpty()) {
@@ -49,24 +47,17 @@ class SearchRepositoryImpl(
             options[Constant.SALARY] = salary
         }
 
-
         options[Constant.ONLY_WITH_SALARY] = salaryOnly.toString()
-
-
         options[Constant.PAGE] = page.toString()
         options[Constant.PER_PAGE] = Constant.PER_PAGE_ITEMS
         options[Constant.TEXT] = expression
-        Log.i("TESTSEARCH", "GET ${Gson().toJson(JobSearchRequest(options))}")
         val response = networkClient.search(JobSearchRequest(options))
         return when (response.resultCode) {
             Constant.NO_CONNECTIVITY_MESSAGE -> {
-                Log.d("TESTSEARCH", "NO_CONNECTIVITY_MESSAGE")
                 Resource(code = Constant.NO_CONNECTIVITY_MESSAGE)
             }
-
             Constant.SUCCESS_RESULT_CODE -> {
                 val result = response as SearchListDto
-                Log.e("TESTSEARCH", "REQUEST COUNT ${result.found}")
                 Resource(
                     VacancyData(
                         found = result.found ?: 0,
@@ -78,13 +69,10 @@ class SearchRepositoryImpl(
                     Constant.SUCCESS_RESULT_CODE
                 )
             }
-
             else -> {
-                Log.d("TESTSEARCH", "ERROR")
                 Resource(code = Constant.SERVER_ERROR)
             }
         }
-
     }
 
     override suspend fun getDetailVacancy(id: String): Flow<Resource<DetailVacancy>> = flow {

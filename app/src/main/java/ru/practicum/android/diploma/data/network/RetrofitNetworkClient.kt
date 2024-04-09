@@ -16,6 +16,7 @@ class RetrofitNetworkClient(
     private val context: Context
 ) : NetworkClient {
 
+    @SuppressWarnings
     override suspend fun search(dto: JobSearchRequest): Response {
         if (!isConnected()) {
             return Response().apply { resultCode = Constant.NO_CONNECTIVITY_MESSAGE }

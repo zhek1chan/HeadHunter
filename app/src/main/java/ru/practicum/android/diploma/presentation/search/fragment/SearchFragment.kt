@@ -21,10 +21,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.presentation.search.SearchState
 import ru.practicum.android.diploma.presentation.search.adapter.PagesAdapter
 import ru.practicum.android.diploma.presentation.search.adapter.SearchLoadStateAdapter
 import ru.practicum.android.diploma.presentation.search.viewmodel.SearchViewModel
-import ru.practicum.android.diploma.presentation.search.SearchState
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
@@ -81,7 +81,7 @@ class SearchFragment : Fragment() {
                         binding.placeholderNoConnection.gone()
                         binding.progressBar.gone()
                         binding.messageText.visible()
-                        binding.messageText.text = getString(R.string.found_x_vacancies, (SearchState.Loaded).counter)
+                        binding.messageText.text = getString(R.string.found_x_vacancies, SearchState.Loaded.counter)
                         binding.placeholderError.gone()
                     }
 
@@ -194,11 +194,9 @@ class SearchFragment : Fragment() {
     }
 
     private fun checkFiltersButton() {
-
         binding.filtersOff.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_filterFragment)
         }
-
         binding.filtersOn.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_filterFragment)
         }

@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.presentation.vacancy.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,8 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.presentation.search.fragment.gone
+import ru.practicum.android.diploma.presentation.search.fragment.visible
 import ru.practicum.android.diploma.presentation.vacancy.state.VacancyState
 import ru.practicum.android.diploma.presentation.vacancy.viewmodel.VacancyDetailViewModel
 import ru.practicum.android.diploma.utils.ConvertSalary
@@ -112,10 +115,19 @@ class VacancyDetailFragment : Fragment() {
                 binding.buttonAddToFavorites.visibility = View.GONE
                 binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
             }
+            if (vacancy.comment.isNullOrEmpty()) {
+                comment.gone()
+                commentDescription.gone()
+            } else {
+                comment.visible()
+                commentDescription.visible()
+                commentDescription.text = vacancy.comment
+            }
         }
     }
 
     fun createContacts(vacancy: DetailVacancy) {
+        Log.d("contactsName", vacancy.toString())
         with(binding) {
             if (vacancy.contactsName != null) {
                 contactPersonDescription.text = vacancy.contactsName
@@ -162,17 +174,28 @@ class VacancyDetailFragment : Fragment() {
         )
     }
 
-    private fun createSkills(skills: List<String?>) {
+    private fun createSkills(keySkills: List<String?>?) {
         with(binding) {
-            if (skills.isEmpty()) {
+            if (keySkills.isNullOrEmpty()) {
                 skillsRecyclerView.visibility = View.GONE
                 binding.skills.visibility = View.GONE
             } else {
-                var skills = ""
-                skills.forEach { skill ->
-                    skills += "• ${skill}\n"
+                skillsRecyclerView.visibility = View.VISIBLE
+                binding.skills.visibility = View.VISIBLE
+                var skillsText = "• "
+                keySkills.forEach { keySkill ->
+                    if ((!(keySkill.isNullOrEmpty()) && (keySkill != ""))) {
+                        keySkill.forEach {
+                            if ((it != ',') && (it != '[') && (it != ']')) {
+                                skillsText += it
+                            } else if ((it == '[') || (it == ']')) {
+                            } else {
+                                skillsText += "\n•"
+                            }
+                        }
+                    }
                 }
-                skillsRecyclerView.text = skills
+                skillsRecyclerView.text = skillsText
             }
         }
     }

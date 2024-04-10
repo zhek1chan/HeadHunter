@@ -199,8 +199,6 @@ class VacancyDetailFragment : Fragment() {
         }
     }
 
-
-
     private fun loading() {
         binding.progressBar.visibility = View.VISIBLE
         binding.fragmentNotifications.visibility = View.GONE

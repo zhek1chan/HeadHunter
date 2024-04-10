@@ -3,6 +3,7 @@ package ru.practicum.android.diploma.presentation.vacancy.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,8 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.models.Vacancy
+import ru.practicum.android.diploma.presentation.search.fragment.gone
+import ru.practicum.android.diploma.presentation.search.fragment.visible
 import ru.practicum.android.diploma.presentation.vacancy.state.VacancyState
 import ru.practicum.android.diploma.presentation.vacancy.viewmodel.VacancyDetailViewModel
 import ru.practicum.android.diploma.utils.ConvertSalary
@@ -48,9 +51,6 @@ class VacancyDetailFragment : Fragment() {
         viewModel.getVacancyDetail(vacancyId!!)
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
             render(state)
-        }
-        binding.buttonSimilar.setOnClickListener {
-            val vacancyId = it.id.toString()
         }
         if (vacancyId == null) {
             onDestroy()
@@ -108,17 +108,52 @@ class VacancyDetailFragment : Fragment() {
                 experienceYears.text = vacancy.experienceName
             }
             createDescription(vacancy.description)
-            vacancy.keySkillsNames?.let { createSkills(it) }
-            createSkills(vacancy.keySkillsNames!!)
+            createSkills(vacancy)
             createContacts(vacancy)
             if (vacancy.isFavorite.isFavorite) {
                 binding.buttonAddToFavorites.visibility = View.GONE
                 binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
             }
+            if (vacancy.comment.isNullOrEmpty()) {
+                comment.gone()
+                commentDescription.gone()
+            } else {
+                comment.visible()
+                commentDescription.visible()
+                commentDescription.text = vacancy.comment
+            }
+        }
+    }
+
+    private fun createSkills(vacancy: DetailVacancy) {
+        with(binding) {
+            if (vacancy.keySkillsNames != null) {
+                skillsRecyclerView.visibility = View.VISIBLE
+                binding.skills.visibility = View.VISIBLE
+                var formattedSkills = "• "
+                vacancy.keySkillsNames.forEach { skill ->
+                    if (!skill.isNullOrEmpty()) {
+                        skill.forEach {
+                            if (it != ',' && it != '[' && it != ']') {
+                                formattedSkills += it
+                            } else if (it == '[' || it == ']') {
+                                return@forEach
+                            } else {
+                                formattedSkills += "\n•"
+                            }
+                        }
+                    }
+                }
+                skillsRecyclerView.text = formattedSkills
+            } else {
+                skillsRecyclerView.visibility = View.GONE
+                binding.skills.visibility = View.GONE
+            }
         }
     }
 
     fun createContacts(vacancy: DetailVacancy) {
+        Log.d("contactsName", vacancy.toString())
         with(binding) {
             if (vacancy.contactsName != null) {
                 contactPersonDescription.text = vacancy.contactsName
@@ -163,21 +198,6 @@ class VacancyDetailFragment : Fragment() {
             description?.replace(Regex("<li>\\s<p>|<li>"), "<li>\u00A0") ?: "",
             HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
         )
-    }
-
-    private fun createSkills(skills: List<String?>) {
-        with(binding) {
-            if (skills.isEmpty()) {
-                skillsRecyclerView.visibility = View.GONE
-                binding.skills.visibility = View.GONE
-            } else {
-                var skills = ""
-                skills.forEach { skill ->
-                    skills += "• ${skill}\n"
-                }
-                skillsRecyclerView.text = skills
-            }
-        }
     }
 
     private fun loading() {

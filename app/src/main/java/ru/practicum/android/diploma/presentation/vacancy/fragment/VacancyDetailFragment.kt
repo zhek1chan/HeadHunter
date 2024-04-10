@@ -125,6 +125,33 @@ class VacancyDetailFragment : Fragment() {
         }
     }
 
+    private fun createSkills(vacancy: DetailVacancy) {
+        with(binding) {
+            if (vacancy.keySkillsNames != null) {
+                skillsRecyclerView.visibility = View.VISIBLE
+                binding.skills.visibility = View.VISIBLE
+                var formattedSkills = "• "
+                vacancy.keySkillsNames.forEach { skill ->
+                    if (!skill.isNullOrEmpty()) {
+                        skill.forEach {
+                            if (it != ',' && it != '[' && it != ']') {
+                                formattedSkills += it
+                            } else if (it == '[' || it == ']') {
+                                return@forEach
+                            } else {
+                                formattedSkills += "\n•"
+                            }
+                        }
+                    }
+                }
+                skillsRecyclerView.text = formattedSkills
+            } else {
+                skillsRecyclerView.visibility = View.GONE
+                binding.skills.visibility = View.GONE
+            }
+        }
+    }
+
     fun createContacts(vacancy: DetailVacancy) {
         Log.d("contactsName", vacancy.toString())
         with(binding) {
@@ -171,32 +198,6 @@ class VacancyDetailFragment : Fragment() {
             description?.replace(Regex("<li>\\s<p>|<li>"), "<li>\u00A0") ?: "",
             HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
         )
-    }
-
-    private fun createSkills(vacancy: DetailVacancy) {
-        with(binding) {
-            if (vacancy.keySkillsNames != null) {
-                skillsRecyclerView.visibility = View.VISIBLE
-                binding.skills.visibility = View.VISIBLE
-                var formattedSkills = "• "
-                vacancy.keySkillsNames.forEach { skill ->
-                    if ((!(skill.isNullOrEmpty()) && (skill != ""))) {
-                        skill.forEach {
-                            if ((it != ',') && (it != '[') && (it != ']')) {
-                                formattedSkills += it
-                            } else if ((it == '[') || (it == ']')) {
-                            } else {
-                                formattedSkills += "\n•"
-                            }
-                        }
-                    }
-                }
-                skillsRecyclerView.text = formattedSkills
-            } else {
-                skillsRecyclerView.visibility = View.GONE
-                binding.skills.visibility = View.GONE
-            }
-        }
     }
 
     private fun loading() {

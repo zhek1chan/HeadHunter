@@ -108,8 +108,7 @@ class VacancyDetailFragment : Fragment() {
                 experienceYears.text = vacancy.experienceName
             }
             createDescription(vacancy.description)
-            vacancy.keySkillsNames?.let { createSkills(it) }
-            createSkills(vacancy.keySkillsNames!!)
+            createSkills(vacancy)
             createContacts(vacancy)
             if (vacancy.isFavorite.isFavorite) {
                 binding.buttonAddToFavorites.visibility = View.GONE
@@ -174,31 +173,33 @@ class VacancyDetailFragment : Fragment() {
         )
     }
 
-    private fun createSkills(keySkills: List<String?>?) {
+    private fun createSkills(vacancy: DetailVacancy) {
         with(binding) {
-            if (keySkills.isNullOrEmpty()) {
-                skillsRecyclerView.visibility = View.GONE
-                binding.skills.visibility = View.GONE
-            } else {
+            if (vacancy.keySkillsNames != null) {
                 skillsRecyclerView.visibility = View.VISIBLE
                 binding.skills.visibility = View.VISIBLE
-                var skillsText = "• "
-                keySkills.forEach { keySkill ->
-                    if ((!(keySkill.isNullOrEmpty()) && (keySkill != ""))) {
-                        keySkill.forEach {
+                var formattedSkills = "• "
+                vacancy.keySkillsNames.forEach { skill ->
+                    if ((!(skill.isNullOrEmpty()) && (skill != ""))) {
+                        skill.forEach {
                             if ((it != ',') && (it != '[') && (it != ']')) {
-                                skillsText += it
+                                formattedSkills += it
                             } else if ((it == '[') || (it == ']')) {
                             } else {
-                                skillsText += "\n•"
+                                formattedSkills += "\n•"
                             }
                         }
                     }
                 }
-                skillsRecyclerView.text = skillsText
+                skillsRecyclerView.text = formattedSkills
+            } else {
+                skillsRecyclerView.visibility = View.GONE
+                binding.skills.visibility = View.GONE
             }
         }
     }
+
+
 
     private fun loading() {
         binding.progressBar.visibility = View.VISIBLE

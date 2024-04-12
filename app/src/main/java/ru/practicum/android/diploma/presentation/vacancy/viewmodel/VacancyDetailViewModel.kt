@@ -103,6 +103,14 @@ class VacancyDetailViewModel(
         return likeIndicator
     }
 
+    fun checkBeforeRender(id: String): Boolean {
+        return likeRepository.checkOnFavDB(id)
+    }
+
+    fun getVacancyFromDb(id: String) {
+        _vacancyState.postValue(VacancyState.ContentFromDb(likeRepository.getVacancy(id)))
+    }
+
     fun shareVacancy() {
         if (vacancyState.value is VacancyState.Content) {
             val screenState = vacancyState.value as VacancyState.Content

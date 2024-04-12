@@ -48,7 +48,15 @@ class VacancyDetailFragment : Fragment() {
 
         vacancyId = requireArguments().getString(ARGS_VACANCY)
         vacancyId = arguments?.getParcelable<Vacancy>("vacancyId")!!.id
-        viewModel.getVacancyDetail(vacancyId!!)
+
+        if (viewModel.checkBeforeRender(vacancyId!!)) {
+            viewModel.getVacancyFromDb(vacancyId!!)
+            Log.d("VacancyFragment", "Got it from Database")
+        } else {
+            viewModel.getVacancyDetail(vacancyId!!)
+            Log.d("VacancyFragment", "Got it from HH")
+        }
+
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
@@ -83,6 +91,7 @@ class VacancyDetailFragment : Fragment() {
             is VacancyState.Content -> content(stateLiveData.vacancy)
             is VacancyState.Error -> connectionError()
             is VacancyState.EmptyScreen -> defaultSearch()
+            is VacancyState.ContentFromDb -> content(stateLiveData.vacancy)
         }
     }
 
@@ -218,10 +227,8 @@ class VacancyDetailFragment : Fragment() {
 
     private fun connectionError() {
         with(binding) {
-            progressBar.visibility = View.GONE
-            fragmentNotifications.visibility = View.GONE
-            tvServerError.visibility = View.VISIBLE
-            ivServerError.visibility = View.VISIBLE
+            vacancyToolbars.visibility = View.VISIBLE
+            binding.serverErrorLayout.visibility = View.VISIBLE
         }
     }
 

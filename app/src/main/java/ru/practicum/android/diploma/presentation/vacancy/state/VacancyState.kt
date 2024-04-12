@@ -7,5 +7,6 @@ sealed interface VacancyState {
     data class Content(val vacancy: DetailVacancy) : VacancyState
     data object Error : VacancyState
     data object EmptyScreen : VacancyState
+    data class ContentFromDb(val vacancy: DetailVacancy) : VacancyState
 
 }

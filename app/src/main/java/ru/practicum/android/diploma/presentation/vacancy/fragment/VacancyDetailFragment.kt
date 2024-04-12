@@ -138,7 +138,7 @@ class VacancyDetailFragment : Fragment() {
         with(binding) {
             if (vacancy.keySkillsNames != null && vacancy.keySkillsNames.isNotEmpty()) {
                 var formattedSkills = vacancy.keySkillsNames.joinToString(prefix = "• ") {
-                    it.replace (",", "\n•")
+                    it.replace(",", "\n•")
                 }
                 formattedSkills = formattedSkills.filter { char -> char != '[' && char != ']' }
                 Log.d("v", formattedSkills)

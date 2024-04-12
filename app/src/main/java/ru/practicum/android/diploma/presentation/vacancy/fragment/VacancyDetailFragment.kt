@@ -136,27 +136,18 @@ class VacancyDetailFragment : Fragment() {
 
     private fun createSkills(vacancy: DetailVacancy) {
         with(binding) {
-            if (vacancy.keySkillsNames != null) {
-                skillsRecyclerView.visibility = View.VISIBLE
-                binding.skills.visibility = View.VISIBLE
-                var formattedSkills = "• "
-                vacancy.keySkillsNames.forEach { skill ->
-                    if (!skill.isNullOrEmpty()) {
-                        skill.forEach {
-                            if (it != ',' && it != '[' && it != ']') {
-                                formattedSkills += it
-                            } else if (it == '[' || it == ']') {
-                                return@forEach
-                            } else {
-                                formattedSkills += "\n•"
-                            }
-                        }
-                    }
+            if (vacancy.keySkillsNames != null && vacancy.keySkillsNames.isNotEmpty()) {
+                var formattedSkills = vacancy.keySkillsNames.joinToString(prefix = "• ") {
+                    it.replace(",", "\n•")
                 }
+                formattedSkills = formattedSkills.filter { char -> char != '[' && char != ']' }
+                Log.d("v", formattedSkills)
                 skillsRecyclerView.text = formattedSkills
+                skillsRecyclerView.visibility = View.VISIBLE
+                skills.visibility = View.VISIBLE
             } else {
                 skillsRecyclerView.visibility = View.GONE
-                binding.skills.visibility = View.GONE
+                skills.visibility = View.GONE
             }
         }
     }

@@ -3,7 +3,6 @@ package ru.practicum.android.diploma.presentation.vacancy.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,10 +50,8 @@ class VacancyDetailFragment : Fragment() {
 
         if (viewModel.checkBeforeRender(vacancyId!!)) {
             viewModel.getVacancyFromDb(vacancyId!!)
-            Log.d("VacancyFragment", "Got it from Database")
         } else {
             viewModel.getVacancyDetail(vacancyId!!)
-            Log.d("VacancyFragment", "Got it from HH")
         }
 
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
@@ -141,7 +138,6 @@ class VacancyDetailFragment : Fragment() {
                     it.replace(",", "\n•")
                 }
                 formattedSkills = formattedSkills.filter { char -> char != '[' && char != ']' }
-                Log.d("v", formattedSkills)
                 skillsRecyclerView.text = formattedSkills
                 skillsRecyclerView.visibility = View.VISIBLE
                 skills.visibility = View.VISIBLE
@@ -153,7 +149,6 @@ class VacancyDetailFragment : Fragment() {
     }
 
     fun createContacts(vacancy: DetailVacancy) {
-        Log.d("contactsName", vacancy.toString())
         with(binding) {
             if (vacancy.contactsName != null) {
                 contactPersonDescription.text = vacancy.contactsName
@@ -219,7 +214,8 @@ class VacancyDetailFragment : Fragment() {
     private fun connectionError() {
         with(binding) {
             vacancyToolbars.visibility = View.VISIBLE
-            binding.serverErrorLayout.visibility = View.VISIBLE
+            serverErrorLayout.visibility = View.VISIBLE
+            vacancyConstraintLayout.visibility = View.GONE
         }
     }
 

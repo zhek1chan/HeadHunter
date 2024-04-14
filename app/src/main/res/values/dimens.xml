@@ -19,5 +19,7 @@
     <dimen name="medium_text_size">22sp</dimen>
     <dimen name="corner_radius_card_company_12">12dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
+    <dimen name="dimen_64">64dp</dimen>
+    <dimen name="dimen_60">60dp</dimen>
     <dimen name="radius_12">12dp</dimen>
 </resources>

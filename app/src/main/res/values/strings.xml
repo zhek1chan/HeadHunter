@@ -37,6 +37,7 @@
     <string name="vacancy">Вакансия</string>
     <string name="todo">Сделать</string>
     <string name="error">Ошибка</string>
+    <string name="server_error">Ошибка сервера</string>
     <string name="similar_vacancies">Похожие вакансии</string>
     <string name="found_x_vacancies">Найдено %d вакансий</string>
     <string name="there_are_no_such_vacs">Таких вакансий нет</string>

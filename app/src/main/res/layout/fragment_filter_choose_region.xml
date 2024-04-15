@@ -111,7 +111,7 @@
         tools:listItem="@layout/country_item" />
 
     <ImageView
-        android:id="@+id/placeholder_image"
+        android:id="@+id/placeholder_failed_image"
         android:layout_width="328dp"
         android:layout_height="223dp"
         android:visibility="gone"
@@ -121,12 +121,10 @@
         app:layout_constraintTop_toBottomOf="@+id/choosing_region_box"
         app:layout_constraintVertical_bias="0.32999998"
         app:srcCompat="@drawable/error_region_list"
-        tools:visibility="visible">
-
-    </ImageView>
+        tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/placeholder_text"
+        android:id="@+id/placeholder_failed_text"
         style="@style/ScreenTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,7 +134,34 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeholder_image"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_failed_image"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/placeholder_no_region_image"
+        android:layout_width="328dp"
+        android:layout_height="223dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choosing_region_box"
+        app:layout_constraintVertical_bias="0.32999998"
+        app:srcCompat="@drawable/ph_nothing_found"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/placeholder_no_region_text"
+        style="@style/ScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/no_such_region"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_no_region_image"
         tools:visibility="visible" />
 
     <ProgressBar

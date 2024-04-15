@@ -26,12 +26,12 @@
                 android:layout_width="@dimen/dimen_48"
                 android:layout_height="@dimen/dimen_48"
                 android:layout_gravity="start"
-                android:layout_marginStart="@dimen/margin_4"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginBottom="@dimen/margin_8">
 
             <ImageView
                 android:id="@+id/filtersOff"
+                style="@style/title_text"
                 android:layout_width="@dimen/margin_24"
                 android:layout_height="@dimen/margin_24"
                 android:layout_gravity="center"
@@ -212,12 +212,12 @@
     <TextView
         android:id="@+id/apply"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/dimen_60"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/white"
         style="@style/white_16_medium"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="@dimen/margin_8"
         android:background="@drawable/rounder"
         android:text="@string/apply"
         android:gravity="center"
@@ -227,12 +227,15 @@
 
     <TextView
         android:id="@+id/remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_marginBottom="@dimen/margin_24"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         style="@style/white_16_medium"
         android:text="@string/remove"
         android:textColor="@color/red"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

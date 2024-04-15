@@ -1,5 +1,5 @@
 package ru.practicum.android.diploma.domain.favorite
 
-interface DeleteDataRepository {
+interface DeleteVacancyRepository {
     suspend fun delete(data: String)
 }

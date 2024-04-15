@@ -7,20 +7,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.domain.favorite.DeleteDataRepository
-import ru.practicum.android.diploma.domain.favorite.GetDataRepository
+import ru.practicum.android.diploma.domain.favorite.DeleteVacancyRepository
+import ru.practicum.android.diploma.domain.favorite.GetVacancyRepository
 import ru.practicum.android.diploma.presentation.favourite.FavouritesState
 import java.sql.SQLException
 
 class FavoriteViewModel(
-    private val favoritesVacancyListRepository: GetDataRepository,
-    private val deleteVacancyRepository: DeleteDataRepository,
+    private val favoritesVacancyListRepository: GetVacancyRepository,
+    private val deleteVacancyRepository: DeleteVacancyRepository,
 ) : ViewModel() {
 
     private val screenStatement: MutableLiveData<FavouritesState> = MutableLiveData()
     val screenState: LiveData<FavouritesState> get() = screenStatement
 
-    // Получение данных
     fun getData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

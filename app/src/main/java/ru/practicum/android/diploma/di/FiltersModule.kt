@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.data.filters.FiltersStorageRepositoryImpl
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor
 import ru.practicum.android.diploma.domain.filters.FiltersInteractorImpl
 
-private const val FILTERS_PREFS = "FILTERS_PREFS"
+private const val filtersPrefs = "FILTERS_PREFS"
 
 val FiltersModule = module {
 
@@ -23,7 +23,7 @@ val FiltersModule = module {
     factoryOf(::FiltersInteractorImpl).bind<FiltersInteractor>()
 
     single(qualifier = named("filtersPrefs")) {
-        provideFiltersPreferences(androidApplication(), FILTERS_PREFS)
+        provideFiltersPreferences(androidApplication(), filtersPrefs)
     }
 
     single { FiltersStorageRepositoryImpl(get(named("filtersPrefs"))) }

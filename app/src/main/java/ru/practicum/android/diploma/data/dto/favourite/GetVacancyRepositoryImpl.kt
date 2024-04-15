@@ -4,12 +4,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.data.converters.VacancyShortMapper
 import ru.practicum.android.diploma.data.dto.room.database.AppDatabase
-import ru.practicum.android.diploma.domain.favorite.GetDataRepository
+import ru.practicum.android.diploma.domain.favorite.GetVacancyRepository
 import ru.practicum.android.diploma.domain.models.Vacancy
 
-class GetDataRepositoryImpl(
+class GetVacancyRepositoryImpl(
     private val db: AppDatabase
-) : GetDataRepository {
+) : GetVacancyRepository {
 
     override fun get(): Flow<List<Vacancy>> =
         db.vacancyDao().getVacancyList().map { list ->

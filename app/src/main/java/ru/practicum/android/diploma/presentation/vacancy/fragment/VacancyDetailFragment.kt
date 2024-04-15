@@ -209,34 +209,34 @@ class VacancyDetailFragment : Fragment() {
 
     private fun checkButton(fromDb: Boolean) {
         viewModel.onLikedCheck(vacancyId!!).observe(requireActivity()) { likeIndicator ->
-            try {
-                if (!likeIndicator) {
+            when (likeIndicator) {
+                true -> {
                     binding.buttonAddToFavorites.visibility = View.VISIBLE
                     binding.buttonDeleteFromFavorites.visibility = View.GONE
                     _vacancy?.isFavorite?.isFavorite = false
                     binding.buttonAddToFavorites.setOnClickListener {
                         Log.d("FragmentVacancy", "Press on like :)")
-                        if (fromDb == true) {
-                            viewModel.clickOnLikeWithDb()
-                        } else {
-                            viewModel.clickOnLike()
-                        }
-                    }
-                } else {
-                    binding.buttonAddToFavorites.visibility = View.GONE
-                    binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
-                    _vacancy?.isFavorite?.isFavorite = true
-                    binding.buttonDeleteFromFavorites.setOnClickListener {
-                        Log.d("FragmentVacancy", "Press on dislike :(")
-                        if (fromDb == true) {
+                        if (fromDb) {
                             viewModel.clickOnLikeWithDb()
                         } else {
                             viewModel.clickOnLike()
                         }
                     }
                 }
-            } catch (_: Throwable) {
 
+                false -> {
+                    binding.buttonAddToFavorites.visibility = View.GONE
+                    binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
+                    _vacancy?.isFavorite?.isFavorite = true
+                    binding.buttonDeleteFromFavorites.setOnClickListener {
+                        Log.d("FragmentVacancy", "Press on dislike :(")
+                        if (fromDb) {
+                            viewModel.clickOnLikeWithDb()
+                        } else {
+                            viewModel.clickOnLike()
+                        }
+                    }
+                }
             }
         }
     }

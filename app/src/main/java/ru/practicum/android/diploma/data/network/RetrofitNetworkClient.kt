@@ -40,51 +40,53 @@ class RetrofitNetworkClient(
             return Response().apply { resultCode = Constant.NO_CONNECTIVITY_MESSAGE }
         }
         var response = Response()
-        return try {
-            when (dto) {
-                is DetailVacancyRequest -> withContext(Dispatchers.IO) {
-                    response = service.getDetailVacancy(vacancyId = dto.id)
-                    response.apply { resultCode = Constant.SUCCESS_RESULT_CODE }
-                }
+        return withContext(Dispatchers.IO) {
+            try {
+                when (dto) {
+                    is DetailVacancyRequest -> withContext(Dispatchers.IO) {
+                        response = service.getDetailVacancy(vacancyId = dto.id)
+                        response.apply { resultCode = Constant.SUCCESS_RESULT_CODE }
+                    }
 
-                is CountriesRequest -> withContext(Dispatchers.IO) {
-                    val result = service.filterCountry()
-                    response.apply {
-                        countriesList = result
-                        resultCode = Constant.SUCCESS_RESULT_CODE
+                    is CountriesRequest -> withContext(Dispatchers.IO) {
+                        val result = service.filterCountry()
+                        response.apply {
+                            countriesList = result
+                            resultCode = Constant.SUCCESS_RESULT_CODE
+                        }
                     }
-                }
 
-                is RegionsRequest -> withContext(Dispatchers.IO) {
-                    val result = if (dto.idArea.isNullOrEmpty()) {
-                        service.filterRegions()
-                    } else {
-                        listOf(service.filterRegion(dto.idArea))
+                    is RegionsRequest -> withContext(Dispatchers.IO) {
+                        val result = if (dto.idArea.isNullOrEmpty()) {
+                            service.filterRegions()
+                        } else {
+                            listOf(service.filterRegion(dto.idArea))
+                        }
+                        response.apply {
+                            regionsList = result
+                            resultCode = Constant.SUCCESS_RESULT_CODE
+                        }
                     }
-                    response.apply {
-                        regionsList = result
-                        resultCode = Constant.SUCCESS_RESULT_CODE
-                    }
-                }
 
-                is IndustriesRequest -> withContext(Dispatchers.IO) {
-                    val result = service.filterIndustry()
-                    response.apply {
-                        industriesList = result
-                        resultCode = Constant.SUCCESS_RESULT_CODE
+                    is IndustriesRequest -> withContext(Dispatchers.IO) {
+                        val result = service.filterIndustry()
+                        response.apply {
+                            industriesList = result
+                            resultCode = Constant.SUCCESS_RESULT_CODE
+                        }
                     }
-                }
 
-                else -> {
-                    response.apply { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        resultCode = DisconnectCause.SERVER_ERROR
-                    }
+                    else -> {
+                        response.apply {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                                resultCode = DisconnectCause.SERVER_ERROR
+                            }
+                        }
                     }
                 }
+            } catch (exception: HttpException) {
+                Response().apply { resultCode = exception.code() }
             }
-        } catch (exception: HttpException) {
-            Response().apply { resultCode = exception.code() }
-
         }
     }
 

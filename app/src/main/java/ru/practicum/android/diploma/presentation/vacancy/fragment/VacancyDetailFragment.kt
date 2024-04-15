@@ -210,7 +210,7 @@ class VacancyDetailFragment : Fragment() {
     private fun checkButton(fromDb: Boolean) {
         viewModel.onLikedCheck(vacancyId!!).observe(requireActivity()) { likeIndicator ->
             when (likeIndicator) {
-                true -> {
+                false -> {
                     binding.buttonAddToFavorites.visibility = View.VISIBLE
                     binding.buttonDeleteFromFavorites.visibility = View.GONE
                     _vacancy?.isFavorite?.isFavorite = false
@@ -224,7 +224,7 @@ class VacancyDetailFragment : Fragment() {
                     }
                 }
 
-                false -> {
+                true -> {
                     binding.buttonAddToFavorites.visibility = View.GONE
                     binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
                     _vacancy?.isFavorite?.isFavorite = true

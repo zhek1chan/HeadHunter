@@ -20,6 +20,28 @@
     <string name="no_list_vacancies">Не удалось получить \n список вакансий</string>
     <string name="no_internet">Нет интернета</string>
 
+
+    <!-- FILTERS -->
+    <string name="workplace">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="filter_settings">Настройки фильтрации</string>
+    <string name="chose_country">Выбор страны</string>
+    <string name="chose_region">Выбор региона</string>
+    <string name="chose_industry">Выбор отрасли</string>
+    <string name="country">Страна</string>
+    <string name="region">Регион</string>
+    <string name="expected_salary">Ожидаемая зарплата</string>
+    <string name="enter_sum">Введите сумму</string>
+    <string name="enter_region">Введите регион</string>
+    <string name="enter_industry">Введите отрасль</string>
+    <string name="choose">Выбрать</string>
+    <string name="apply">Применить</string>
+    <string name="remove">Сбросить</string>
+    <string name="dont_show_without_salary">Не показывать без зарплаты</string>
+    <string name="choosing_place_of_work">Выбор места работы</string>
+    <string name="failed_to_get_list">Не удалось получить \n список</string>
+    <string name="no_such_region">Такого региона нет</string>
+
     <!-- Vacancy details -->
     <string name="job">Работа</string>
     <string name="salary">Заработная плата</string>

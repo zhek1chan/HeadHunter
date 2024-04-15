@@ -82,6 +82,7 @@
         <item name="colorAccent">@color/blue</item>
     </style>
 
-    <color name="filter_icon_color">@color/white_universal</color>
+    <color name="button_icon_color">@color/white_universal</color>
+    <color name="edit_text_color">@color/gray</color>
 
 </resources>

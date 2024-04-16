@@ -82,7 +82,7 @@ class VacancyDetailFragment : Fragment() {
         _vacancy = vacancy
         with(binding) {
             job.text = vacancy.name
-            salary.text = ConvertSalary().formatSalaryWithCurrency(
+            salary.text = ConvertSalary().formatSalaryWithCurrency(requireContext().resources,
                 vacancy.salaryFrom.toString(), vacancy.salaryTo.toString(), vacancy.salaryCurrency
             )
             Glide.with(requireContext()).load(vacancy.areaUrl).placeholder(R.drawable.ic_toast).fitCenter()

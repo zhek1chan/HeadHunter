@@ -66,4 +66,11 @@
     <string name="uri_mailto">mailto:</string>
     <string name="text_plain">text/plain</string>
     <string name="tel">tel:%1$s</string>
+    <string name="salary_range_full">От %1$d до %2$d</string>
+    <string name="salary_range_to">до %1$d</string>
+    <string name="salary_range_from">От %1$d</string>
+    <string name="salary_range_empty">Зарплата не указана</string>
+    <string name="salary_from_to">от</string>
+    <string name="salary_to">до %1$s</string>
+    <string name="salary_from">от %1$s</string>
 </resources>

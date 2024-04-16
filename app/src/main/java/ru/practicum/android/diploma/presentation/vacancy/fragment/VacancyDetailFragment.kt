@@ -17,8 +17,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.models.Vacancy
-import ru.practicum.android.diploma.presentation.search.fragment.gone
-import ru.practicum.android.diploma.presentation.search.fragment.visible
 import ru.practicum.android.diploma.presentation.vacancy.state.VacancyState
 import ru.practicum.android.diploma.presentation.vacancy.viewmodel.VacancyDetailViewModel
 import ru.practicum.android.diploma.utils.ConvertSalary
@@ -109,11 +107,11 @@ class VacancyDetailFragment : Fragment() {
                 binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
             }
             if (vacancy.comment.isNullOrEmpty()) {
-                comment.gone()
-                commentDescription.gone()
+                comment.visibility = View.GONE
+                commentDescription.visibility = View.GONE
             } else {
-                comment.visible()
-                commentDescription.visible()
+                comment.visibility = View.VISIBLE
+                commentDescription.visibility = View.VISIBLE
                 commentDescription.text = vacancy.comment
             }
         }
@@ -216,7 +214,7 @@ class VacancyDetailFragment : Fragment() {
                     _vacancy?.isFavorite?.isFavorite = false
                     binding.buttonAddToFavorites.setOnClickListener {
                         Log.d("FragmentVacancy", "Press on like :)")
-                        if (fromDb) {
+                        if (fromDb == true) {
                             viewModel.clickOnLikeWithDb()
                         } else {
                             viewModel.clickOnLike()
@@ -230,7 +228,7 @@ class VacancyDetailFragment : Fragment() {
                     _vacancy?.isFavorite?.isFavorite = true
                     binding.buttonDeleteFromFavorites.setOnClickListener {
                         Log.d("FragmentVacancy", "Press on dislike :(")
-                        if (fromDb) {
+                        if (fromDb == true) {
                             viewModel.clickOnLikeWithDb()
                         } else {
                             viewModel.clickOnLike()

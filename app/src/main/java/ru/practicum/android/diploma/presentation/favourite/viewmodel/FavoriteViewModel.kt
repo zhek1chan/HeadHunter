@@ -7,14 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.practicum.android.diploma.domain.favorite.DeleteVacancyInteractor
 import ru.practicum.android.diploma.domain.favorite.DeleteVacancyRepository
+import ru.practicum.android.diploma.domain.favorite.GetVacancyInteractor
 import ru.practicum.android.diploma.domain.favorite.GetVacancyRepository
 import ru.practicum.android.diploma.presentation.favourite.FavouritesState
 import java.sql.SQLException
 
 class FavoriteViewModel(
-    private val favoritesVacancyListRepository: GetVacancyRepository,
-    private val deleteVacancyRepository: DeleteVacancyRepository,
+    private val getVacs: GetVacancyInteractor,
+    private val deleteVacancy: DeleteVacancyInteractor,
 ) : ViewModel() {
 
     private val screenStatement: MutableLiveData<FavouritesState> = MutableLiveData()
@@ -23,7 +25,7 @@ class FavoriteViewModel(
     fun getData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                favoritesVacancyListRepository.get().collect { list ->
+                getVacs.getVacancy().collect { list ->
                     when {
                         list == null -> screenStatement.postValue(FavouritesState.DbError)
                         list.isEmpty() -> screenStatement.postValue(FavouritesState.Empty)
@@ -42,7 +44,7 @@ class FavoriteViewModel(
 
     fun deleteVacancyFromFavorite(vacancyId: String) {
         viewModelScope.launch {
-            deleteVacancyRepository.delete(vacancyId)
+            deleteVacancy.deleteVacancy(vacancyId)
         }
     }
 }

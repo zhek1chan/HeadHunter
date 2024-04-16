@@ -12,20 +12,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.common.Resource
 import ru.practicum.android.diploma.data.converters.DetailsConverter
-import ru.practicum.android.diploma.domain.favorite.CheckVacancyOnLikeRepository
-import ru.practicum.android.diploma.domain.favorite.DeleteVacancyRepository
+import ru.practicum.android.diploma.domain.favorite.CheckVacancyOnLikeInteractor
+import ru.practicum.android.diploma.domain.favorite.DeleteVacancyInteractor
 import ru.practicum.android.diploma.domain.favorite.ExternalNavigator
-import ru.practicum.android.diploma.domain.favorite.SaveVacancyRepository
+import ru.practicum.android.diploma.domain.favorite.SaveVacancyInteractor
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.search.VacancyInteractor
 import ru.practicum.android.diploma.presentation.vacancy.state.VacancyState
 
 class VacancyDetailViewModel(
     private val vacancyInteractor: VacancyInteractor,
-    private val deleteVacancyRepository: DeleteVacancyRepository,
-    private val saveVacancyRepository: SaveVacancyRepository,
+    private val deleteVacancyInteractor: DeleteVacancyInteractor,
+    private val saveVacancyInteractor: SaveVacancyInteractor,
     private val convertor: DetailsConverter,
-    private val likeRepository: CheckVacancyOnLikeRepository,
+    private val likeInteractor: CheckVacancyOnLikeInteractor,
     private val externalNavigator: ExternalNavigator
 ) : ViewModel() {
 
@@ -67,7 +67,7 @@ class VacancyDetailViewModel(
                     vacancy.isFavorite.isFavorite = false
                 })
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-                    deleteVacancyRepository.delete(
+                    deleteVacancyInteractor.deleteVacancy(
                         (vacancyState.value as VacancyState.Content).vacancy.id
                     )
                     Log.d("VacancyVM", "Vacancy was deleted from favs")
@@ -77,7 +77,7 @@ class VacancyDetailViewModel(
                     vacancy.isFavorite.isFavorite = true
                 })
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-                    saveVacancyRepository.save(
+                    saveVacancyInteractor.saveVacancy(
                         convertor.map((vacancyState.value as VacancyState.Content).vacancy)
                     )
                 }
@@ -102,7 +102,7 @@ class VacancyDetailViewModel(
                     }
                 )
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-                    deleteVacancyRepository.delete(
+                    deleteVacancyInteractor.deleteVacancy(
                         (vacancyState.value as VacancyState.ContentFromDb)
                             .vacancy.id
                     )
@@ -115,7 +115,7 @@ class VacancyDetailViewModel(
                     }
                 )
                 viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-                    saveVacancyRepository.save(
+                    saveVacancyInteractor.saveVacancy(
                         convertor.map((vacancyState.value as VacancyState.ContentFromDb).vacancy)
                     )
                 }
@@ -128,7 +128,7 @@ class VacancyDetailViewModel(
             while (true) {
                 delay(BUTTON_PRESSING_DELAY)
                 v.let { id ->
-                    likeRepository.favouritesCheck(id).collect { value ->
+                    likeInteractor.favouritesCheck(id).collect { value ->
                         likeIndicator.postValue(value)
                     }
                 }
@@ -138,11 +138,11 @@ class VacancyDetailViewModel(
     }
 
     fun checkBeforeRender(id: String): Boolean {
-        return likeRepository.checkOnFavDB(id)
+        return likeInteractor.checkOnFavDB(id)
     }
 
     fun getVacancyFromDb(id: String) {
-        _vacancyState.postValue(VacancyState.ContentFromDb(likeRepository.getVacancy(id)))
+        _vacancyState.postValue(VacancyState.ContentFromDb(likeInteractor.getVacancy(id)))
     }
 
     fun shareVacancy() {

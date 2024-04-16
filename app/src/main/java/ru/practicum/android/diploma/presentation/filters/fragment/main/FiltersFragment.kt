@@ -66,18 +66,18 @@ class FiltersFragment : Fragment() {
             }
         }
 
-        //setFragmentResultListenerControl()
+        setFragmentResultListenerControl()
     }
 
-    /*fun setFragmentResultListenerControl() {
-        parentFragmentManager.setFragmentResultListener(
+    fun setFragmentResultListenerControl() {
+        /*parentFragmentManager.setFragmentResultListener(
             FiltersIndustryFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
             val industry =
                 BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY_KEY, SubIndustry::class.java)
             viewModel.setNewIndustry(industry)
-        }
+        }*/
 
         parentFragmentManager.setFragmentResultListener(
             FiltersPlaceOfWorkFragment.REQUEST_KEY,
@@ -88,7 +88,7 @@ class FiltersFragment : Fragment() {
             val region = BundleCompat.getParcelable(bundle, FiltersPlaceOfWorkFragment.REGION_KEY, Area::class.java)
             viewModel.setNewCounterAndRegion(country, region)
         }
-    }*/
+    }
 
     private fun initButtonListeners() {
         binding.backButton.setOnClickListener {
@@ -187,10 +187,15 @@ class FiltersFragment : Fragment() {
             } else {
                 ""
             }
-
+            binding.workplaceValue.setTextColor(context?.let { it1 ->
+                AppCompatResources.getColorStateList(
+                    it1,
+                    R.color.filters_values_text_color
+                )
+            })
             binding.workplaceValue.setText(textLocation)
         } else {
-            binding.workplaceValue.setText("")
+            //binding.workplaceValue.setText("dfgfgfg")
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment,

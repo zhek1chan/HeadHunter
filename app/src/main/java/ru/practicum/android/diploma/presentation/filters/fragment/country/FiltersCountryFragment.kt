@@ -8,20 +8,20 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseCountryBinding
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.presentation.filters.adapter.FilterAdapter
 import ru.practicum.android.diploma.presentation.filters.state.country.FiltersCountriesState
 import ru.practicum.android.diploma.presentation.filters.viewmodel.country.FiltersCountryViewModel
-import ru.practicum.android.diploma.ui.search.gone
-import ru.practicum.android.diploma.ui.search.visible
+import ru.practicum.android.diploma.presentation.search.fragment.gone
+import ru.practicum.android.diploma.presentation.search.fragment.visible
 
 class FiltersCountryFragment : Fragment() {
 
     private var _binding: FragmentFilterChooseCountryBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: FiltersCountryViewModel by viewModel()
+    private val viewModel by viewModel<FiltersCountryViewModel>()
     private var countriesAdapter: FilterAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +17,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseRegionBinding
 import ru.practicum.android.diploma.domain.models.RegionDataItem
+import ru.practicum.android.diploma.presentation.filters.adapter.RegionAdapter
 import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
+import ru.practicum.android.diploma.presentation.filters.state.region.FiltersRegionsState
 import ru.practicum.android.diploma.presentation.filters.viewmodel.region.FiltersRegionViewModel
+import ru.practicum.android.diploma.presentation.search.fragment.gone
+import ru.practicum.android.diploma.presentation.search.fragment.visible
 
 class FiltersRegionFragment : Fragment() {
 
@@ -61,9 +66,9 @@ class FiltersRegionFragment : Fragment() {
         binding.regionList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        binding.choosingRegion.doAfterTextChanged {
+        binding.choosingIndustry.doAfterTextChanged {
             if (it?.isNotEmpty() == true) {
-                binding.imageTextView.setImageDrawable(context?.let { it1 ->
+                binding.clearButton.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
                         it1,
                         R.drawable.ic_clear_button
@@ -71,13 +76,13 @@ class FiltersRegionFragment : Fragment() {
                 })
                 viewModel.findArea(it?.toString() ?: "")
             } else {
-                binding.imageTextView.setImageDrawable(context?.let { it1 ->
+                binding.searchDrawable.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
                         it1,
                         R.drawable.ic_search
                     )
                 })
-                viewModel.showAllArea()
+                viewModel.showArea()
             }
 
         }
@@ -85,12 +90,12 @@ class FiltersRegionFragment : Fragment() {
         binding.arrowBackButton.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.imageTextView.setOnClickListener {
-            binding.choosingRegion.setText("")
+        binding.searchDrawable.setOnClickListener {
+            binding.choosingIndustry.setText("")
             viewModel.showArea()
         }
 
-        binding.choosingRegion.setOnEditorActionListener { v, actionId, event ->
+        binding.choosingIndustry.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val imm = context?.let { ContextCompat.getSystemService(it, InputMethodManager::class.java) }
                 imm?.hideSoftInputFromWindow(v.windowToken, 0)
@@ -113,45 +118,45 @@ class FiltersRegionFragment : Fragment() {
 
     fun showStartScreen() {
         binding.progressBar.gone()
-        binding.placeholderImage.gone()
-        binding.placeholderText.gone()
+        binding.placeholderNoRegionImage.gone()
+        binding.placeholderNoRegionText.gone()
         binding.regionList.gone()
-        binding.choosingRegion.isEnabled = true
+        binding.choosingIndustry.isEnabled = true
     }
 
     private fun showLoading() {
         binding.progressBar.visible()
         binding.regionList.gone()
-        binding.choosingRegion.isEnabled = false
+        binding.choosingIndustry.isEnabled = false
     }
 
     private fun showError() {
         binding.progressBar.gone()
-        binding.placeholderImage.setImageResource(R.drawable.error_region_list)
-        binding.placeholderText.setText(R.string.failed_to_get_list)
-        binding.placeholderImage.visible()
-        binding.placeholderText.visible()
+        binding.placeholderNoRegionImage.setImageResource(R.drawable.error_region_list)
+        binding.placeholderNoRegionText.setText(R.string.failed_to_get_list)
+        binding.placeholderNoRegionImage.visible()
+        binding.placeholderNoRegionText.visible()
         binding.regionList.gone()
-        binding.choosingRegion.isEnabled = false
+        binding.choosingIndustry.isEnabled = false
     }
 
     private fun showEmpty() {
         binding.progressBar.gone()
-        binding.placeholderImage.setImageResource(R.drawable.there_no_such_region)
-        binding.placeholderText.setText(R.string.no_region)
-        binding.placeholderImage.visible()
-        binding.placeholderText.visible()
+        binding.placeholderNoRegionImage.setImageResource(R.drawable.there_no_such_region)
+        binding.placeholderNoRegionText.setText(R.string.no_such_region)
+        binding.placeholderNoRegionImage.visible()
+        binding.placeholderNoRegionText.visible()
         binding.regionList.gone()
-        binding.choosingRegion.isEnabled = true
+        binding.choosingIndustry.isEnabled = true
     }
 
     private fun showContent(regions: List<RegionDataItem>) {
         binding.progressBar.gone()
-        binding.placeholderImage.gone()
-        binding.placeholderText.gone()
+        binding.placeholderNoRegionImage.gone()
+        binding.placeholderNoRegionText.gone()
         regionAdapter!!.setItems(regions)
         binding.regionList.visible()
-        binding.choosingRegion.isEnabled = true
+        binding.choosingIndustry.isEnabled = true
     }
 
     companion object {

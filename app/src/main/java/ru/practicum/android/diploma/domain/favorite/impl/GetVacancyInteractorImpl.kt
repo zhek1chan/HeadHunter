@@ -5,7 +5,7 @@ import ru.practicum.android.diploma.domain.favorite.GetVacancyInteractor
 import ru.practicum.android.diploma.domain.favorite.GetVacancyRepository
 import ru.practicum.android.diploma.domain.models.Vacancy
 
-class GetVacancyInteractorImpl(val rep: GetVacancyRepository): GetVacancyInteractor {
+class GetVacancyInteractorImpl(val rep: GetVacancyRepository) : GetVacancyInteractor {
     override fun getVacancy(): Flow<List<Vacancy>> {
         return rep.get()
     }

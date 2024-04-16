@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.favorite.DeleteVacancyInteractor
-import ru.practicum.android.diploma.domain.favorite.DeleteVacancyRepository
 import ru.practicum.android.diploma.domain.favorite.GetVacancyInteractor
-import ru.practicum.android.diploma.domain.favorite.GetVacancyRepository
 import ru.practicum.android.diploma.presentation.favourite.FavouritesState
 import java.sql.SQLException
 

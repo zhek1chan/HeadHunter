@@ -40,6 +40,7 @@
     <string name="choosing_place_of_work">Выбор места работы</string>
     <string name="failed_to_get_list">Не удалось получить \n список</string>
     <string name="no_such_region">Такого региона нет</string>
+    <string name="divider">,\ </string>
 
     <!-- Vacancy details -->
     <string name="job">Работа</string>

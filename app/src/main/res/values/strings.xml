@@ -20,7 +20,6 @@
     <string name="no_list_vacancies">Не удалось получить \n список вакансий</string>
     <string name="no_internet">Нет интернета</string>
 
-
     <!-- FILTERS -->
     <string name="workplace">Место работы</string>
     <string name="industry">Отрасль</string>

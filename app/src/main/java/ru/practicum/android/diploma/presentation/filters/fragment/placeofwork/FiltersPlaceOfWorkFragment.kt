@@ -113,6 +113,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     fun setCountry(actualCountry: Country?) {
         if (actualCountry != null) {
+            binding.countryTop.visible()
             binding.country.text = actualCountry.name
             binding.textView2.visible()
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
@@ -131,6 +132,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         } else {
             binding.country.text = ""
             binding.textView2.gone()
+            binding.countryTop.gone()
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
@@ -145,6 +147,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     fun setRegion(actualArea: Area?) {
         if (actualArea != null) {
+            binding.regionTop.visible()
             binding.region.text = actualArea.name
             binding.textView2.visible()
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
@@ -163,6 +166,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             if (country == null) {
                 binding.textView2.gone()
             }
+            binding.regionTop.gone()
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,

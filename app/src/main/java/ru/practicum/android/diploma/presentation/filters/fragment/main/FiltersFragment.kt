@@ -18,7 +18,9 @@ class FiltersFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,7 +43,6 @@ class FiltersFragment : Fragment() {
                 binding.industryValue.text = industry.name
             }
         }
-
     }
 
     override fun onDestroyView() {

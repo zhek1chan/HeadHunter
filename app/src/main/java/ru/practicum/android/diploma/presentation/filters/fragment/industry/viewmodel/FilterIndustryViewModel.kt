@@ -30,8 +30,8 @@ class FilterIndustryViewModel(
         _industriesState.value = RequestIndustriesState.Loading
         viewModelScope.launch {
             filtersInteractor.getIndustries().collect { industriesResponse ->
-                    processResult(industriesResponse)
-                }
+                processResult(industriesResponse)
+            }
         }
     }
 
@@ -47,7 +47,6 @@ class FilterIndustryViewModel(
             }
         }
     }
-
 
     fun filterIndustries(text: String) {
         if (text.isNotEmpty()) {

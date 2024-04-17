@@ -37,7 +37,9 @@ class FiltersViewModel(
             val showApply = filter != oldFilter
             filterState.emit(
                 filterState.value.copy(
-                    filters = filter!!, showApply = showApply, showClear = showApply || filter?.checkEmpty() == false
+                    filters = filter!!,
+                    showApply = showApply,
+                    showClear = showApply || filter?.checkEmpty() == false
                 )
             )
         }

@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -32,9 +29,7 @@ class FiltersRegionFragment : Fragment() {
     private var regionAdapter: RegionAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilterChooseRegionBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,33 +48,28 @@ class FiltersRegionFragment : Fragment() {
 
         regionAdapter = RegionAdapter { region ->
             parentFragmentManager.setFragmentResult(
-                REQUEST_KEY,
-                bundleOf(
-                    REGION_KEY to region.currentRegion,
-                    FiltersCountryFragment.COUNTRY_KEY to region.rootRegion
+                REQUEST_KEY, bundleOf(
+                    REGION_KEY to region.currentRegion, FiltersCountryFragment.COUNTRY_KEY to region.rootRegion
                 )
             )
             findNavController().popBackStack()
         }
 
         binding.regionList.adapter = regionAdapter
-        binding.regionList.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.regionList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         binding.choosingRegion.doAfterTextChanged {
             if (it?.isNotEmpty() == true) {
                 binding.clearButton.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
-                        it1,
-                        R.drawable.ic_clear_button
+                        it1, R.drawable.ic_clear_button
                     )
                 })
-                viewModel.findArea(it?.toString() ?: "")
+                viewModel.findArea(it.toString() ?: "")
             } else {
                 binding.searchDrawable.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
-                        it1,
-                        R.drawable.ic_search
+                        it1, R.drawable.ic_search
                     )
                 })
                 viewModel.showArea()

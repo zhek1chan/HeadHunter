@@ -107,7 +107,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     fun setCountry(actualCountry: Country?) {
         if (actualCountry != null) {
-            binding.country.setText(actualCountry.name)
+            binding.country.text = actualCountry.name
             binding.textView2.visible()
             binding.placeOfWorkArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
@@ -122,14 +122,14 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                 setRegion(null)
             }
         } else {
-            binding.country.setText("")
+            binding.country.text = ""
             binding.textView2.gone()
             binding.placeOfWorkArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1, R.drawable.arrow_forward_24px
                 )
             })
-            binding.placeOfWorkArrow.setOnClickListener{
+            binding.placeOfWorkArrow.setOnClickListener {
                 findNavController().navigate(R.id.action_filterPlaceOfWorkFragment_to_filtersCountryFragment)
             }
         }
@@ -137,7 +137,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     fun setRegion(actualArea: Area?) {
         if (actualArea != null) {
-            binding.region.setText(actualArea.name)
+            binding.region.text = actualArea.name
             binding.textView2.visible()
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
@@ -150,7 +150,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                 setRegion(null)
             }
         } else {
-            binding.region.setText("")
+            binding.region.text = ""
             if (country == null) {
                 binding.textView2.gone()
             }
@@ -159,7 +159,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                     it1, R.drawable.arrow_forward_24px
                 )
             })
-            binding.regionArrow.setOnClickListener{
+            binding.regionArrow.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
                     bundleOf(FiltersCountryFragment.COUNTRY_KEY to country?.id)

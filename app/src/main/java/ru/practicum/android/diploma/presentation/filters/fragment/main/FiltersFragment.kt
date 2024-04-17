@@ -12,24 +12,22 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
-import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
-import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.FiltersIndustryFragment
-import ru.practicum.android.diploma.presentation.filters.viewmodel.main.FiltersViewModel
-import ru.practicum.android.diploma.presentation.search.fragment.gone
-import ru.practicum.android.diploma.presentation.search.fragment.visible
-import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.withContext
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.domain.models.Filters
-import ru.practicum.android.diploma.domain.models.SubIndustry
+import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.placeofwork.FiltersPlaceOfWorkFragment
+import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
+import ru.practicum.android.diploma.presentation.filters.viewmodel.main.FiltersViewModel
+import ru.practicum.android.diploma.presentation.search.fragment.gone
+import ru.practicum.android.diploma.presentation.search.fragment.visible
 
 class FiltersFragment : Fragment() {
 
@@ -39,9 +37,7 @@ class FiltersFragment : Fragment() {
     private var industryIdPrefs = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -69,8 +65,7 @@ class FiltersFragment : Fragment() {
         setFragmentResultListenerControl()
     }
 
-    fun setFragmentResultListenerControl() {
-        /*parentFragmentManager.setFragmentResultListener(
+    fun setFragmentResultListenerControl() {/*parentFragmentManager.setFragmentResultListener(
             FiltersIndustryFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
@@ -80,8 +75,7 @@ class FiltersFragment : Fragment() {
         }*/
 
         parentFragmentManager.setFragmentResultListener(
-            FiltersPlaceOfWorkFragment.REQUEST_KEY,
-            viewLifecycleOwner
+            FiltersPlaceOfWorkFragment.REQUEST_KEY, viewLifecycleOwner
         ) { _, bundle ->
             val country =
                 BundleCompat.getParcelable(bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY, Country::class.java)
@@ -98,10 +92,8 @@ class FiltersFragment : Fragment() {
         binding.workplace.setOnClickListener {
             val (country, region) = viewModel.getActualCountryAndRegion()
             findNavController().navigate(
-                R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
-                bundleOf(
-                    FiltersCountryFragment.COUNTRY_KEY to country,
-                    FiltersRegionFragment.REGION_KEY to region
+                R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                    FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
                 )
             )
         }
@@ -150,9 +142,7 @@ class FiltersFragment : Fragment() {
         setStateLocation(filterSettings.country, filterSettings.region)
         //setStateIndustry(filterSettings.industry)
 
-        if (binding.expectedSalary.isFocused.not() &&
-            binding.expectedSalary.text?.toString() != filterSettings.expectedSalary
-        ) {
+        if (binding.expectedSalary.isFocused.not() && binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
             binding.expectedSalary.setText(filterSettings.expectedSalary)
         }
         if (binding.salaryOnlyCheckbox.isChecked != filterSettings.salaryOnlyCheckbox) {
@@ -165,8 +155,7 @@ class FiltersFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
-        val inputMethodManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         inputMethodManager?.hideSoftInputFromWindow(binding.expectedSalary.windowToken, 0)
     }
 
@@ -178,8 +167,7 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.close_24px
+                    it1, R.drawable.close_24px
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
@@ -189,32 +177,27 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1,
-                    R.color.filters_values_text_color
+                    it1, R.color.filters_values_text_color
                 )
             })
-            binding.workplaceValue.setText(textLocation)
+            binding.workplaceValue.text = textLocation
         } else {
             binding.workplaceValue.setText(R.string.workplace)
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1,
-                    R.color.gray
+                    it1, R.color.gray
                 )
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
-                    bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country,
-                        FiltersRegionFragment.REGION_KEY to region
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
                     )
                 )
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.arrow_forward_24px
+                    it1, R.drawable.arrow_forward_24px
                 )
             })
         }

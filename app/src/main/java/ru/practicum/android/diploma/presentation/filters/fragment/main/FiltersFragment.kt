@@ -1,21 +1,17 @@
 package ru.practicum.android.diploma.presentation.filters.fragment.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
@@ -78,7 +74,7 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    fun setFragmentResultListenerControl() {
+    private fun setFragmentResultListenerControl() {
         parentFragmentManager.setFragmentResultListener(
             FiltersPlaceOfWorkFragment.REQUEST_KEY,
             viewLifecycleOwner
@@ -97,52 +93,6 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    private fun initButtonListeners() {
-        binding.backButton.setOnClickListener {
-            findNavController().navigateUp()
-
-            binding.workplace.setOnClickListener {
-                val (country, region) = viewModel.getActualCountryAndRegion()
-                findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
-                    bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country,
-                        FiltersRegionFragment.REGION_KEY to region
-                    )
-                )
-            }
-
-            binding.buttonApply.setOnClickListener {
-                binding.buttonApply.gone()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    savePrefs()
-                    withContext(Dispatchers.Main) {
-                        findNavController().popBackStack()
-                    }
-                }
-            }
-
-            binding.buttonRemove.setOnClickListener {
-                resetFilters()
-            }
-
-            binding.clearButton.setOnClickListener {
-                binding.expectedSalary.setText("")
-                hideKeyboard()
-            }
-
-            binding.salaryOnlyCheckbox.setOnCheckedChangeListener { button, check ->
-                viewModel.setSalaryOnlyCheckbox(check)
-            }
-        }
-    }
-
-    private fun initTextListeners() {
-        binding.expectedSalary.doOnTextChanged { text, start, before, count ->
-            viewModel.setExpectedSalary(text?.toString())
-        }
-    }
-
     private fun initFilterSettings(filterSettings: Filters) {
         setStateLocation(filterSettings.country, filterSettings.region)
         if (binding.expectedSalary.isFocused.not() &&
@@ -154,16 +104,7 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    private suspend fun savePrefs() {
-        viewModel.savePrefs()
-    }
-
-    private fun hideKeyboard() {
-        val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        inputMethodManager?.hideSoftInputFromWindow(binding.expectedSalary.windowToken, 0)
-    }
-
-    fun setStateLocation(country: String?, region: String?) {
+    private fun setStateLocation(country: String?, region: String?) {
         if (country?.isNotEmpty() == true) {
             binding.workplaceView.setOnClickListener {
                 clearStateLocation()
@@ -196,10 +137,8 @@ class FiltersFragment : Fragment() {
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
-                    bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country,
-                        FiltersRegionFragment.REGION_KEY to region
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
                     )
                 )
             }
@@ -212,16 +151,11 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    fun clearStateLocation() {
+    private fun clearStateLocation() {
         viewModel.setNewCounterAndRegion(null, null)
     }
 
-    private fun resetFilters() {
-        binding.buttonRemove.gone()
-        viewModel.clearPrefs()
-    }
-
-    fun visibleSaveControl(visible: Boolean) {
+    private fun visibleSaveControl(visible: Boolean) {
         if (visible) {
             binding.buttonApply.visible()
         } else {
@@ -229,7 +163,7 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    fun visibleClearControl(visible: Boolean) {
+    private fun visibleClearControl(visible: Boolean) {
         if (visible) {
             binding.buttonRemove.visible()
         } else {
@@ -237,7 +171,7 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    fun visibleClearSalaryButtonControl() {
+    private fun visibleClearSalaryButtonControl() {
         if (binding.expectedSalary.text?.isEmpty() == true) {
             binding.clearButton.gone()
         } else {

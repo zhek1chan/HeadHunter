@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class Industry(
     val id: String,
     val industries: List<SubIndustry>,
-    val name: String
+    val name: String,
+    var isChosen : Boolean = false
 ) : Parcelable

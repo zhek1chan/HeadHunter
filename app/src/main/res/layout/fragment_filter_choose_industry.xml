@@ -50,7 +50,7 @@
         app:placeholderText="@string/enter_industry">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/choosing_industry"
+            android:id="@+id/search_industry"
             style="@style/TextStyleMedium16_500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,11 +95,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choosing_industry_layout"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/chose_btn"
         tools:listitem="@layout/industry_item" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/chose_btn"
         style="@style/white_16_medium"
         android:layout_width="match_parent"
         android:layout_height="59dp"

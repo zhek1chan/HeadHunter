@@ -134,7 +134,8 @@ class FiltersFragment : Fragment() {
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region)
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
+                    bundleOf(FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region)
                 )
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->

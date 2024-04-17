@@ -45,9 +45,6 @@ class FiltersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initButtonListeners()
-        initTextListeners()
-
         binding.industry.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_filterIndustryFragment)
         }
@@ -126,7 +123,7 @@ class FiltersFragment : Fragment() {
                     R.color.filters_values_text_color
                 )
             })
-            binding.workplaceValue.setText(textLocation)
+            binding.workplaceValue.text = textLocation
         } else {
             binding.workplaceValue.setText(R.string.workplace)
             binding.workplaceValue.setTextColor(context?.let { it1 ->
@@ -137,9 +134,7 @@ class FiltersFragment : Fragment() {
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
-                    )
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region)
                 )
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->

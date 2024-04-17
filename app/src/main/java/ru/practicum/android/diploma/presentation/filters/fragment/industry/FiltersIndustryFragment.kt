@@ -40,7 +40,6 @@ class FiltersIndustryFragment : Fragment() {
             }
         })
 
-
         binding.industryList.layoutManager = LinearLayoutManager(requireContext())
         binding.industryList.adapter = industriesAdapter
 

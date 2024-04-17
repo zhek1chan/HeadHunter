@@ -29,7 +29,9 @@ class FiltersRegionFragment : Fragment() {
     private var regionAdapter: RegionAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilterChooseRegionBinding.inflate(inflater, container, false)
         return binding.root
@@ -62,14 +64,16 @@ class FiltersRegionFragment : Fragment() {
             if (it?.isNotEmpty() == true) {
                 binding.clearButton.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
-                        it1, R.drawable.ic_clear_button
+                        it1,
+                        R.drawable.ic_clear_button
                     )
                 })
                 viewModel.findArea(it.toString() ?: "")
             } else {
                 binding.searchDrawable.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
-                        it1, R.drawable.ic_search
+                        it1,
+                        R.drawable.ic_search
                     )
                 })
                 viewModel.showArea()

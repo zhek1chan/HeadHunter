@@ -115,13 +115,13 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         if (actualCountry != null) {
             binding.country.text = actualCountry.name
             binding.textView2.visible()
-            binding.placeOfWorkArrow.setImageDrawable(context?.let { it1 ->
+            binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
                     R.drawable.close_24px
                 )
             })
-            binding.placeOfWorkArrow.setOnClickListener {
+            binding.workplaceArrow.setOnClickListener {
                 clearArguments()
                 country = null
                 region = null
@@ -131,13 +131,13 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         } else {
             binding.country.text = ""
             binding.textView2.gone()
-            binding.placeOfWorkArrow.setImageDrawable(context?.let { it1 ->
+            binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
                     R.drawable.arrow_forward_24px
                 )
             })
-            binding.placeOfWorkArrow.setOnClickListener {
+            binding.workplaceArrow.setOnClickListener {
                 findNavController().navigate(R.id.action_filterPlaceOfWorkFragment_to_filtersCountryFragment)
             }
         }

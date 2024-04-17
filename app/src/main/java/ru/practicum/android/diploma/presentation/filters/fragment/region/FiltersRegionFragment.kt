@@ -62,7 +62,7 @@ class FiltersRegionFragment : Fragment() {
 
         binding.choosingRegion.doAfterTextChanged {
             if (it?.isNotEmpty() == true) {
-                binding.clearButton.setImageDrawable(context?.let { it1 ->
+                binding.searchDrawable.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
                         it1,
                         R.drawable.ic_clear_button

@@ -50,14 +50,14 @@ class FiltersIndustryFragment : Fragment() {
         binding.searchIndustry.doOnTextChanged { text, _, _, _ ->
             viewModel.filterIndustries(text.toString())
             if (text.isNullOrBlank()) {
-                binding.clearButton.visibility = View.GONE
+                //binding.clearButton.visibility = View.GONE
                 binding.searchDrawable.visibility = View.VISIBLE
             } else {
-                binding.clearButton.visibility = View.VISIBLE
+                //binding.clearButton.visibility = View.VISIBLE
                 binding.searchDrawable.visibility = View.GONE
-                binding.clearButton.setOnClickListener {
-                    binding.searchIndustry.text?.clear()
-                }
+                //binding.clearButton.setOnClickListener {
+                //    binding.searchIndustry.text?.clear()
+                //}
             }
         }
 

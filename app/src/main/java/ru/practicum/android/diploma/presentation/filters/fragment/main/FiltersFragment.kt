@@ -38,9 +38,7 @@ class FiltersFragment : Fragment() {
     private val viewModel by viewModel<FiltersViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -78,19 +76,13 @@ class FiltersFragment : Fragment() {
 
     fun setFragmentResultListenerControl() {
         parentFragmentManager.setFragmentResultListener(
-            FiltersPlaceOfWorkFragment.REQUEST_KEY,
-            viewLifecycleOwner
+            FiltersPlaceOfWorkFragment.REQUEST_KEY, viewLifecycleOwner
         ) { _, bundle ->
-            val country =
-                BundleCompat.getParcelable(
-                    bundle,
-                    FiltersPlaceOfWorkFragment.COUNTRY_KEY,
-                    Country::class.java
-                )
+            val country = BundleCompat.getParcelable(
+                bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY, Country::class.java
+            )
             val region = BundleCompat.getParcelable(
-                bundle,
-                FiltersPlaceOfWorkFragment.REGION_KEY,
-                Area::class.java
+                bundle, FiltersPlaceOfWorkFragment.REGION_KEY, Area::class.java
             )
             viewModel.setNewCounterAndRegion(country, region)
         }
@@ -100,40 +92,39 @@ class FiltersFragment : Fragment() {
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
 
-        binding.workplace.setOnClickListener {
-            val (country, region) = viewModel.getActualCountryAndRegion()
-            findNavController().navigate(
-                R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
-                bundleOf(
-                    FiltersCountryFragment.COUNTRY_KEY to country,
-                    FiltersRegionFragment.REGION_KEY to region
+            binding.workplace.setOnClickListener {
+                val (country, region) = viewModel.getActualCountryAndRegion()
+                findNavController().navigate(
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
+                    )
                 )
-            )
-        }
+            }
 
-        binding.buttonApply.setOnClickListener {
-            binding.buttonApply.gone()
-            lifecycleScope.launch(Dispatchers.IO) {
-                savePrefs()
-                withContext(Dispatchers.Main) {
-                    findNavController().popBackStack()
+            binding.buttonApply.setOnClickListener {
+                binding.buttonApply.gone()
+                lifecycleScope.launch(Dispatchers.IO) {
+                    savePrefs()
+                    withContext(Dispatchers.Main) {
+                        findNavController().popBackStack()
+                    }
                 }
             }
-        }
 
-        binding.buttonRemove.setOnClickListener {
-            resetFilters()
-        }
+            binding.buttonRemove.setOnClickListener {
+                resetFilters()
+            }
 
-        binding.clearButton.setOnClickListener {
-            binding.expectedSalary.setText("")
-            hideKeyboard()
-        }
+            binding.clearButton.setOnClickListener {
+                binding.expectedSalary.setText("")
+                hideKeyboard()
+            }
 
-        binding.salaryOnlyCheckbox.setOnCheckedChangeListener { button, check ->
-            viewModel.setSalaryOnlyCheckbox(check)
+            binding.salaryOnlyCheckbox.setOnCheckedChangeListener { button, check ->
+                viewModel.setSalaryOnlyCheckbox(check)
+            }
         }
-    } }
+    }
 
     private fun initTextListeners() {
         binding.expectedSalary.doOnTextChanged { text, start, before, count ->
@@ -143,8 +134,7 @@ class FiltersFragment : Fragment() {
 
     private fun initFilterSettings(filterSettings: Filters) {
         setStateLocation(filterSettings.country, filterSettings.region)
-        if (binding.expectedSalary.isFocused.not() &&
-            binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
+        if (binding.expectedSalary.isFocused.not() && binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
             binding.expectedSalary.setText(filterSettings.expectedSalary)
         }
         if (binding.salaryOnlyCheckbox.isChecked != filterSettings.salaryOnlyCheckbox) {
@@ -168,8 +158,7 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.close_24px
+                    it1, R.drawable.close_24px
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
@@ -179,8 +168,7 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1,
-                    R.color.filters_values_text_color
+                    it1, R.color.filters_values_text_color
                 )
             })
             binding.workplaceValue.text = textLocation
@@ -188,23 +176,19 @@ class FiltersFragment : Fragment() {
             binding.workplaceValue.setText(R.string.workplace)
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1,
-                    R.color.gray
+                    it1, R.color.gray
                 )
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
-                    bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country,
-                        FiltersRegionFragment.REGION_KEY to region
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
                     )
                 )
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.arrow_forward_24px
+                    it1, R.drawable.arrow_forward_24px
                 )
             })
         }

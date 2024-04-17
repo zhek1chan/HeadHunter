@@ -1,9 +1,11 @@
 package ru.practicum.android.diploma.presentation.filters.fragment.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
@@ -12,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
@@ -59,7 +62,7 @@ class FiltersFragment : Fragment() {
         }
 
         setFragmentResultListenerControl()
-
+        buttonListeners()
         parentFragmentManager.setFragmentResultListener(
             FiltersIndustryFragment.INDUSTRY_KEY,
             viewLifecycleOwner,
@@ -173,5 +176,50 @@ class FiltersFragment : Fragment() {
         } else {
             binding.clearButton.visible()
         }
+    }
+
+    private fun buttonListeners() {
+        binding.filtersOff.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+
+        binding.buttonApply.setOnClickListener {
+            binding.buttonApply.gone()
+            lifecycleScope.launch(Dispatchers.IO) {
+                savePrefs()
+                withContext(Dispatchers.Main) {
+                    findNavController().popBackStack()
+                }
+            }
+        }
+
+        binding.buttonRemove.setOnClickListener {
+            resetFilters()
+        }
+
+        binding.clearButton.setOnClickListener {
+            binding.expectedSalary.setText("")
+            hideKeyboard()
+        }
+
+        binding.salaryOnlyCheckbox.setOnCheckedChangeListener { button, check ->
+            viewModel.setSalaryOnlyCheckbox(check)
+        }
+    }
+
+    private suspend fun savePrefs() {
+        viewModel.savePrefs()
+    }
+
+    private fun resetFilters() {
+        binding.clearButton.gone()
+        viewModel.clearPrefs()
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        inputMethodManager?.hideSoftInputFromWindow(binding.expectedSalary.windowToken, 0)
     }
 }

@@ -114,7 +114,6 @@ class FiltersIndustryFragment : Fragment() {
         binding.choseBtn.visibility = View.GONE
         binding.industryList.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
-
         binding.errorFailedGetImage.setImageResource(R.drawable.error_region_list)
         binding.errorFailedGetText.setText(R.string.failed_to_get_list)
         binding.errorFailedGet.visibility = View.VISIBLE
@@ -124,7 +123,6 @@ class FiltersIndustryFragment : Fragment() {
         binding.choseBtn.visibility = View.GONE
         binding.industryList.visibility = View.GONE
         binding.errorFailedGet.visibility = View.GONE
-
         binding.progressBar.visibility = View.VISIBLE
     }
 

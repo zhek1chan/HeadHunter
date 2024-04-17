@@ -132,7 +132,7 @@ class FiltersFragment : Fragment() {
                     R.color.gray
                 )
             })
-            binding.workplaceView.setOnClickListener {
+            binding.workplace.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
                     bundleOf(FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region)

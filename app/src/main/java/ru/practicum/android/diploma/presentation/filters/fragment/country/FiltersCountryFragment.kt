@@ -75,21 +75,20 @@ class FiltersCountryFragment : Fragment() {
 
     private fun showError() {
         binding.progressBar.gone()
-        binding.errorFailedGet.visible()
+        binding.errorHolder.visible()
     }
 
     private fun showEmpty() {
         binding.progressBar.gone()
-        binding.errorFailedGet.visible()
+        binding.errorHolder.visible()
     }
 
     private fun showContent(countries: List<Country>) {
         binding.progressBar.gone()
-        binding.errorFailedGet.gone()
+        binding.errorHolder.gone()
         countriesAdapter!!.countriesList.clear()
         countriesAdapter!!.countriesList.addAll(countries)
         countriesAdapter!!.notifyDataSetChanged()
-
     }
 
     companion object {

@@ -22,4 +22,9 @@
     <dimen name="dimen_64">64dp</dimen>
     <dimen name="dimen_60">60dp</dimen>
     <dimen name="radius_12">12dp</dimen>
+    <dimen name="favorites_margin_16">16dp</dimen>
+    <dimen name="favorites_margin_160">160dp</dimen>
+    <dimen name="favorites_margin_32">32dp</dimen>
+    <dimen name="toolbar_height">64dp</dimen>
+    <dimen name="item_height">60dp</dimen>
 </resources>

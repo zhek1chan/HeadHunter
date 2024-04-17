@@ -67,7 +67,7 @@ class FiltersViewModel(
         )
     }
 
-    fun setSalaryOnlyCheckbox(salaryOnlyCheckbox: Boolean) {
+    fun setOnlyWithSalary(salaryOnlyCheckbox: Boolean) {
         filter = filter?.copy(
             salaryOnlyCheckbox = salaryOnlyCheckbox,
         )

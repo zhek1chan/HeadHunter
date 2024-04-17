@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/error_failed_get"
+        android:id="@+id/error_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -71,7 +71,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/error_failed_get_image"
+            android:id="@+id/errors_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
@@ -82,16 +82,16 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
-            android:id="@+id/error_failed_get_text"
+            android:id="@+id/errors_text"
             style="@style/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
             android:text="@string/failed_to_get_list"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@id/error_failed_get_image"
-            app:layout_constraintEnd_toEndOf="@id/error_failed_get"
-            app:layout_constraintStart_toStartOf="@id/error_failed_get"/>
+            app:layout_constraintTop_toBottomOf="@id/errors_image"
+            app:layout_constraintEnd_toEndOf="@id/error_holder"
+            app:layout_constraintStart_toStartOf="@id/error_holder"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

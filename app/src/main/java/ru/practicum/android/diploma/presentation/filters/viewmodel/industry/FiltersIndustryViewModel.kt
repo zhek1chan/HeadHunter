@@ -5,84 +5,78 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.practicum.android.diploma.common.Constants.SUCCESS_RESULT_CODE
 import ru.practicum.android.diploma.common.Resource
+import ru.practicum.android.diploma.data.Constant
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor
 import ru.practicum.android.diploma.domain.models.Industry
+import ru.practicum.android.diploma.domain.models.SubIndustry
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.RequestIndustriesState
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapterItem
 
-class FiltersIndustryViewModel(
-    private val filtersInteractor: FiltersInteractor
-) : ViewModel() {
-    private val _industriesState = MutableLiveData<RequestIndustriesState>()
-    private var _chosenIndustry = MutableLiveData<Industry>()
+class FiltersIndustryViewModel(private val interactor: FiltersInteractor) : ViewModel() {
+    private val _state = MutableLiveData<RequestIndustriesState>()
+    val state: LiveData<RequestIndustriesState> = _state
+    private var list = ArrayList<SubIndustry>()
 
-    fun getIndustriesState(): LiveData<RequestIndustriesState> = _industriesState
-    fun getChosenIndustry(): LiveData<Industry> = _chosenIndustry
-
-    private var _currentIndustries = listOf<Industry>()
-
-    init {
-        fetchIndustries()
-    }
-
-    fun fetchIndustries() {
-        _industriesState.value = RequestIndustriesState.Loading
+    fun getIndustries() {
+        _state.value = RequestIndustriesState.Loading
         viewModelScope.launch {
-            filtersInteractor.getIndustries().collect { industriesResponse ->
-                processResult(industriesResponse)
+            interactor.getIndustries().collect { industry ->
+                processResult(industry)
             }
         }
     }
 
-    fun clickIndustry(industry: Industry) {
-        _chosenIndustry.value = if (industry.id != _chosenIndustry.value?.id ?: "") industry else null
-        if (_industriesState.value is RequestIndustriesState.Success) {
-            (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
-                if (item.id == industry.id) {
-                    item.isChosen.isChosen = !industry.isChosen.isChosen
-                } else {
-                    item.isChosen.isChosen = false
-                }
+    private fun processResult(industry: Resource<List<Industry>>) {
+        if (industry.code == Constant.SUCCESS_RESULT_CODE) {
+            if (industry.data != null) {
+                list.clear()
+                list.addAll(sortIndustries(industry.data))
+                _state.value =
+                    RequestIndustriesState.Success(list.map { IndustriesAdapterItem(it) })
+            } else {
+                _state.value = RequestIndustriesState.Empty
             }
+        } else {
+            _state.value = RequestIndustriesState.Error
         }
     }
 
-    fun filterIndustries(text: String) {
-        if (text.isNotEmpty()) {
-            val filteredList = _currentIndustries.filter {
-                it.name.contains(text, ignoreCase = true)
+    private fun sortIndustries(industriesList: List<Industry>): List<SubIndustry> {
+        val sortedSubIndustriesList: MutableList<SubIndustry> = mutableListOf()
+        for (industry in industriesList) {
+            for (subindustry in industry.industries) {
+                sortedSubIndustriesList.add(
+                    SubIndustry(
+                        id = subindustry.id,
+                        name = subindustry.name
+                    )
+                )
+            }
+            sortedSubIndustriesList.add(
+                SubIndustry(
+                    id = industry.id,
+                    name = industry.name
+                )
+            )
+        }
+
+        return sortedSubIndustriesList.sortedBy { it.name }
+    }
+
+    fun filterIndustries(editText: String) {
+        if (editText.isNotEmpty()) {
+            val filteredList = list.filter {
+                it.name.contains(editText, ignoreCase = true)
             }
             if (filteredList.isNotEmpty()) {
-                _industriesState.value = RequestIndustriesState.Success(filteredList)
+                _state.value = RequestIndustriesState.Success(filteredList.map { IndustriesAdapterItem(it) })
             } else {
-                _industriesState.value = RequestIndustriesState.Empty
+                _state.value = RequestIndustriesState.Empty
             }
         } else {
-            fetchIndustries()
+            _state.value =
+                RequestIndustriesState.Success(list.map { IndustriesAdapterItem(it) })
         }
     }
-
-    private fun processResult(response: Resource<List<Industry>>) {
-        if (response.code == SUCCESS_RESULT_CODE) {
-            if (!response.data.isNullOrEmpty()) {
-                _currentIndustries = response.data
-                _industriesState.value = RequestIndustriesState.Success(response.data)
-                checkChosenIndustry()
-            } else {
-                _industriesState.value = RequestIndustriesState.Empty
-            }
-        } else {
-            _industriesState.value = RequestIndustriesState.Error
-        }
-    }
-
-    private fun checkChosenIndustry() {
-        if (_industriesState.value is RequestIndustriesState.Success && _chosenIndustry.value != null) {
-            (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
-                item.isChosen.isChosen = item.id == _chosenIndustry.value!!.id
-            }
-        }
-    }
-
 }

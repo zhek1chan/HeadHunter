@@ -29,7 +29,7 @@ val FiltersModule = module {
     viewModelOf(::FiltersViewModel)
     viewModelOf(::FiltersCountryViewModel)
     viewModelOf(::FiltersRegionViewModel)
-   // viewModelOf(::FiltersIndustryViewModel)
+    //viewModelOf(::FiltersIndustryViewModel)
 
     single(qualifier = named("filtersPrefs")) {
         provideFiltersPreferences(androidApplication(), FILTERS_PREFS)

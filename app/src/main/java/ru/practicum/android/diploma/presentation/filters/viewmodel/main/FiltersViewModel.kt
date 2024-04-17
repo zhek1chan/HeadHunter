@@ -6,11 +6,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor
-import ru.practicum.android.diploma.domain.models.Filters
-import ru.practicum.android.diploma.domain.models.checkEmpty
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
+import ru.practicum.android.diploma.domain.models.Filters
 import ru.practicum.android.diploma.domain.models.SubIndustry
+import ru.practicum.android.diploma.domain.models.checkEmpty
 
 class FiltersViewModel(
     private val filterInteractor: FiltersInteractor,
@@ -37,9 +37,7 @@ class FiltersViewModel(
             val showApply = filter != oldFilter
             filterState.emit(
                 filterState.value.copy(
-                    filters = filter!!,
-                    showApply = showApply,
-                    showClear = showApply || filter?.checkEmpty() == false
+                    filters = filter!!, showApply = showApply, showClear = showApply || filter?.checkEmpty() == false
                 )
             )
         }

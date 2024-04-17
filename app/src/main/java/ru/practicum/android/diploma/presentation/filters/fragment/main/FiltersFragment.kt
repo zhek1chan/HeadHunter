@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.domain.models.Industry
-import ru.practicum.android.diploma.domain.models.SubIndustry
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.FiltersIndustryFragment
 
 class FiltersFragment : Fragment() {
@@ -19,9 +18,7 @@ class FiltersFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -37,10 +34,9 @@ class FiltersFragment : Fragment() {
         parentFragmentManager.setFragmentResultListener(
             FiltersIndustryFragment.INDUSTRY_KEY,
             viewLifecycleOwner,
-        ){ _, bundle ->
-            val industry =
-                BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY, Industry::class.java)
-            // TODO Здесь будет логика работы с viewModel
+        ) { _, bundle ->
+            val industry = BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY, Industry::class.java)
+            // Здесь будет логика работы с viewModel
             if (industry != null) {
                 binding.industryValue.text = industry.name
             }

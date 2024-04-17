@@ -9,19 +9,19 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.practicum.android.diploma.databinding.FragmentFilterChooseIndustryBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.databinding.FragmentFilterChooseIndustryBinding
 import ru.practicum.android.diploma.domain.models.Industry
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleView.IndustriesAdapter
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleView.IndustryClick
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.viewModel.FilterIndustryViewModel
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapter
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustryClick
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.viewmodel.FilterIndustryViewModel
 
 class FiltersIndustryFragment : Fragment() {
     private var _binding: FragmentFilterChooseIndustryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : FilterIndustryViewModel by viewModel()
+    private val viewModel: FilterIndustryViewModel by viewModel()
 
     private val industriesAdapter = IndustriesAdapter()
 
@@ -58,8 +58,8 @@ class FiltersIndustryFragment : Fragment() {
             }
         }
 
-        viewModel.getIndustriesState().observe(viewLifecycleOwner){ requestState ->
-            when(requestState){
+        viewModel.getIndustriesState().observe(viewLifecycleOwner) { requestState ->
+            when (requestState) {
                 is RequestIndustriesState.Loading -> showLoading()
                 is RequestIndustriesState.Error -> showError()
                 is RequestIndustriesState.Empty -> showEmpty()
@@ -71,17 +71,19 @@ class FiltersIndustryFragment : Fragment() {
             }
         }
 
-        viewModel.getChosenIndustry().observe(viewLifecycleOwner){ chosenIndustry ->
-            if(chosenIndustry != null){
+        viewModel.getChosenIndustry().observe(viewLifecycleOwner) { chosenIndustry ->
+            if (chosenIndustry != null) {
                 binding.choseBtn.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 binding.choseBtn.visibility = View.GONE
             }
         }
 
         binding.choseBtn.setOnClickListener {
-            parentFragmentManager.setFragmentResult(INDUSTRY_KEY, bundleOf(INDUSTRY to viewModel.getChosenIndustry().value))
+            parentFragmentManager.setFragmentResult(
+                INDUSTRY_KEY,
+                bundleOf(INDUSTRY to viewModel.getChosenIndustry().value)
+            )
             findNavController().popBackStack()
         }
 
@@ -92,14 +94,14 @@ class FiltersIndustryFragment : Fragment() {
         _binding = null
     }
 
-    private fun showContent(){
+    private fun showContent() {
         binding.choseBtn.visibility = if (viewModel.getChosenIndustry().value != null) View.VISIBLE else View.GONE
         binding.industryList.visibility = View.VISIBLE
         binding.progressBar.visibility = View.GONE
         binding.errorFailedGet.visibility = View.GONE
     }
 
-    private fun showEmpty(){
+    private fun showEmpty() {
         binding.choseBtn.visibility = View.GONE
         binding.industryList.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
@@ -109,7 +111,7 @@ class FiltersIndustryFragment : Fragment() {
         binding.errorFailedGet.visibility = View.VISIBLE
     }
 
-    private fun showError(){
+    private fun showError() {
         binding.choseBtn.visibility = View.GONE
         binding.industryList.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
@@ -119,7 +121,7 @@ class FiltersIndustryFragment : Fragment() {
         binding.errorFailedGet.visibility = View.VISIBLE
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
         binding.choseBtn.visibility = View.GONE
         binding.industryList.visibility = View.GONE
         binding.errorFailedGet.visibility = View.GONE

@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.fragment.industry.viewModel
+package ru.practicum.android.diploma.presentation.filters.fragment.industry.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,8 +17,8 @@ class FilterIndustryViewModel(
     private val _industriesState = MutableLiveData<RequestIndustriesState>()
     private var _chosenIndustry = MutableLiveData<Industry>()
 
-    fun getIndustriesState() : LiveData<RequestIndustriesState> = _industriesState
-    fun getChosenIndustry() : LiveData<Industry> = _chosenIndustry
+    fun getIndustriesState(): LiveData<RequestIndustriesState> = _industriesState
+    fun getChosenIndustry(): LiveData<Industry> = _chosenIndustry
 
     private var _currentIndustries = listOf<Industry>()
 
@@ -26,25 +26,22 @@ class FilterIndustryViewModel(
         fetchIndustries()
     }
 
-    fun fetchIndustries(){
+    fun fetchIndustries() {
         _industriesState.value = RequestIndustriesState.Loading
         viewModelScope.launch {
-            filtersInteractor
-                .getIndustries()
-                .collect{ industriesResponse ->
+            filtersInteractor.getIndustries().collect { industriesResponse ->
                     processResult(industriesResponse)
                 }
         }
     }
 
-    fun clickIndustry(industry: Industry){
-        _chosenIndustry.value = if(industry.id != (_chosenIndustry.value?.id ?: "")) industry else null
-        if (_industriesState.value is RequestIndustriesState.Success){
+    fun clickIndustry(industry: Industry) {
+        _chosenIndustry.value = if (industry.id != (_chosenIndustry.value?.id ?: "")) industry else null
+        if (_industriesState.value is RequestIndustriesState.Success) {
             (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
-                if (item.id == industry.id){
+                if (item.id == industry.id) {
                     item.isChosen = !industry.isChosen
-                }
-                else{
+                } else {
                     item.isChosen = false
                 }
             }
@@ -62,37 +59,29 @@ class FilterIndustryViewModel(
             } else {
                 _industriesState.value = RequestIndustriesState.Empty
             }
-        }
-        else {
+        } else {
             fetchIndustries()
         }
     }
 
-    private fun processResult(response : Resource<List<Industry>>){
-        if (response.code == SUCCESS_RESULT_CODE){
-            if (!response.data.isNullOrEmpty()){
+    private fun processResult(response: Resource<List<Industry>>) {
+        if (response.code == SUCCESS_RESULT_CODE) {
+            if (!response.data.isNullOrEmpty()) {
                 _currentIndustries = response.data
                 _industriesState.value = RequestIndustriesState.Success(response.data)
                 checkChosenIndustry()
-            }
-            else {
+            } else {
                 _industriesState.value = RequestIndustriesState.Empty
             }
-        }
-        else {
+        } else {
             _industriesState.value = RequestIndustriesState.Error
         }
     }
 
-    private fun checkChosenIndustry(){
-        if (_industriesState.value is RequestIndustriesState.Success && _chosenIndustry.value != null){
+    private fun checkChosenIndustry() {
+        if (_industriesState.value is RequestIndustriesState.Success && _chosenIndustry.value != null) {
             (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
-                if (item.id == _chosenIndustry.value!!.id){
-                    item.isChosen = true
-                }
-                else{
-                    item.isChosen = false
-                }
+                item.isChosen = item.id == _chosenIndustry.value!!.id
             }
         }
     }

@@ -34,10 +34,11 @@ class FiltersFragment : Fragment() {
     private var _binding: FragmentFiltersBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<FiltersViewModel>()
-    private var industryIdPrefs = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -65,21 +66,18 @@ class FiltersFragment : Fragment() {
         setFragmentResultListenerControl()
     }
 
-    fun setFragmentResultListenerControl() {/*parentFragmentManager.setFragmentResultListener(
-            FiltersIndustryFragment.REQUEST_KEY,
+    fun setFragmentResultListenerControl() {
+        parentFragmentManager.setFragmentResultListener(
+            FiltersPlaceOfWorkFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
-            val industry =
-                BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY_KEY, SubIndustry::class.java)
-            viewModel.setNewIndustry(industry)
-        }*/
-
-        parentFragmentManager.setFragmentResultListener(
-            FiltersPlaceOfWorkFragment.REQUEST_KEY, viewLifecycleOwner
-        ) { _, bundle ->
             val country =
-                BundleCompat.getParcelable(bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY, Country::class.java)
-            val region = BundleCompat.getParcelable(bundle, FiltersPlaceOfWorkFragment.REGION_KEY, Area::class.java)
+                BundleCompat.getParcelable(bundle,
+                    FiltersPlaceOfWorkFragment.COUNTRY_KEY,
+                    Country::class.java)
+            val region = BundleCompat.getParcelable(bundle,
+                FiltersPlaceOfWorkFragment.REGION_KEY,
+                Area::class.java)
             viewModel.setNewCounterAndRegion(country, region)
         }
     }
@@ -97,16 +95,6 @@ class FiltersFragment : Fragment() {
                 )
             )
         }
-
-        /*binding.industry.setOnClickListener {
-            val industryIdPrefs = viewModel.getActualIndustryId()
-            findNavController().navigate(
-                R.id.action_filterFragment_to_filterIndustryFragment,
-                bundleOf(
-                    FiltersIndustryFragment.INDUSTRY_KEY_ID to industryIdPrefs
-                )
-            )
-        }*/
 
         binding.buttonApply.setOnClickListener {
             binding.buttonApply.gone()
@@ -140,8 +128,6 @@ class FiltersFragment : Fragment() {
 
     private fun initFilterSettings(filterSettings: Filters) {
         setStateLocation(filterSettings.country, filterSettings.region)
-        //setStateIndustry(filterSettings.industry)
-
         if (binding.expectedSalary.isFocused.not() && binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
             binding.expectedSalary.setText(filterSettings.expectedSalary)
         }
@@ -161,7 +147,6 @@ class FiltersFragment : Fragment() {
 
     fun setStateLocation(country: String?, region: String?) {
         if (country?.isNotEmpty() == true) {
-            //binding.placeOfWorkTop.visible()
             binding.workplaceView.setOnClickListener {
                 clearStateLocation()
             }
@@ -205,46 +190,6 @@ class FiltersFragment : Fragment() {
 
     fun clearStateLocation() {
         viewModel.setNewCounterAndRegion(null, null)
-        //clearArguments(1)
-    }
-
-    /*fun setStateIndustry(industry: String?) {
-        if (industry?.isNotEmpty() == true) {
-            binding.industryTop.visible()
-            binding.industryView.setOnClickListener {
-                clearStateIndustry()
-            }
-            binding.industryValue.setText(industry)
-        } else {
-            binding.industryValue.setText("")
-            binding.industryView.setOnClickListener {
-                findNavController().navigate(
-                    R.id.action_filterFragment_to_filterIndustryFragment,
-                    bundleOf(FiltersIndustryFragment.INDUSTRY_KEY to industry)
-                )
-            }
-        }
-
-        if (binding.industryValue.text.toString() != "") {
-            binding.industryView.setImageDrawable(context?.let { it1 ->
-                AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.close_24px
-                )
-            })
-        } else {
-            binding.industryView.setImageDrawable(context?.let { it1 ->
-                AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.arrow_forward_24px
-                )
-            })
-        }
-    }*/
-
-    fun clearStateIndustry() {
-        viewModel.setNewIndustry(null)
-        //clearArguments(0)
     }
 
     private fun resetFilters() {
@@ -259,18 +204,6 @@ class FiltersFragment : Fragment() {
             binding.buttonApply.gone()
         }
     }
-
-    /*fun clearArguments(type: Int) {
-        when (type) {
-            0 -> {
-                binding.industryTop.gone()
-            }
-            1 -> {
-                binding.placeOfWorkTop.gone()
-            }
-
-        }
-    }*/
 
     fun visibleClearControl(visible: Boolean) {
         if (visible) {

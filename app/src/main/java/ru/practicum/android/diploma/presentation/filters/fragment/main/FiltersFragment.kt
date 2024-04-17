@@ -179,7 +179,7 @@ class FiltersFragment : Fragment() {
     }
 
     private fun buttonListeners() {
-        binding.filtersOff.setOnClickListener {
+        binding.arrowBackButton.setOnClickListener {
             findNavController().navigateUp()
         }
 

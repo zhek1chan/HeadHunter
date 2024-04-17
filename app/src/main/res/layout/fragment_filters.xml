@@ -21,22 +21,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
-                android:id="@+id/backButton"
-                android:layout_width="@dimen/dimen_48"
-                android:layout_height="@dimen/dimen_48"
-                android:layout_gravity="start"
-                android:layout_marginTop="@dimen/margin_8"
-                android:layout_marginBottom="@dimen/margin_8">
-
-            <ImageView
-                android:id="@+id/filtersOff"
-                style="@style/title_text"
-                android:layout_width="@dimen/margin_24"
-                android:layout_height="@dimen/margin_24"
-                android:layout_gravity="center"
+            <ImageButton
+                android:id="@+id/arrowBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginStart="@dimen/margin_16"
+                android:background="@android:color/transparent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/arrow_back_24px" />
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/filter_settings"
@@ -44,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="19dp"
                 android:text="@string/filter_settings" />
 

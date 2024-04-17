@@ -11,6 +11,6 @@ class IndustryViewHolder(val binding: IndustryItemBinding) : ViewHolder(binding.
 
     fun bind(item: Industry) {
         binding.industry.text = item.name
-        binding.radioButton.isChecked = item.isChosen
+        binding.radioButton.isChecked = item.isChosen.isChosen
     }
 }

@@ -40,9 +40,9 @@ class FilterIndustryViewModel(
         if (_industriesState.value is RequestIndustriesState.Success) {
             (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
                 if (item.id == industry.id) {
-                    item.isChosen = !industry.isChosen
+                    item.isChosen.isChosen = !industry.isChosen.isChosen
                 } else {
-                    item.isChosen = false
+                    item.isChosen.isChosen = false
                 }
             }
         }
@@ -80,7 +80,7 @@ class FilterIndustryViewModel(
     private fun checkChosenIndustry() {
         if (_industriesState.value is RequestIndustriesState.Success && _chosenIndustry.value != null) {
             (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
-                item.isChosen = item.id == _chosenIndustry.value!!.id
+                item.isChosen.isChosen = item.id == _chosenIndustry.value!!.id
             }
         }
     }

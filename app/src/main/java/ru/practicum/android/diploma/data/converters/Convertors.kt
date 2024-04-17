@@ -132,8 +132,7 @@ class Convertors {
         return Industry(
             id = industry.id,
             name = industry.name,
-            industries = subindustries,
-            isChosen = false
+            industries = subindustries
         )
     }
 

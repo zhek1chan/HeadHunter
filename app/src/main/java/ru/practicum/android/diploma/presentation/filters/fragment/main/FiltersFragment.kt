@@ -77,9 +77,11 @@ class FiltersFragment : Fragment() {
                     FiltersPlaceOfWorkFragment.COUNTRY_KEY,
                     Country::class.java
                 )
-            val region = BundleCompat.getParcelable(bundle,
+            val region = BundleCompat.getParcelable(
+                bundle,
                 FiltersPlaceOfWorkFragment.REGION_KEY,
-                Area::class.java)
+                Area::class.java
+            )
             viewModel.setNewCounterAndRegion(country, region)
         }
     }
@@ -132,7 +134,8 @@ class FiltersFragment : Fragment() {
 
     private fun initFilterSettings(filterSettings: Filters) {
         setStateLocation(filterSettings.country, filterSettings.region)
-        if (binding.expectedSalary.isFocused.not() && binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
+        if (binding.expectedSalary.isFocused.not() &&
+            binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
             binding.expectedSalary.setText(filterSettings.expectedSalary)
         }
         if (binding.salaryOnlyCheckbox.isChecked != filterSettings.salaryOnlyCheckbox) {
@@ -182,7 +185,8 @@ class FiltersFragment : Fragment() {
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
+                    bundleOf(
                         FiltersCountryFragment.COUNTRY_KEY to country,
                         FiltersRegionFragment.REGION_KEY to region
                     )

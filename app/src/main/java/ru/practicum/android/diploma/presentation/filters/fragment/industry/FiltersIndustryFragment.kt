@@ -27,7 +27,7 @@ class FiltersIndustryFragment : Fragment() {
     private var industryId: String? = null
     private var industryIndex: Int = -1
     private var adapter = IndustriesAdapter { industry ->
-        binding.buttonPick.isVisible = industry.active
+        binding.buttonPick.isVisible = industry.active.isActive
         currentIndustry = industry.industry
     }
 
@@ -97,7 +97,7 @@ class FiltersIndustryFragment : Fragment() {
         if (active == null) {
             binding.buttonPick.isVisible = false
         } else {
-            active.active = true
+            active.active.isActive = true
             binding.buttonPick.isVisible = true
         }
         adapter.updateList(list)

@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.IndustryItemBinding
 import ru.practicum.android.diploma.domain.models.SubIndustry
 
-class IndustriesAdapter(private val onClick: (IndustriesAdapterItem) -> Unit) : RecyclerView.Adapter<IndustryViewHolder>() {
+class IndustriesAdapter(private val onClick: (IndustriesAdapterItem) -> Unit) :
+    RecyclerView.Adapter<IndustryViewHolder>() {
     var data: List<IndustriesAdapterItem> = emptyList()
     var checkedRadioButtonId: Int = -1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
@@ -22,7 +23,7 @@ class IndustriesAdapter(private val onClick: (IndustriesAdapterItem) -> Unit) : 
     override fun onBindViewHolder(holder: IndustryViewHolder, position: Int) {
         val item = data[position]
         holder.bind(item.industry)
-        holder.binding.radioButton.isChecked = item.active
+        holder.binding.radioButton.isChecked = item.active.isActive
         holder.binding.root.setOnClickListener {
             updateSelectedIndustry(position)
         }
@@ -33,12 +34,12 @@ class IndustriesAdapter(private val onClick: (IndustriesAdapterItem) -> Unit) : 
 
     private fun updateSelectedIndustry(position: Int) {
         checkedRadioButtonId = position
-        data[position].active = true
+        data[position].active.isActive = true
         onClick.invoke(data[position])
         notifyItemChanged(position)
-        val oldPosition = data.indexOfFirst { it != data[position] && it.active }
+        val oldPosition = data.indexOfFirst { it != data[position] && it.active.isActive }
         if (oldPosition > -1) {
-            data[oldPosition].active = false
+            data[oldPosition].active.isActive = false
             notifyItemChanged(oldPosition)
         }
     }
@@ -52,13 +53,19 @@ class IndustriesAdapter(private val onClick: (IndustriesAdapterItem) -> Unit) : 
     fun setSelectedIndustry(industryId: String?) {
         val position = data.indexOfFirst { it.industry.id == industryId }
         if (position != -1) {
-            data[position].active = true
+            data[position].active.isActive = true
             checkedRadioButtonId = position
             notifyItemChanged(position)
         }
     }
 }
+
 data class IndustriesAdapterItem(
-    val industry: SubIndustry,
-    var active: Boolean = false
-)
+    val industry: SubIndustry
+) {
+    val active: ActiveBooleanClass = ActiveBooleanClass()
+}
+
+class ActiveBooleanClass {
+    var isActive: Boolean = false
+}

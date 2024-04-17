@@ -68,7 +68,7 @@ class FiltersRegionFragment : Fragment() {
                         R.drawable.ic_clear_button
                     )
                 })
-                viewModel.findArea(it.toString() ?: "")
+                viewModel.findArea(it.toString())
             } else {
                 binding.searchDrawable.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
@@ -96,7 +96,7 @@ class FiltersRegionFragment : Fragment() {
         }
     }
 
-    fun showStartScreen() {
+    private fun showStartScreen() {
         binding.progressBar.gone()
         binding.placeholderNoRegionImage.gone()
         binding.placeholderNoRegionText.gone()

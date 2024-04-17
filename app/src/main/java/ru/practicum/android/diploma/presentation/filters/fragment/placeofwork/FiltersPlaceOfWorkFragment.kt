@@ -72,7 +72,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
     }
 
-    fun initView() {
+    private fun initView() {
         country = country ?: arguments?.getParcelable(FiltersCountryFragment.COUNTRY_KEY)
         region = region ?: arguments?.getParcelable(FiltersRegionFragment.REGION_KEY)
         setRegion(region)
@@ -111,7 +111,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
     }
 
-    fun setCountry(actualCountry: Country?) {
+    private fun setCountry(actualCountry: Country?) {
         if (actualCountry != null) {
             binding.country.text = actualCountry.name
             binding.buttonPick.visible()
@@ -143,7 +143,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
     }
 
-    fun setRegion(actualArea: Area?) {
+    private fun setRegion(actualArea: Area?) {
         if (actualArea != null) {
             binding.region.text = actualArea.name
             binding.buttonPick.visible()
@@ -178,7 +178,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
     }
 
-    fun clearArguments() {
+    private fun clearArguments() {
         arguments = null
     }
 

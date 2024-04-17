@@ -5,25 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseIndustryBinding
-import ru.practicum.android.diploma.domain.models.Industry
+import ru.practicum.android.diploma.domain.models.SubIndustry
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapter
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustryClick
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapterItem
 import ru.practicum.android.diploma.presentation.filters.viewmodel.industry.FiltersIndustryViewModel
+import ru.practicum.android.diploma.presentation.search.fragment.gone
+import ru.practicum.android.diploma.presentation.search.fragment.visible
 
 class FiltersIndustryFragment : Fragment() {
     private var _binding: FragmentFilterChooseIndustryBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: FiltersIndustryViewModel by viewModel()
-
-    private val industriesAdapter = IndustriesAdapter()
+    private val viewModel by viewModel<FiltersIndustryViewModel>()
+    private var currentIndustry: SubIndustry? = null
+    private var industryId: String? = null
+    private var industryIndex: Int = -1
+    private var adapter = IndustriesAdapter { industry ->
+        binding.buttonPick.isVisible = industry.active.isActive
+        currentIndustry = industry.industry
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFilterChooseIndustryBinding.inflate(inflater, container, false)
@@ -32,64 +38,53 @@ class FiltersIndustryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getIndustries()
 
-        industriesAdapter.setIndustryClickListener(object : IndustryClick {
-            override fun click(industry: Industry) {
-                viewModel.clickIndustry(industry)
-                industriesAdapter.notifyDataSetChanged()
-            }
-        })
-
-        binding.industryList.layoutManager = LinearLayoutManager(requireContext())
-        binding.industryList.adapter = industriesAdapter
-
-        binding.arrowBackButton.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        binding.searchIndustry.doOnTextChanged { text, _, _, _ ->
+        binding.industryList.adapter = this.adapter
+        binding.choosingIndustry.doOnTextChanged { text, _, _, _ ->
             viewModel.filterIndustries(text.toString())
             if (text.isNullOrBlank()) {
-                //binding.clearButton.visibility = View.GONE
-                binding.searchDrawable.visibility = View.VISIBLE
+                binding.clearButton.gone()
+                binding.searchDrawable.visible()
+                if (adapter.checkedRadioButtonId != -1) {
+                    binding.buttonPick.visible()
+                }
             } else {
-                //binding.clearButton.visibility = View.VISIBLE
-                binding.searchDrawable.visibility = View.GONE
-                //binding.clearButton.setOnClickListener {
-                //    binding.searchIndustry.text?.clear()
-                //}
-            }
-        }
-
-        viewModel.getIndustriesState().observe(viewLifecycleOwner) { requestState ->
-            when (requestState) {
-                is RequestIndustriesState.Loading -> showLoading()
-                is RequestIndustriesState.Error -> showError()
-                is RequestIndustriesState.Empty -> showEmpty()
-                is RequestIndustriesState.Success -> {
-                    industriesAdapter.industryList = requestState.data
-                    industriesAdapter.notifyDataSetChanged()
-                    showContent()
+                binding.clearButton.visible()
+                binding.searchDrawable.gone()
+                binding.clearButton.setOnClickListener {
+                    binding.choosingIndustry.text?.clear()
                 }
             }
         }
 
-        viewModel.getChosenIndustry().observe(viewLifecycleOwner) { chosenIndustry ->
-            if (chosenIndustry != null) {
-                binding.choseBtn.visibility = View.VISIBLE
-            } else {
-                binding.choseBtn.visibility = View.GONE
-            }
+        binding.arrowBackButton.setOnClickListener {
+            findNavController().popBackStack()
         }
-
-        binding.choseBtn.setOnClickListener {
-            parentFragmentManager.setFragmentResult(
-                INDUSTRY_KEY,
-                bundleOf(INDUSTRY to viewModel.getChosenIndustry().value)
-            )
+        binding.buttonPick.setOnClickListener {
+            parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(INDUSTRY_KEY to currentIndustry))
             findNavController().popBackStack()
         }
 
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                RequestIndustriesState.Error -> {
+                    showError()
+                }
+
+                RequestIndustriesState.Empty -> {
+                    showEmpty()
+                }
+
+                RequestIndustriesState.Loading -> {
+                    showLoading()
+                }
+
+                is RequestIndustriesState.Success -> {
+                    showContent(state.data)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -97,42 +92,64 @@ class FiltersIndustryFragment : Fragment() {
         _binding = null
     }
 
-    private fun showContent() {
-        binding.choseBtn.visibility = if (viewModel.getChosenIndustry().value != null) View.VISIBLE else View.GONE
-        binding.industryList.visibility = View.VISIBLE
-        binding.progressBar.visibility = View.GONE
-        binding.errorFailedGet.visibility = View.GONE
+    private fun showContent(list: List<IndustriesAdapterItem>) {
+        val active = list.find { it.industry.id == currentIndustry?.id }
+        if (active == null) {
+            binding.buttonPick.isVisible = false
+        } else {
+            active.active.isActive = true
+            binding.buttonPick.isVisible = true
+        }
+        adapter.updateList(list)
+
+        if (currentIndustry == null) {
+            val idPrefs = arguments?.getString(INDUSTRY_KEY_ID)
+            adapter.setSelectedIndustry(idPrefs)
+            industryId = idPrefs
+            industryIndex = adapter.checkedRadioButtonId
+
+            if (!idPrefs.isNullOrEmpty()) {
+                val position = adapter.data.indexOfFirst { it.industry.id == idPrefs }
+                if (position != -1) {
+                    binding.buttonPick.visible()
+                    currentIndustry = adapter.data[position].industry
+                }
+            }
+        }
+
+        binding.industryList.visible()
+        binding.progressBar.gone()
+        binding.errorHolder.gone()
     }
 
     private fun showEmpty() {
-        binding.choseBtn.visibility = View.GONE
-        binding.industryList.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
+        binding.buttonPick.gone()
+        binding.industryList.gone()
+        binding.progressBar.gone()
 
-        binding.errorFailedGetImage.setImageResource(R.drawable.ph_nothing_found)
-        binding.errorFailedGetText.setText(R.string.industry_not_found)
-        binding.errorFailedGet.visibility = View.VISIBLE
+        binding.errorsImage.setImageResource(R.drawable.ph_nothing_found)
+        binding.errorsText.setText(R.string.industry_not_found)
+        binding.errorHolder.visible()
     }
 
     private fun showError() {
-        binding.choseBtn.visibility = View.GONE
-        binding.industryList.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
-        binding.errorFailedGetImage.setImageResource(R.drawable.error_region_list)
-        binding.errorFailedGetText.setText(R.string.failed_to_get_list)
-        binding.errorFailedGet.visibility = View.VISIBLE
+        binding.buttonPick.gone()
+        binding.industryList.gone()
+        binding.progressBar.gone()
+
+        binding.errorHolder.visible()
     }
 
     private fun showLoading() {
-        binding.choseBtn.visibility = View.GONE
-        binding.industryList.visibility = View.GONE
-        binding.errorFailedGet.visibility = View.GONE
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visible()
+        binding.buttonPick.gone()
+        binding.industryList.gone()
+        binding.errorHolder.gone()
     }
 
     companion object {
-        const val INDUSTRY_KEY = "INDUSTRY_KEY"
-        const val INDUSTRY = "INDUSTRY"
+        const val REQUEST_KEY = "KEY"
+        const val INDUSTRY_KEY = "INDUSTRY"
+        const val INDUSTRY_KEY_ID = "INDUSTRY_ID"
     }
-
 }

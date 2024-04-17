@@ -282,6 +282,8 @@ class FiltersFragment : Fragment() {
             binding.buttonCancel.visible()
         } else {
             binding.buttonCancel.gone()
+            binding.industryHolder.gone()
+            binding.workplaceHolder.gone()
         }
     }
 

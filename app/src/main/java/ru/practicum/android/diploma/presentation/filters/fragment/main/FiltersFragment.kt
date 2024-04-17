@@ -70,7 +70,7 @@ class FiltersFragment : Fragment() {
 
     private fun setControlResultOfPick() {
         parentFragmentManager.setFragmentResultListener(
-            FiltersIndustryFragment.INDUSTRY,
+            FiltersIndustryFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
             val industry =

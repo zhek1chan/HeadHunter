@@ -138,7 +138,7 @@
         app:layout_constraintTop_toTopOf="@id/region_layout" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/button_pick"
         style="@style/white_16_medium"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60"

@@ -14,13 +14,14 @@
         android:background="@android:color/transparent"
         android:src="@drawable/arrow_back_24px"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAccessibility="no" />
 
     <TextView
         android:id="@+id/toolbarText"
         style="@style/TextStyleToolbar"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dimen_64"
+        android:layout_height="@dimen/toolbar_height"
         android:layout_marginStart="@dimen/margin_16"
         android:gravity="center_vertical"
         android:text="@string/chose_industry"
@@ -50,7 +51,7 @@
         app:placeholderText="@string/enter_industry">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_industry"
+            android:id="@+id/choosing_industry"
             style="@style/TextStyleMedium16_500"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,7 +63,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/button_clear_expected_salary"
+        android:id="@+id/clear_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -71,7 +72,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/choosing_industry_layout"
         app:layout_constraintEnd_toEndOf="@+id/choosing_industry_layout"
-        app:layout_constraintTop_toTopOf="@+id/choosing_industry_layout" />
+        app:layout_constraintTop_toTopOf="@+id/choosing_industry_layout"
+        android:importantForAccessibility="no" />
 
     <ImageView
         android:id="@+id/search_drawable"
@@ -83,7 +85,8 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/choosing_industry_layout"
         app:layout_constraintEnd_toEndOf="@+id/choosing_industry_layout"
-        app:layout_constraintTop_toTopOf="@+id/choosing_industry_layout" />
+        app:layout_constraintTop_toTopOf="@+id/choosing_industry_layout"
+        android:importantForAccessibility="no" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/industry_list"
@@ -95,11 +98,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choosing_industry_layout"
-        app:layout_constraintBottom_toTopOf="@+id/chose_btn"
+        app:layout_constraintBottom_toTopOf="@+id/button_pick"
         tools:listitem="@layout/industry_item" />
 
     <TextView
-        android:id="@+id/chose_btn"
+        android:id="@+id/button_pick"
         style="@style/white_16_medium"
         android:layout_width="match_parent"
         android:layout_height="59dp"
@@ -131,7 +134,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/error_failed_get"
+        android:id="@+id/error_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -147,7 +150,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/error_failed_get_image"
+            android:id="@+id/errors_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
@@ -155,19 +158,20 @@
             app:layout_constraintDimensionRatio="328:223"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:importantForAccessibility="no" />
 
         <TextView
-            android:id="@+id/error_failed_get_text"
+            android:id="@+id/errors_text"
             style="@style/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
             android:text="@string/failed_to_get_list"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@id/error_failed_get_image"
-            app:layout_constraintEnd_toEndOf="@id/error_failed_get"
-            app:layout_constraintStart_toStartOf="@id/error_failed_get"/>
+            app:layout_constraintTop_toBottomOf="@id/errors_image"
+            app:layout_constraintEnd_toEndOf="@id/error_holder"
+            app:layout_constraintStart_toStartOf="@id/error_holder"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

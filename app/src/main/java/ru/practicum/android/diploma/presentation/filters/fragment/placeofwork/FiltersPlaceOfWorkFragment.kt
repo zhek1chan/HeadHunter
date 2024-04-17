@@ -40,7 +40,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         initListeners()
         initFilters()
         if (country != null) {
-            binding.textView2.visible()
+            binding.buttonPick.visible()
         }
     }
 
@@ -60,7 +60,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             )
         }
 
-        binding.textView2.setOnClickListener {
+        binding.buttonPick.setOnClickListener {
             parentFragmentManager.setFragmentResult(
                 REQUEST_KEY,
                 bundleOf(
@@ -114,7 +114,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     fun setCountry(actualCountry: Country?) {
         if (actualCountry != null) {
             binding.country.text = actualCountry.name
-            binding.textView2.visible()
+            binding.buttonPick.visible()
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
@@ -130,7 +130,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             }
         } else {
             binding.country.text = ""
-            binding.textView2.gone()
+            binding.buttonPick.gone()
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
@@ -146,7 +146,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     fun setRegion(actualArea: Area?) {
         if (actualArea != null) {
             binding.region.text = actualArea.name
-            binding.textView2.visible()
+            binding.buttonPick.visible()
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
@@ -161,7 +161,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         } else {
             binding.region.text = ""
             if (country == null) {
-                binding.textView2.gone()
+                binding.buttonPick.gone()
             }
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(

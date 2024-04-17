@@ -132,7 +132,6 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         } else {
             binding.country.text = ""
             binding.buttonPick.gone()
-            binding.textView2.gone()
             binding.countryTop.gone()
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(

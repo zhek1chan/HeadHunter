@@ -38,7 +38,9 @@ class FiltersFragment : Fragment() {
     private val viewModel by viewModel<FiltersViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -67,7 +69,6 @@ class FiltersFragment : Fragment() {
             viewLifecycleOwner,
         ) { _, bundle ->
             val industry = BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY, Industry::class.java)
-            // Здесь будет логика работы с viewModel
             if (industry != null) {
                 binding.industryValue.text = industry.name
             }
@@ -76,13 +77,16 @@ class FiltersFragment : Fragment() {
 
     fun setFragmentResultListenerControl() {
         parentFragmentManager.setFragmentResultListener(
-            FiltersPlaceOfWorkFragment.REQUEST_KEY, viewLifecycleOwner
+            FiltersPlaceOfWorkFragment.REQUEST_KEY,
+            viewLifecycleOwner
         ) { _, bundle ->
             val country = BundleCompat.getParcelable(
-                bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY, Country::class.java
+                bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY,
+                Country::class.java
             )
             val region = BundleCompat.getParcelable(
-                bundle, FiltersPlaceOfWorkFragment.REGION_KEY, Area::class.java
+                bundle, FiltersPlaceOfWorkFragment.REGION_KEY,
+                Area::class.java
             )
             viewModel.setNewCounterAndRegion(country, region)
         }
@@ -96,7 +100,8 @@ class FiltersFragment : Fragment() {
                 val (country, region) = viewModel.getActualCountryAndRegion()
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
+                        FiltersCountryFragment.COUNTRY_KEY to country,
+                        FiltersRegionFragment.REGION_KEY to region
                     )
                 )
             }
@@ -182,13 +187,15 @@ class FiltersFragment : Fragment() {
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
+                        FiltersCountryFragment.COUNTRY_KEY to country,
+                        FiltersRegionFragment.REGION_KEY to region
                     )
                 )
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.arrow_forward_24px
+                    it1,
+                    R.drawable.arrow_forward_24px
                 )
             })
         }

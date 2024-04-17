@@ -8,7 +8,7 @@ data class Industry(
     val id: String,
     val industries: List<SubIndustry>,
     val name: String,
-) : Parcelable{
+) : Parcelable {
     val isChosen: IsChosenClass = IsChosenClass()
 }
 class IsChosenClass {

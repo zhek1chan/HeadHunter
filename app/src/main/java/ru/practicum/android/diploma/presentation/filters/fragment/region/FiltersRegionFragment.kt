@@ -66,7 +66,7 @@ class FiltersRegionFragment : Fragment() {
         binding.regionList.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        binding.choosingIndustry.doAfterTextChanged {
+        binding.choosingRegion.doAfterTextChanged {
             if (it?.isNotEmpty() == true) {
                 binding.clearButton.setImageDrawable(context?.let { it1 ->
                     AppCompatResources.getDrawable(
@@ -90,20 +90,6 @@ class FiltersRegionFragment : Fragment() {
         binding.arrowBackButton.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.searchDrawable.setOnClickListener {
-            binding.choosingIndustry.setText("")
-            viewModel.showArea()
-        }
-
-        binding.choosingIndustry.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val imm = context?.let { ContextCompat.getSystemService(it, InputMethodManager::class.java) }
-                imm?.hideSoftInputFromWindow(v.windowToken, 0)
-                true
-            } else {
-                false
-            }
-        }
     }
 
     private fun render(state: FiltersRegionsState) {
@@ -121,13 +107,13 @@ class FiltersRegionFragment : Fragment() {
         binding.placeholderNoRegionImage.gone()
         binding.placeholderNoRegionText.gone()
         binding.regionList.gone()
-        binding.choosingIndustry.isEnabled = true
+        binding.choosingRegion.isEnabled = true
     }
 
     private fun showLoading() {
         binding.progressBar.visible()
         binding.regionList.gone()
-        binding.choosingIndustry.isEnabled = false
+        binding.choosingRegion.isEnabled = false
     }
 
     private fun showError() {
@@ -137,7 +123,7 @@ class FiltersRegionFragment : Fragment() {
         binding.placeholderNoRegionImage.visible()
         binding.placeholderNoRegionText.visible()
         binding.regionList.gone()
-        binding.choosingIndustry.isEnabled = false
+        binding.choosingRegion.isEnabled = false
     }
 
     private fun showEmpty() {
@@ -147,7 +133,7 @@ class FiltersRegionFragment : Fragment() {
         binding.placeholderNoRegionImage.visible()
         binding.placeholderNoRegionText.visible()
         binding.regionList.gone()
-        binding.choosingIndustry.isEnabled = true
+        binding.choosingRegion.isEnabled = true
     }
 
     private fun showContent(regions: List<RegionDataItem>) {
@@ -156,7 +142,7 @@ class FiltersRegionFragment : Fragment() {
         binding.placeholderNoRegionText.gone()
         regionAdapter!!.setItems(regions)
         binding.regionList.visible()
-        binding.choosingIndustry.isEnabled = true
+        binding.choosingRegion.isEnabled = true
     }
 
     companion object {

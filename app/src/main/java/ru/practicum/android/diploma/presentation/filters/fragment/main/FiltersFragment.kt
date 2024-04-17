@@ -116,8 +116,8 @@ class FiltersFragment : Fragment() {
             )
         }*/
 
-        binding.apply.setOnClickListener {
-            binding.apply.gone()
+        binding.buttonApply.setOnClickListener {
+            binding.buttonApply.gone()
             lifecycleScope.launch(Dispatchers.IO) {
                 savePrefs()
                 withContext(Dispatchers.Main) {
@@ -126,7 +126,7 @@ class FiltersFragment : Fragment() {
             }
         }
 
-        binding.remove.setOnClickListener {
+        binding.buttonRemove.setOnClickListener {
             resetFilters()
         }
 
@@ -195,7 +195,13 @@ class FiltersFragment : Fragment() {
             })
             binding.workplaceValue.setText(textLocation)
         } else {
-            //binding.workplaceValue.setText("dfgfgfg")
+            binding.workplaceValue.setText(R.string.workplace)
+            binding.workplaceValue.setTextColor(context?.let { it1 ->
+                AppCompatResources.getColorStateList(
+                    it1,
+                    R.color.gray
+                )
+            })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
@@ -259,15 +265,15 @@ class FiltersFragment : Fragment() {
     }
 
     private fun resetFilters() {
-        binding.remove.gone()
+        binding.buttonRemove.gone()
         viewModel.clearPrefs()
     }
 
     fun visibleSaveControl(visible: Boolean) {
         if (visible) {
-            binding.apply.visible()
+            binding.buttonApply.visible()
         } else {
-            binding.apply.gone()
+            binding.buttonApply.gone()
         }
     }
 
@@ -285,9 +291,9 @@ class FiltersFragment : Fragment() {
 
     fun visibleClearControl(visible: Boolean) {
         if (visible) {
-            binding.remove.visible()
+            binding.buttonRemove.visible()
         } else {
-            binding.remove.gone()
+            binding.buttonRemove.gone()
         }
     }
 

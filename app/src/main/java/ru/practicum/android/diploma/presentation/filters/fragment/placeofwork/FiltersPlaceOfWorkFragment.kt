@@ -129,7 +129,9 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                     it1, R.drawable.arrow_forward_24px
                 )
             })
-            binding.placeOfWorkArrow.setOnClickListener(null)
+            binding.placeOfWorkArrow.setOnClickListener{
+                findNavController().navigate(R.id.action_filterPlaceOfWorkFragment_to_filtersCountryFragment)
+            }
         }
     }
 
@@ -157,7 +159,12 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                     it1, R.drawable.arrow_forward_24px
                 )
             })
-            binding.regionArrow.setOnClickListener(null)
+            binding.regionArrow.setOnClickListener{
+                findNavController().navigate(
+                    R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
+                    bundleOf(FiltersCountryFragment.COUNTRY_KEY to country?.id)
+                )
+            }
         }
     }
 

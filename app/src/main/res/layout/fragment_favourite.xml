@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/head"
         tools:itemCount="10"
-        tools:listitem="@layout/vacancy" />
+        tools:listitem="@layout/vacancy_item" />
 
     <ImageView
         android:id="@+id/iv_empty"

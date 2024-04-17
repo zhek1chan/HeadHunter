@@ -72,9 +72,11 @@ class FiltersFragment : Fragment() {
             viewLifecycleOwner
         ) { _, bundle ->
             val country =
-                BundleCompat.getParcelable(bundle,
+                BundleCompat.getParcelable(
+                    bundle,
                     FiltersPlaceOfWorkFragment.COUNTRY_KEY,
-                    Country::class.java)
+                    Country::class.java
+                )
             val region = BundleCompat.getParcelable(bundle,
                 FiltersPlaceOfWorkFragment.REGION_KEY,
                 Area::class.java)
@@ -90,8 +92,10 @@ class FiltersFragment : Fragment() {
         binding.workplace.setOnClickListener {
             val (country, region) = viewModel.getActualCountryAndRegion()
             findNavController().navigate(
-                R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
-                    FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
+                R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
+                bundleOf(
+                    FiltersCountryFragment.COUNTRY_KEY to country,
+                    FiltersRegionFragment.REGION_KEY to region
                 )
             )
         }
@@ -152,7 +156,8 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.close_24px
+                    it1,
+                    R.drawable.close_24px
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
@@ -162,7 +167,8 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1, R.color.filters_values_text_color
+                    it1,
+                    R.color.filters_values_text_color
                 )
             })
             binding.workplaceValue.text = textLocation
@@ -170,19 +176,22 @@ class FiltersFragment : Fragment() {
             binding.workplaceValue.setText(R.string.workplace)
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1, R.color.gray
+                    it1,
+                    R.color.gray
                 )
             })
             binding.workplaceView.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country, FiltersRegionFragment.REGION_KEY to region
+                        FiltersCountryFragment.COUNTRY_KEY to country,
+                        FiltersRegionFragment.REGION_KEY to region
                     )
                 )
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.arrow_forward_24px
+                    it1,
+                    R.drawable.arrow_forward_24px
                 )
             })
         }

@@ -36,7 +36,7 @@ class FilterIndustryViewModel(
     }
 
     fun clickIndustry(industry: Industry) {
-        _chosenIndustry.value = if (industry.id != (_chosenIndustry.value?.id ?: "")) industry else null
+        _chosenIndustry.value = if (industry.id != _chosenIndustry.value?.id ?: "") industry else null
         if (_industriesState.value is RequestIndustriesState.Success) {
             (_industriesState.value as RequestIndustriesState.Success).data.forEach { item ->
                 if (item.id == industry.id) {

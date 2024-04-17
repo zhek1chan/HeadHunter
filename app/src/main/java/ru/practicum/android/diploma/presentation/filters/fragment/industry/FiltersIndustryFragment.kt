@@ -43,6 +43,10 @@ class FiltersIndustryFragment : Fragment() {
         binding.industryList.layoutManager = LinearLayoutManager(requireContext())
         binding.industryList.adapter = industriesAdapter
 
+        binding.arrowBackButton.setOnClickListener{
+            findNavController().navigateUp()
+        }
+
         binding.searchIndustry.doOnTextChanged { text, _, _, _ ->
             viewModel.filterIndustries(text.toString())
             if (text.isNullOrBlank()) {

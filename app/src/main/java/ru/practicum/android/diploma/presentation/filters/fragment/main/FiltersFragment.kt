@@ -81,11 +81,13 @@ class FiltersFragment : Fragment() {
             viewLifecycleOwner
         ) { _, bundle ->
             val country = BundleCompat.getParcelable(
-                bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY,
+                bundle,
+                FiltersPlaceOfWorkFragment.COUNTRY_KEY,
                 Country::class.java
             )
             val region = BundleCompat.getParcelable(
-                bundle, FiltersPlaceOfWorkFragment.REGION_KEY,
+                bundle,
+                FiltersPlaceOfWorkFragment.REGION_KEY,
                 Area::class.java
             )
             viewModel.setNewCounterAndRegion(country, region)
@@ -99,7 +101,8 @@ class FiltersFragment : Fragment() {
             binding.workplace.setOnClickListener {
                 val (country, region) = viewModel.getActualCountryAndRegion()
                 findNavController().navigate(
-                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment, bundleOf(
+                    R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
+                    bundleOf(
                         FiltersCountryFragment.COUNTRY_KEY to country,
                         FiltersRegionFragment.REGION_KEY to region
                     )
@@ -139,7 +142,8 @@ class FiltersFragment : Fragment() {
 
     private fun initFilterSettings(filterSettings: Filters) {
         setStateLocation(filterSettings.country, filterSettings.region)
-        if (binding.expectedSalary.isFocused.not() && binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
+        if (binding.expectedSalary.isFocused.not() &&
+            binding.expectedSalary.text?.toString() != filterSettings.expectedSalary) {
             binding.expectedSalary.setText(filterSettings.expectedSalary)
         }
         if (binding.salaryOnlyCheckbox.isChecked != filterSettings.salaryOnlyCheckbox) {
@@ -163,7 +167,8 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceView.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.close_24px
+                    it1,
+                    R.drawable.close_24px
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
@@ -173,7 +178,8 @@ class FiltersFragment : Fragment() {
             }
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1, R.color.filters_values_text_color
+                    it1,
+                    R.color.filters_values_text_color
                 )
             })
             binding.workplaceValue.text = textLocation
@@ -181,7 +187,8 @@ class FiltersFragment : Fragment() {
             binding.workplaceValue.setText(R.string.workplace)
             binding.workplaceValue.setTextColor(context?.let { it1 ->
                 AppCompatResources.getColorStateList(
-                    it1, R.color.gray
+                    it1,
+                    R.color.gray
                 )
             })
             binding.workplaceView.setOnClickListener {

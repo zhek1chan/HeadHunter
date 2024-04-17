@@ -1,18 +1,17 @@
-package ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleView
+package ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.IndustryItemBinding
 import ru.practicum.android.diploma.domain.models.Industry
-import ru.practicum.android.diploma.domain.models.SubIndustry
 
-class IndustriesAdapter() : RecyclerView.Adapter<IndustryViewHolder>() {
+class IndustriesAdapter : RecyclerView.Adapter<IndustryViewHolder>() {
 
     var industryList: List<Industry> = emptyList()
-    private var clickListener : IndustryClick? = null
+    private var clickListener: IndustryClick? = null
 
-    fun setIndustryClickListener(listener : IndustryClick){
+    fun setIndustryClickListener(listener: IndustryClick) {
         clickListener = listener
     }
 

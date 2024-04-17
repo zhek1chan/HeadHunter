@@ -15,7 +15,7 @@ import ru.practicum.android.diploma.data.filters.FiltersRepositoryImpl
 import ru.practicum.android.diploma.data.filters.FiltersStorageRepositoryImpl
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor
 import ru.practicum.android.diploma.domain.filters.FiltersInteractorImpl
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.viewModel.FilterIndustryViewModel
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.viewmodel.FilterIndustryViewModel
 
 private const val FILTERS_PREFS = "FILTERS_PREFS"
 

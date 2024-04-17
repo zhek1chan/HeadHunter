@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.fragment.industry.viewmodel
+package ru.practicum.android.diploma.presentation.filters.viewmodel.industry
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.domain.filters.FiltersInteractor
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.RequestIndustriesState
 
-class FilterIndustryViewModel(
+class FiltersIndustryViewModel(
     private val filtersInteractor: FiltersInteractor
 ) : ViewModel() {
     private val _industriesState = MutableLiveData<RequestIndustriesState>()

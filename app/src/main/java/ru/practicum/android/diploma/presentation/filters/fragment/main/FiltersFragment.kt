@@ -22,7 +22,9 @@ import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.domain.models.Filters
+import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
+import ru.practicum.android.diploma.presentation.filters.fragment.industry.FiltersIndustryFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.placeofwork.FiltersPlaceOfWorkFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
 import ru.practicum.android.diploma.presentation.filters.viewmodel.main.FiltersViewModel
@@ -61,6 +63,17 @@ class FiltersFragment : Fragment() {
         }
 
         setFragmentResultListenerControl()
+
+        parentFragmentManager.setFragmentResultListener(
+            FiltersIndustryFragment.INDUSTRY_KEY,
+            viewLifecycleOwner,
+        ) { _, bundle ->
+            val industry = BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY, Industry::class.java)
+            // Здесь будет логика работы с viewModel
+            if (industry != null) {
+                binding.industryValue.text = industry.name
+            }
+        }
     }
 
     fun setFragmentResultListenerControl() {
@@ -86,17 +99,6 @@ class FiltersFragment : Fragment() {
     private fun initButtonListeners() {
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
-
-        parentFragmentManager.setFragmentResultListener(
-            FiltersIndustryFragment.INDUSTRY_KEY,
-            viewLifecycleOwner,
-        ) { _, bundle ->
-            val industry = BundleCompat.getParcelable(bundle, FiltersIndustryFragment.INDUSTRY, Industry::class.java)
-            // Здесь будет логика работы с viewModel
-            if (industry != null) {
-                binding.industryValue.text = industry.name
-            }
-        }
 
         binding.workplace.setOnClickListener {
             val (country, region) = viewModel.getActualCountryAndRegion()
@@ -131,7 +133,7 @@ class FiltersFragment : Fragment() {
         binding.salaryOnlyCheckbox.setOnCheckedChangeListener { button, check ->
             viewModel.setSalaryOnlyCheckbox(check)
         }
-    }
+    } }
 
     private fun initTextListeners() {
         binding.expectedSalary.doOnTextChanged { text, start, before, count ->

@@ -15,13 +15,13 @@ import ru.practicum.android.diploma.databinding.FragmentFilterChooseIndustryBind
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapter
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustryClick
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.viewmodel.FilterIndustryViewModel
+import ru.practicum.android.diploma.presentation.filters.viewmodel.industry.FiltersIndustryViewModel
 
 class FiltersIndustryFragment : Fragment() {
     private var _binding: FragmentFilterChooseIndustryBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: FilterIndustryViewModel by viewModel()
+    private val viewModel: FiltersIndustryViewModel by viewModel()
 
     private val industriesAdapter = IndustriesAdapter()
 

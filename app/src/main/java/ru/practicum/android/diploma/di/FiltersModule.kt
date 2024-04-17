@@ -16,7 +16,7 @@ import ru.practicum.android.diploma.data.filters.FiltersStorageRepositoryImpl
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor
 import ru.practicum.android.diploma.domain.filters.FiltersInteractorImpl
 import ru.practicum.android.diploma.presentation.filters.viewmodel.country.FiltersCountryViewModel
-//import ru.practicum.android.diploma.presentation.filters.viewmodel.industry.FiltersIndustryViewModel
+// import ru.practicum.android.diploma.presentation.filters.viewmodel.industry.FiltersIndustryViewModel
 import ru.practicum.android.diploma.presentation.filters.viewmodel.main.FiltersViewModel
 import ru.practicum.android.diploma.presentation.filters.viewmodel.region.FiltersRegionViewModel
 
@@ -29,7 +29,7 @@ val FiltersModule = module {
     viewModelOf(::FiltersViewModel)
     viewModelOf(::FiltersCountryViewModel)
     viewModelOf(::FiltersRegionViewModel)
-    //viewModelOf(::FiltersIndustryViewModel)
+    // viewModelOf(::FiltersIndustryViewModel)
 
     single(qualifier = named("filtersPrefs")) {
         provideFiltersPreferences(androidApplication(), FILTERS_PREFS)

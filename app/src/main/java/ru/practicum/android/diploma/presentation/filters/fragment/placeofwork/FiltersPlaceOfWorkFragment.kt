@@ -25,7 +25,9 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     private var region: Area? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFilterChoosePlaceOfWorkBinding.inflate(inflater, container, false)
         return binding.root
@@ -60,8 +62,10 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
         binding.textView2.setOnClickListener {
             parentFragmentManager.setFragmentResult(
-                REQUEST_KEY, bundleOf(
-                    COUNTRY_KEY to country, REGION_KEY to region
+                REQUEST_KEY,
+                bundleOf(
+                    COUNTRY_KEY to country,
+                    REGION_KEY to region
                 )
             )
             findNavController().popBackStack()
@@ -77,7 +81,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     private fun initFilters() {
         parentFragmentManager.setFragmentResultListener(
-            FiltersCountryFragment.REQUEST_KEY, viewLifecycleOwner
+            FiltersCountryFragment.REQUEST_KEY,
+            viewLifecycleOwner
         ) { _, bundle ->
             clearArguments()
             val newCountry = bundle.getParcelable<Country>(FiltersCountryFragment.COUNTRY_KEY)
@@ -91,7 +96,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            FiltersRegionFragment.REQUEST_KEY, viewLifecycleOwner
+            FiltersRegionFragment.REQUEST_KEY,
+            viewLifecycleOwner
         ) { _, bundle ->
             clearArguments()
             region = bundle.getParcelable(FiltersRegionFragment.REGION_KEY)
@@ -111,7 +117,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.textView2.visible()
             binding.placeOfWorkArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.close_24px
+                    it1,
+                    R.drawable.close_24px
                 )
             })
             binding.placeOfWorkArrow.setOnClickListener {
@@ -126,7 +133,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.textView2.gone()
             binding.placeOfWorkArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.arrow_forward_24px
+                    it1,
+                    R.drawable.arrow_forward_24px
                 )
             })
             binding.placeOfWorkArrow.setOnClickListener {
@@ -141,7 +149,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.textView2.visible()
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.close_24px
+                    it1,
+                    R.drawable.close_24px
                 )
             })
             binding.regionArrow.setOnClickListener {
@@ -156,7 +165,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             }
             binding.regionArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
-                    it1, R.drawable.arrow_forward_24px
+                    it1,
+                    R.drawable.arrow_forward_24px
                 )
             })
             binding.regionArrow.setOnClickListener {

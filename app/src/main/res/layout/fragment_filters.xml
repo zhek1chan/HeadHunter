@@ -210,7 +210,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/apply"
+        android:id="@+id/button_apply"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60"
         android:layout_marginStart="16dp"
@@ -221,12 +221,12 @@
         android:background="@drawable/rounder"
         android:text="@string/apply"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/remove"
+        app:layout_constraintBottom_toTopOf="@+id/button_remove"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/remove"
+        android:id="@+id/button_remove"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_60"
         android:layout_marginBottom="@dimen/margin_24"

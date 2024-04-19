@@ -2,7 +2,6 @@ package ru.practicum.android.diploma.domain.filters
 
 import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.common.Resource
-import ru.practicum.android.diploma.data.filters.FiltersRepository
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.domain.models.Filters

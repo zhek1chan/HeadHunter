@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.data.filters
+package ru.practicum.android.diploma.domain.filters
 
 import ru.practicum.android.diploma.domain.models.Filters
 

@@ -19,6 +19,7 @@ import ru.practicum.android.diploma.presentation.filters.viewmodel.country.Filte
 import ru.practicum.android.diploma.presentation.filters.viewmodel.industry.FiltersIndustryViewModel
 import ru.practicum.android.diploma.presentation.filters.viewmodel.main.FiltersViewModel
 import ru.practicum.android.diploma.presentation.filters.viewmodel.region.FiltersRegionViewModel
+import FiltersPlaceOfWorkViewModel
 
 private const val FILTERS_PREFS = "FILTERS_PREFS"
 
@@ -30,6 +31,7 @@ val FiltersModule = module {
     viewModelOf(::FiltersCountryViewModel)
     viewModelOf(::FiltersRegionViewModel)
     viewModelOf(::FiltersIndustryViewModel)
+    viewModelOf(::FiltersPlaceOfWorkViewModel)
 
     single(qualifier = named("filtersPrefs")) {
         provideFiltersPreferences(androidApplication(), FILTERS_PREFS)

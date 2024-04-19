@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.data.filters
 
 import android.content.SharedPreferences
+import ru.practicum.android.diploma.domain.filters.FiltersStorageRepository
 import ru.practicum.android.diploma.domain.models.Filters
 
 class FiltersStorageRepositoryImpl(private val shPref: SharedPreferences) : FiltersStorageRepository {

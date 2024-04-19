@@ -10,7 +10,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import ru.practicum.android.diploma.data.filters.FiltersRepository
+import ru.practicum.android.diploma.domain.filters.FiltersRepository
 import ru.practicum.android.diploma.data.filters.FiltersRepositoryImpl
 import ru.practicum.android.diploma.data.filters.FiltersStorageRepositoryImpl
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor

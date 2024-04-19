@@ -178,7 +178,7 @@ class FiltersFragment : Fragment() {
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
-                getString(R.string.divider) + region
+                getString(R.string.divider) + getString(R.string.space) + region
             } else {
                 ""
             }

@@ -94,5 +94,4 @@ class FiltersIndustryViewModel(private val interactor: FiltersInteractor) : View
     fun setIndustryIndex(index: Int) {
         _industryState.value = FiltersIndustryState.IndustryIndex(index)
     }
-
 }

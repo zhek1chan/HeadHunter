@@ -18,6 +18,7 @@ import ru.practicum.android.diploma.presentation.filters.fragment.country.Filter
 import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
 import ru.practicum.android.diploma.presentation.search.fragment.gone
 import ru.practicum.android.diploma.presentation.search.fragment.visible
+import ru.practicum.android.diploma.presentation.vacancy.fragment.VacancyDetailFragment
 
 class FiltersPlaceOfWorkFragment : Fragment() {
 
@@ -37,17 +38,16 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
         initListeners()
         initFilters()
         viewModel.selectedCountry.observe(viewLifecycleOwner) { country ->
             if (country != null) {
                 binding.buttonPick.visibility = View.VISIBLE
+                setCountry(country)
             } else {
                 binding.buttonPick.visibility = View.GONE
             }
-            setCountry(country)
         }
         viewModel.selectedRegion.observe(viewLifecycleOwner, ::setRegion)
     }
@@ -85,8 +85,10 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     }
 
     private fun initView() {
-        viewModel.setSelectedCountry(arguments?.getParcelable(FiltersCountryFragment.COUNTRY_KEY))
-        viewModel.setSelectedRegion(arguments?.getParcelable(FiltersRegionFragment.REGION_KEY))
+        if ((requireArguments().getString(FiltersCountryFragment.COUNTRY_KEY) != null) || (requireArguments().getString(FiltersRegionFragment.REGION_KEY) != null)) {
+            viewModel.setSelectedCountry(arguments?.getParcelable(FiltersCountryFragment.COUNTRY_KEY))
+            viewModel.setSelectedRegion(arguments?.getParcelable(FiltersRegionFragment.REGION_KEY))
+        }
     }
 
     private fun initFilters() {

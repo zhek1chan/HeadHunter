@@ -326,6 +326,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/arrow_back_16x16"
+                app:contentInsetStartWithNavigation="0dp"
                 app:title="@string/vacancy">
 
                 <ImageView

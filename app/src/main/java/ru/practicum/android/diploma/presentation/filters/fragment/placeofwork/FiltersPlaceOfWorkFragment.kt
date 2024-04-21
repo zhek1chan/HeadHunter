@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.presentation.filters.fragment.placeofwork
 
 import FiltersPlaceOfWorkViewModel
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,10 @@ import ru.practicum.android.diploma.databinding.FragmentFilterChoosePlaceOfWorkB
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
+import ru.practicum.android.diploma.presentation.filters.fragment.main.FiltersFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
 import ru.practicum.android.diploma.presentation.search.fragment.gone
 import ru.practicum.android.diploma.presentation.search.fragment.visible
-import ru.practicum.android.diploma.presentation.vacancy.fragment.VacancyDetailFragment
 
 class FiltersPlaceOfWorkFragment : Fragment() {
 
@@ -45,11 +46,12 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             if (country != null) {
                 binding.buttonPick.visibility = View.VISIBLE
                 setCountry(country)
+                viewModel.selectedRegion.observe(viewLifecycleOwner, ::setRegion)
             } else {
                 binding.buttonPick.visibility = View.GONE
+                setRegion(null)
             }
         }
-        viewModel.selectedRegion.observe(viewLifecycleOwner, ::setRegion)
     }
 
     private fun initListeners() {
@@ -62,11 +64,18 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
 
         binding.region.setOnClickListener {
-            viewModel.selectedCountry.value?.let { country ->
+            if (binding.country.text.isEmpty()) {
                 findNavController().navigate(
                     R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
-                    bundleOf(FiltersCountryFragment.COUNTRY_KEY to country)
+                    bundleOf(FiltersFragment.COUNTRY_KEY to null)
                 )
+            } else {
+                viewModel.selectedCountry.value?.let { country ->
+                    findNavController().navigate(
+                        R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
+                        bundleOf(FiltersFragment.COUNTRY_KEY to country.id)
+                    )
+                }
             }
         }
 
@@ -75,8 +84,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                 parentFragmentManager.setFragmentResult(
                     REQUEST_KEY,
                     bundleOf(
-                        COUNTRY_KEY to country,
-                        REGION_KEY to viewModel.selectedRegion.value
+                        FiltersFragment.COUNTRY_KEY to country,
+                        FiltersFragment.REGION_KEY to viewModel.selectedRegion.value
                     )
                 )
                 findNavController().popBackStack()
@@ -85,10 +94,10 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     }
 
     private fun initView() {
-        if ((requireArguments().getString(FiltersCountryFragment.COUNTRY_KEY) != null) || (requireArguments().getString(FiltersRegionFragment.REGION_KEY) != null)) {
-            viewModel.setSelectedCountry(arguments?.getParcelable(FiltersCountryFragment.COUNTRY_KEY))
-            viewModel.setSelectedRegion(arguments?.getParcelable(FiltersRegionFragment.REGION_KEY))
-        }
+        Log.d("Bundle region", "${arguments?.getParcelable(FiltersFragment.REGION_KEY) as Area?}")
+        Log.d("Bundle country", "${arguments?.getParcelable(FiltersFragment.COUNTRY_KEY) as Country?}")
+        viewModel.setSelectedRegion(arguments?.getParcelable(FiltersFragment.REGION_KEY))
+        viewModel.setSelectedCountry(arguments?.getParcelable(FiltersFragment.COUNTRY_KEY))
     }
 
     private fun initFilters() {
@@ -96,7 +105,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             FiltersCountryFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
-            val newCountry = bundle.getParcelable<Country>(FiltersCountryFragment.COUNTRY_KEY)
+            val newCountry = bundle.getParcelable<Country>(FiltersFragment.COUNTRY_KEY)
             viewModel.setSelectedCountry(newCountry)
             if (newCountry != null && newCountry != viewModel.selectedCountry.value) {
                 viewModel.setSelectedRegion(null)
@@ -107,7 +116,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             FiltersRegionFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
-            val newRegion = bundle.getParcelable<Area>(FiltersRegionFragment.REGION_KEY)
+            val newRegion = bundle.getParcelable<Area>(FiltersFragment.REGION_KEY)
             viewModel.setSelectedRegion(newRegion)
         }
     }
@@ -125,6 +134,14 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.workplaceArrow.setOnClickListener {
                 viewModel.setSelectedCountry(null)
                 viewModel.setSelectedRegion(null)
+                binding.country.text = ""
+                binding.region.text = ""
+                binding.workplaceArrow.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        requireContext(),
+                        R.drawable.arrow_forward_24px
+                    )
+                )
             }
         } else {
             binding.country.text = ""
@@ -167,7 +184,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
                 viewModel.selectedCountry.value?.let { country ->
                     findNavController().navigate(
                         R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
-                        bundleOf(FiltersCountryFragment.COUNTRY_KEY to country)
+                        bundleOf(FiltersFragment.COUNTRY_KEY to country.id)
                     )
                 }
             }
@@ -176,7 +193,5 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     companion object {
         const val REQUEST_KEY = "PLACE_KEY"
-        const val COUNTRY_KEY = "COUNTRY"
-        const val REGION_KEY = "REGION"
     }
 }

@@ -12,6 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseCountryBinding
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.presentation.filters.adapter.FilterAdapter
+import ru.practicum.android.diploma.presentation.filters.fragment.main.FiltersFragment
 import ru.practicum.android.diploma.presentation.filters.state.country.FiltersCountriesState
 import ru.practicum.android.diploma.presentation.filters.viewmodel.country.FiltersCountryViewModel
 import ru.practicum.android.diploma.presentation.search.fragment.gone
@@ -42,7 +43,7 @@ class FiltersCountryFragment : Fragment() {
         }
 
         countriesAdapter = FilterAdapter { country ->
-            parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(COUNTRY_KEY to country))
+            parentFragmentManager.setFragmentResult(REQUEST_KEY, bundleOf(FiltersFragment.COUNTRY_KEY to country))
             findNavController().popBackStack()
         }
 
@@ -93,6 +94,5 @@ class FiltersCountryFragment : Fragment() {
 
     companion object {
         const val REQUEST_KEY = "COUNTRY_KEY"
-        const val COUNTRY_KEY = "COUNTRY"
     }
 }

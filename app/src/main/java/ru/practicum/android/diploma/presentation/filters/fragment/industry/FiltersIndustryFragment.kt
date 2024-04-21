@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.presentation.filters.fragment.industry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -111,7 +112,7 @@ class FiltersIndustryFragment : Fragment() {
         adapter.updateList(list)
 
         if (currentIndustry == null) {
-            val idPrefs = arguments?.getString(INDUSTRY_KEY_ID)
+            val idPrefs = arguments?.getString(INDUSTRY_KEY)
             adapter.setSelectedIndustry(idPrefs)
             viewModel.setIndustryId(idPrefs)
             viewModel.setIndustryIndex(adapter.checkedRadioButtonId)
@@ -158,6 +159,5 @@ class FiltersIndustryFragment : Fragment() {
     companion object {
         const val REQUEST_KEY = "KEY"
         const val INDUSTRY_KEY = "INDUSTRY"
-        const val INDUSTRY_KEY_ID = "INDUSTRY_ID"
     }
 }

@@ -96,10 +96,10 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     private fun initView() {
         Log.d("Bundle region", "${arguments?.getString(FiltersFragment.REGION_KEY)}")
         Log.d("Bundle country", "${arguments?.getString(FiltersFragment.COUNTRY_KEY)}")
-        if ((arguments?.getParcelable(FiltersFragment.COUNTRY_KEY) as Country?) != null) {
+        if (arguments?.getParcelable(FiltersFragment.COUNTRY_KEY) as? Country != null) {
             viewModel.setSelectedCountry(arguments?.getParcelable(FiltersFragment.COUNTRY_KEY))
         }
-        if ((arguments?.getParcelable(FiltersFragment.REGION_KEY) as Area?) != null) {
+        if (arguments?.getParcelable(FiltersFragment.REGION_KEY) as? Area != null) {
             viewModel.setSelectedRegion(arguments?.getParcelable(FiltersFragment.REGION_KEY))
         }
     }

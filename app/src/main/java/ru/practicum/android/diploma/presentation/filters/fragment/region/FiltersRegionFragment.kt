@@ -1,13 +1,10 @@
 package ru.practicum.android.diploma.presentation.filters.fragment.region
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
-import androidx.core.view.marginLeft
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -17,7 +14,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseRegionBinding
 import ru.practicum.android.diploma.domain.models.RegionDataItem
 import ru.practicum.android.diploma.presentation.filters.adapter.RegionAdapter
-import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.main.FiltersFragment
 import ru.practicum.android.diploma.presentation.filters.state.region.FiltersRegionsState
 import ru.practicum.android.diploma.presentation.filters.viewmodel.region.FiltersRegionViewModel
@@ -57,7 +53,6 @@ class FiltersRegionFragment : Fragment() {
                     REGION_KEY to region.currentRegion, FiltersFragment.COUNTRY_KEY to region.rootRegion
                 )
             )
-            Log.d("HUIHHUI", "${bundleOf(REGION_KEY to region.currentRegion, FiltersFragment.COUNTRY_KEY to region.rootRegion)}")
             findNavController().popBackStack()
         }
 

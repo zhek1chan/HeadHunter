@@ -149,6 +149,9 @@ class VacancyDetailViewModel(
         if (vacancyState.value is VacancyState.Content) {
             val screenState = vacancyState.value as VacancyState.Content
             externalNavigator.share("https://hh.ru/vacancy/${screenState.vacancy.id}")
+        } else if (vacancyState.value is VacancyState.ContentFromDb) {
+            val screenState = vacancyState.value as VacancyState.ContentFromDb
+            externalNavigator.share("https://hh.ru/vacancy/${screenState.vacancy.id}")
         }
     }
 

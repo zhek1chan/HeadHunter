@@ -144,7 +144,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.workplaceArrow.setOnClickListener {
                 viewModel.setSelectedCountry(null)
                 viewModel.setSelectedRegion(null)
-                binding.countryTop.visibility = View.GONE
+                binding.countryTop.gone()
                 binding.country.text = ""
                 binding.region.text = ""
                 binding.workplaceArrow.setImageDrawable(

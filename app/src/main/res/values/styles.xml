@@ -162,6 +162,8 @@
         <item name="cornerSize">@dimen/margin_12</item>
     </style>
 
-    <color name="filter_icon_color">@color/black</color>
+    <color name="button_icon_color">@color/black</color>
+    <color name="edit_text_color">@color/light_gray</color>
+
 
 </resources>

@@ -5,4 +5,178 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/arrowBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@android:color/transparent"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toolbarText"
+        style="@style/TextStyleToolbar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_64"
+        android:layout_marginStart="@dimen/margin_16"
+        android:gravity="center_vertical"
+        android:text="@string/chose_region"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/arrowBackButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/choosing_region_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/expected_salary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarText">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/choosing_region_layout"
+            style="@style/search_textInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:boxBackgroundColor="#00000000"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:cornerRadius="12dp"
+            app:cursorColor="@color/blue"
+            app:expandedHintEnabled="false"
+            android:textColorHint="?attr/colorOnSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderText="@string/enter_region">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/choosing_region"
+                style="@style/TextStyleMedium16_500"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/expected_salary"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:paddingVertical="16dp"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/button_clear_expected_salary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/clear_button"
+            android:layout_marginHorizontal="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/choosing_region_layout"
+            app:layout_constraintEnd_toEndOf="@+id/choosing_region_layout"
+            app:layout_constraintTop_toTopOf="@+id/choosing_region_layout" />
+
+        <ImageView
+            android:id="@+id/search_drawable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/search"
+            android:layout_marginHorizontal="16dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/choosing_region_layout"
+            app:layout_constraintEnd_toEndOf="@+id/choosing_region_layout"
+            app:layout_constraintTop_toTopOf="@+id/choosing_region_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/region_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choosing_region_box"
+        tools:listItem="@layout/country_item" />
+
+    <ImageView
+        android:id="@+id/placeholder_failed_image"
+        android:layout_width="328dp"
+        android:layout_height="223dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choosing_region_box"
+        app:layout_constraintVertical_bias="0.32999998"
+        app:srcCompat="@drawable/error_region_list"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/placeholder_failed_text"
+        style="@style/ScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/failed_to_get_list"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_failed_image"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/placeholder_no_region_image"
+        android:layout_width="328dp"
+        android:layout_height="223dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choosing_region_box"
+        app:layout_constraintVertical_bias="0.32999998"
+        app:srcCompat="@drawable/ph_nothing_found"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/placeholder_no_region_text"
+        style="@style/ScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:text="@string/no_such_region"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeholder_no_region_image"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

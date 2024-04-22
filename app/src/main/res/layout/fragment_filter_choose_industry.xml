@@ -5,4 +5,174 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/arrowBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@android:color/transparent"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/toolbarText"
+        style="@style/TextStyleToolbar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/toolbar_height"
+        android:layout_marginStart="@dimen/margin_16"
+        android:gravity="center_vertical"
+        android:text="@string/chose_industry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/arrowBackButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/choosing_industry_layout"
+        style="@style/search_textInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:boxBackgroundColor="#00000000"
+        app:boxBackgroundMode="filled"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:cornerRadius="12dp"
+        app:cursorColor="@color/blue"
+        app:expandedHintEnabled="false"
+        android:textColorHint="?attr/colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarText"
+        app:placeholderText="@string/enter_industry">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/choosing_industry"
+            style="@style/TextStyleMedium16_500"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/expected_salary"
+            android:maxLines="1"
+            android:paddingVertical="16dp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/clear_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/clear_button"
+        android:layout_marginHorizontal="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/choosing_industry_layout"
+        app:layout_constraintEnd_toEndOf="@+id/choosing_industry_layout"
+        app:layout_constraintTop_toTopOf="@+id/choosing_industry_layout"
+        android:importantForAccessibility="no" />
+
+    <ImageView
+        android:id="@+id/search_drawable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/search"
+        android:layout_marginHorizontal="16dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/choosing_industry_layout"
+        app:layout_constraintEnd_toEndOf="@+id/choosing_industry_layout"
+        app:layout_constraintTop_toTopOf="@+id/choosing_industry_layout"
+        android:importantForAccessibility="no" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/industry_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_16"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choosing_industry_layout"
+        app:layout_constraintBottom_toTopOf="@+id/button_pick"
+        tools:listitem="@layout/industry_item" />
+
+    <TextView
+        android:id="@+id/button_pick"
+        style="@style/white_16_medium"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/expected_salary"
+        android:backgroundTint="@color/blue"
+        android:gravity="center"
+        android:text="@string/choose"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        tools:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/error_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="122dp"
+        android:layout_marginBottom="179dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/errors_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/error_region_list"
+            app:layout_constraintDimensionRatio="328:223"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:importantForAccessibility="no" />
+
+        <TextView
+            android:id="@+id/errors_text"
+            style="@style/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:text="@string/failed_to_get_list"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/errors_image"
+            app:layout_constraintEnd_toEndOf="@id/error_holder"
+            app:layout_constraintStart_toStartOf="@id/error_holder"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

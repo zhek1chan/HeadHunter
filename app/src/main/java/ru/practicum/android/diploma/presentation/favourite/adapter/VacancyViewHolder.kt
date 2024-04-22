@@ -28,7 +28,7 @@ class VacancyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var salaryTo = "%,d".format(Locale.US, item.salaryTo)
         salaryFrom = salaryFrom.replace(',', ' ')
         salaryTo = salaryTo.replace(',', ' ')
-        tvSalary.text = convertSalary.formatSalaryWithCurrency(salaryFrom, salaryTo, item.currency)
+        tvSalary.text = convertSalary.formatSalaryWithCurrency(itemView.resources, salaryFrom, salaryTo, item.currency)
         Glide.with(ivUrl100)
             .load(item.employerLogoUrls)
             .placeholder(R.drawable.placeholder_vacancy)

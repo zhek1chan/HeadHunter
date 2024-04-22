@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,8 +17,6 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentVacancyBinding
 import ru.practicum.android.diploma.domain.models.DetailVacancy
 import ru.practicum.android.diploma.domain.models.Vacancy
-import ru.practicum.android.diploma.presentation.search.fragment.gone
-import ru.practicum.android.diploma.presentation.search.fragment.visible
 import ru.practicum.android.diploma.presentation.vacancy.state.VacancyState
 import ru.practicum.android.diploma.presentation.vacancy.viewmodel.VacancyDetailViewModel
 import ru.practicum.android.diploma.utils.ConvertSalary
@@ -31,6 +28,7 @@ class VacancyDetailFragment : Fragment() {
     private var _binding: FragmentVacancyBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<VacancyDetailViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,37 +49,22 @@ class VacancyDetailFragment : Fragment() {
 
         if (viewModel.checkBeforeRender(vacancyId!!)) {
             viewModel.getVacancyFromDb(vacancyId!!)
-            Log.d("VacancyFragment", "Got it from Database")
+            checkButton(true)
         } else {
             viewModel.getVacancyDetail(vacancyId!!)
-            Log.d("VacancyFragment", "Got it from HH")
+            checkButton(false)
         }
 
         viewModel.vacancyState.observe(viewLifecycleOwner) { state ->
             render(state)
         }
-        if (vacancyId == null) {
-            onDestroy()
-        }
-        viewModel.onLikedCheck(vacancyId!!).observe(requireActivity()) { likeIndicator ->
-            if (!likeIndicator) {
-                binding.buttonAddToFavorites.visibility = View.VISIBLE
-                binding.buttonDeleteFromFavorites.visibility = View.GONE
-                _vacancy?.isFavorite?.isFavorite = false
-                binding.buttonAddToFavorites.setOnClickListener {
-                    viewModel.clickOnButton()
-                }
-            } else {
-                binding.buttonAddToFavorites.visibility = View.GONE
-                binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
-                _vacancy?.isFavorite?.isFavorite = true
-                binding.buttonDeleteFromFavorites.setOnClickListener {
-                    viewModel.clickOnButton()
-                }
-            }
-        }
+
         binding.buttonShare.setOnClickListener {
             viewModel.shareVacancy()
+        }
+
+        if (vacancyId == null) {
+            onDestroy()
         }
     }
 
@@ -99,7 +82,7 @@ class VacancyDetailFragment : Fragment() {
         _vacancy = vacancy
         with(binding) {
             job.text = vacancy.name
-            salary.text = ConvertSalary().formatSalaryWithCurrency(
+            salary.text = ConvertSalary().formatSalaryWithCurrency(requireContext().resources,
                 vacancy.salaryFrom.toString(), vacancy.salaryTo.toString(), vacancy.salaryCurrency
             )
             Glide.with(requireContext()).load(vacancy.areaUrl).placeholder(R.drawable.ic_toast).fitCenter()
@@ -124,11 +107,11 @@ class VacancyDetailFragment : Fragment() {
                 binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
             }
             if (vacancy.comment.isNullOrEmpty()) {
-                comment.gone()
-                commentDescription.gone()
+                comment.visibility = View.GONE
+                commentDescription.visibility = View.GONE
             } else {
-                comment.visible()
-                commentDescription.visible()
+                comment.visibility = View.VISIBLE
+                commentDescription.visibility = View.VISIBLE
                 commentDescription.text = vacancy.comment
             }
         }
@@ -141,7 +124,6 @@ class VacancyDetailFragment : Fragment() {
                     it.replace(",", "\n•")
                 }
                 formattedSkills = formattedSkills.filter { char -> char != '[' && char != ']' }
-                Log.d("v", formattedSkills)
                 skillsRecyclerView.text = formattedSkills
                 skillsRecyclerView.visibility = View.VISIBLE
                 skills.visibility = View.VISIBLE
@@ -153,7 +135,6 @@ class VacancyDetailFragment : Fragment() {
     }
 
     fun createContacts(vacancy: DetailVacancy) {
-        Log.d("contactsName", vacancy.toString())
         with(binding) {
             if (vacancy.contactsName != null) {
                 contactPersonDescription.text = vacancy.contactsName
@@ -219,7 +200,42 @@ class VacancyDetailFragment : Fragment() {
     private fun connectionError() {
         with(binding) {
             vacancyToolbars.visibility = View.VISIBLE
-            binding.serverErrorLayout.visibility = View.VISIBLE
+            serverErrorLayout.visibility = View.VISIBLE
+            vacancyConstraintLayout.visibility = View.GONE
+        }
+    }
+
+    private fun checkButton(fromDb: Boolean) {
+        viewModel.onLikedCheck(vacancyId!!).observe(requireActivity()) { likeIndicator ->
+            when (likeIndicator) {
+                false -> {
+                    binding.buttonAddToFavorites.visibility = View.VISIBLE
+                    binding.buttonDeleteFromFavorites.visibility = View.GONE
+                    _vacancy?.isFavorite?.isFavorite = false
+                    binding.buttonAddToFavorites.setOnClickListener {
+                        Log.d("FragmentVacancy", "Press on like :)")
+                        if (fromDb == true) {
+                            viewModel.clickOnLikeWithDb()
+                        } else {
+                            viewModel.clickOnLike()
+                        }
+                    }
+                }
+
+                true -> {
+                    binding.buttonAddToFavorites.visibility = View.GONE
+                    binding.buttonDeleteFromFavorites.visibility = View.VISIBLE
+                    _vacancy?.isFavorite?.isFavorite = true
+                    binding.buttonDeleteFromFavorites.setOnClickListener {
+                        Log.d("FragmentVacancy", "Press on dislike :(")
+                        if (fromDb == true) {
+                            viewModel.clickOnLikeWithDb()
+                        } else {
+                            viewModel.clickOnLike()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -230,6 +246,5 @@ class VacancyDetailFragment : Fragment() {
 
     companion object {
         const val ARGS_VACANCY = "vacancyId"
-        fun createArgs(vacancyId: String): Bundle = bundleOf(ARGS_VACANCY to vacancyId)
     }
 }

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="filters_values_text_color">@color/white</color>
+</resources>

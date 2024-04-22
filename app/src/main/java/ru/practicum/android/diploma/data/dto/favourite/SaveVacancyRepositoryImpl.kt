@@ -3,11 +3,11 @@ package ru.practicum.android.diploma.data.dto.favourite
 import ru.practicum.android.diploma.data.converters.VacancyConverter
 import ru.practicum.android.diploma.data.dto.room.VacancyDetails
 import ru.practicum.android.diploma.data.dto.room.database.AppDatabase
-import ru.practicum.android.diploma.domain.favorite.SaveDataRepository
+import ru.practicum.android.diploma.domain.favorite.SaveVacancyRepository
 
-class SaveDataRepositoryImpl(
+class SaveVacancyRepositoryImpl(
     private val db: AppDatabase,
-) : SaveDataRepository {
+) : SaveVacancyRepository {
 
     override suspend fun save(data: VacancyDetails) {
         data?.run {

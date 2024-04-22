@@ -5,4 +5,5 @@ object Constants {
     const val NO_CONNECTION = -1
     const val SERVER_ERROR = 500
     const val BAD_REQUEST = 400
+    const val SUCCESS_RESULT_CODE = 200
 }

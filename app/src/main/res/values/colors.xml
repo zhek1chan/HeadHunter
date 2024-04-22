@@ -11,4 +11,6 @@
     <color name="black_universal">#1A1B22</color>
     <color name="light_red">#F56B6C</color>
     <color name="fav_background_after_delete">@color/gray</color>
+
+    <color name="filters_values_text_color">@color/black</color>
 </resources>

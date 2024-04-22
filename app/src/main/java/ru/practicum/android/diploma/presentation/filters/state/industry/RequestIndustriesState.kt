@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.fragment.industry
+package ru.practicum.android.diploma.presentation.filters.state.industry
 
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapterItem
 

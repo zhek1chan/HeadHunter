@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -15,7 +14,7 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterChooseRegionBinding
 import ru.practicum.android.diploma.domain.models.RegionDataItem
 import ru.practicum.android.diploma.presentation.filters.adapter.RegionAdapter
-import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
+import ru.practicum.android.diploma.presentation.filters.fragment.main.FiltersFragment
 import ru.practicum.android.diploma.presentation.filters.state.region.FiltersRegionsState
 import ru.practicum.android.diploma.presentation.filters.viewmodel.region.FiltersRegionViewModel
 import ru.practicum.android.diploma.presentation.search.fragment.gone
@@ -39,7 +38,7 @@ class FiltersRegionFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.init(arguments?.getString(FiltersCountryFragment.COUNTRY_KEY))
+        viewModel.init(arguments?.getString(FiltersFragment.COUNTRY_KEY))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +50,7 @@ class FiltersRegionFragment : Fragment() {
         regionAdapter = RegionAdapter { region ->
             parentFragmentManager.setFragmentResult(
                 REQUEST_KEY, bundleOf(
-                    REGION_KEY to region.currentRegion, FiltersCountryFragment.COUNTRY_KEY to region.rootRegion
+                    REGION_KEY to region.currentRegion, FiltersFragment.COUNTRY_KEY to region.rootRegion
                 )
             )
             findNavController().popBackStack()
@@ -62,20 +61,13 @@ class FiltersRegionFragment : Fragment() {
 
         binding.choosingRegion.doAfterTextChanged {
             if (it?.isNotEmpty() == true) {
-                binding.searchDrawable.setImageDrawable(context?.let { it1 ->
-                    AppCompatResources.getDrawable(
-                        it1,
-                        R.drawable.ic_clear_button
-                    )
-                })
+                binding.searchDrawable.setBackgroundResource(R.drawable.close_24px)
                 viewModel.findArea(it.toString())
+                binding.searchDrawable.setOnClickListener {
+                    binding.choosingRegion.text?.clear()
+                }
             } else {
-                binding.searchDrawable.setImageDrawable(context?.let { it1 ->
-                    AppCompatResources.getDrawable(
-                        it1,
-                        R.drawable.ic_search
-                    )
-                })
+                binding.searchDrawable.setBackgroundResource(R.drawable.ic_search)
                 viewModel.showArea()
             }
 

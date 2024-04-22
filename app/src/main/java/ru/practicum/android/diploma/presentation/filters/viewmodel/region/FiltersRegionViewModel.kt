@@ -16,7 +16,7 @@ class FiltersRegionViewModel(
 ) : ViewModel() {
 
     val filtersRegionLiveData = MutableLiveData<FiltersRegionsState>()
-    val allAreas = mutableListOf<Area>()
+    private val allAreas = mutableListOf<Area>()
 
     init {
         filtersRegionLiveData.postValue(FiltersRegionsState.Start)
@@ -31,7 +31,7 @@ class FiltersRegionViewModel(
         }
     }
 
-    suspend fun loadRegions(idArea: String?) {
+    private suspend fun loadRegions(idArea: String?) {
         filtersInteractor.getRegions(idArea)
             .collect {
                 if (it.data.isNullOrEmpty()) {
@@ -53,7 +53,7 @@ class FiltersRegionViewModel(
         filtersRegionLiveData.postValue(FiltersRegionsState.Content(sortedArea(content)))
     }
 
-    fun createEntries(parentArea: Area, rootArea: Area): MutableList<RegionDataItem> {
+    private fun createEntries(parentArea: Area, rootArea: Area): MutableList<RegionDataItem> {
         val content = mutableListOf<RegionDataItem>()
         parentArea.areas.forEach { area ->
             content.add(RegionDataItem(rootRegion = rootArea, currentRegion = area))
@@ -77,7 +77,7 @@ class FiltersRegionViewModel(
         }
     }
 
-    fun findSecondArea(text: String, parentArea: Area, rootArea: Area): MutableList<RegionDataItem> {
+    private fun findSecondArea(text: String, parentArea: Area, rootArea: Area): MutableList<RegionDataItem> {
         val content = mutableListOf<RegionDataItem>()
         parentArea.areas.forEach { area ->
             if (area.name.trim().uppercase().indexOf(text) >= 0) {
@@ -88,7 +88,7 @@ class FiltersRegionViewModel(
         return content
     }
 
-    fun sortedArea(list: List<RegionDataItem>): List<RegionDataItem> {
+    private fun sortedArea(list: List<RegionDataItem>): List<RegionDataItem> {
         val yoRule = "& а < б < в < г < д < е < ё < ж < з < и < й < к < л < м < н < о < п < р < с " +
             "< т < у < ф < х < ц < ч < ш < щ < ъ < ы < ь < я < ю < я"
         val ruleBasedCollator = RuleBasedCollator(yoRule)

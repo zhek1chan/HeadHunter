@@ -9,7 +9,7 @@ import ru.practicum.android.diploma.domain.models.RegionDataItem
 import ru.practicum.android.diploma.presentation.filters.adapter.viewholder.RegionViewHolder
 
 class RegionAdapter(private val clickListener: RegionClickListener) : RecyclerView.Adapter<RegionViewHolder>() {
-    var regionsList = listOf<RegionDataItem>()
+    private var regionsList = listOf<RegionDataItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RegionViewHolder {
         val layoutInspector = LayoutInflater.from(parent.context)
@@ -40,8 +40,4 @@ class RegionAdapter(private val clickListener: RegionClickListener) : RecyclerVi
         regionsList = newList
         notifyDataSetChanged()
     }
-
-    fun getItemByPosition(position: Int) =
-        regionsList[position]
-
 }

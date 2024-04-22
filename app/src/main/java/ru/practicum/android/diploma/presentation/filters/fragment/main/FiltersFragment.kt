@@ -172,7 +172,7 @@ class FiltersFragment : Fragment() {
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
-                    R.drawable.close_24px
+                    R.drawable.close_changing_color_24px
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
@@ -228,7 +228,7 @@ class FiltersFragment : Fragment() {
             binding.industryArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
-                    R.drawable.close_24px
+                    R.drawable.close_changing_color_24px
                 )
             })
         } else {

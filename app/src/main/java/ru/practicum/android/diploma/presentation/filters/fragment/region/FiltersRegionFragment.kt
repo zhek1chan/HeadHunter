@@ -47,7 +47,6 @@ class FiltersRegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.init(arguments?.getString(FiltersFragment.COUNTRY_KEY))
         viewModel.filtersRegionLiveData.observe(viewLifecycleOwner) {
             render(it)
         }
@@ -55,9 +54,10 @@ class FiltersRegionFragment : Fragment() {
         regionAdapter = RegionAdapter { region ->
             parentFragmentManager.setFragmentResult(
                 REQUEST_KEY, bundleOf(
-                    FiltersFragment.REGION_KEY to region.currentRegion, FiltersFragment.COUNTRY_KEY to region.rootRegion
+                    REGION_KEY to region.currentRegion, FiltersFragment.COUNTRY_KEY to region.rootRegion
                 )
             )
+            Log.d("HUIHHUI", "${bundleOf(REGION_KEY to region.currentRegion, FiltersFragment.COUNTRY_KEY to region.rootRegion)}")
             findNavController().popBackStack()
         }
 
@@ -67,10 +67,10 @@ class FiltersRegionFragment : Fragment() {
         binding.choosingRegion.doAfterTextChanged {
             if (it?.isNotEmpty() == true) {
                 binding.searchDrawable.setBackgroundResource(R.drawable.close_24px)
+                viewModel.findArea(it.toString())
                 binding.searchDrawable.setOnClickListener {
                     binding.choosingRegion.text?.clear()
                 }
-                viewModel.findArea(it.toString())
             } else {
                 binding.searchDrawable.setBackgroundResource(R.drawable.ic_search)
                 viewModel.showArea()
@@ -138,6 +138,7 @@ class FiltersRegionFragment : Fragment() {
 
     companion object {
         const val REQUEST_KEY = "REGION_KEY"
+        const val REGION_KEY = "REGION"
     }
 
     override fun onDestroyView() {

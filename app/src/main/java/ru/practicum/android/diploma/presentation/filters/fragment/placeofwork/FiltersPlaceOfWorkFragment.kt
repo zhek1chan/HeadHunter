@@ -94,10 +94,14 @@ class FiltersPlaceOfWorkFragment : Fragment() {
     }
 
     private fun initView() {
-        Log.d("Bundle region", "${arguments?.getParcelable(FiltersFragment.REGION_KEY) as Area?}")
-        Log.d("Bundle country", "${arguments?.getParcelable(FiltersFragment.COUNTRY_KEY) as Country?}")
-        viewModel.setSelectedRegion(arguments?.getParcelable(FiltersFragment.REGION_KEY))
-        viewModel.setSelectedCountry(arguments?.getParcelable(FiltersFragment.COUNTRY_KEY))
+        Log.d("Bundle region", "${arguments?.getString(FiltersFragment.REGION_KEY)}")
+        Log.d("Bundle country", "${arguments?.getString(FiltersFragment.COUNTRY_KEY)}")
+        if ((arguments?.getParcelable(FiltersFragment.COUNTRY_KEY) as Country?) != null) {
+            viewModel.setSelectedCountry(arguments?.getParcelable(FiltersFragment.COUNTRY_KEY))
+        }
+        if ((arguments?.getParcelable(FiltersFragment.REGION_KEY) as Area?) != null) {
+            viewModel.setSelectedRegion(arguments?.getParcelable(FiltersFragment.REGION_KEY))
+        }
     }
 
     private fun initFilters() {
@@ -118,6 +122,12 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         ) { _, bundle ->
             val newRegion = bundle.getParcelable<Area>(FiltersFragment.REGION_KEY)
             viewModel.setSelectedRegion(newRegion)
+            val newCountry = bundle.getParcelable<Area?>(FiltersFragment.COUNTRY_KEY)?.let {
+                Country(
+                    id = it.id, parentId = it.parentId ?: "", name = it.name
+                )
+            }
+            viewModel.setSelectedCountry(newCountry)
         }
     }
 
@@ -128,7 +138,7 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.workplaceArrow.setImageDrawable(
                 AppCompatResources.getDrawable(
                     requireContext(),
-                    R.drawable.close_24px
+                    R.drawable.close_changing_color_24px
                 )
             )
             binding.workplaceArrow.setOnClickListener {
@@ -165,10 +175,11 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             binding.regionArrow.setImageDrawable(
                 AppCompatResources.getDrawable(
                     requireContext(),
-                    R.drawable.close_24px
+                    R.drawable.close_changing_color_24px
                 )
             )
             binding.regionArrow.setOnClickListener {
+                binding.region.text = ""
                 viewModel.setSelectedRegion(null)
             }
         } else {

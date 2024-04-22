@@ -331,34 +331,35 @@
 
                 <ImageView
                     android:id="@+id/button_add_to_favorites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="end"
+                    android:scaleType="center"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:contentDescription="@string/todo"
-                    android:paddingEnd="@dimen/font_size_16"
                     android:src="@drawable/ic_add_to_favorites"
                     android:visibility="visible"
                     tools:ignore="RtlSymmetry" />
 
                 <ImageView
                     android:id="@+id/button_delete_from_favorites"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="end"
+                    android:scaleType="center"
                     android:layout_marginEnd="@dimen/margin_8"
                     android:contentDescription="@string/todo"
-                    android:paddingEnd="@dimen/font_size_16"
                     android:src="@drawable/ic_added_to_favorites"
                     android:visibility="gone"
                     tools:ignore="RtlSymmetry" />
 
                 <ImageView
                     android:id="@+id/button_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="@dimen/margin_16"
+                    android:scaleType="center"
+                    android:layout_marginEnd="@dimen/margin_8"
                     android:contentDescription="@string/todo"
                     android:src="@drawable/ic_share"
                     tools:ignore="RtlSymmetry" />

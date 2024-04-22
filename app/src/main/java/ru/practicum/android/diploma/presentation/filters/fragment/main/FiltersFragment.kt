@@ -224,7 +224,7 @@ class FiltersFragment : Fragment() {
             }
         }
 
-        if (binding.industry.text.toString() != "") {
+        if (binding.industry.text.toString().isNotEmpty()) {
             binding.industryArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,

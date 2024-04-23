@@ -326,9 +326,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:navigationIcon="@drawable/arrow_back_16x16"
-                app:contentInsetStartWithNavigation="0dp"
-                app:title="@string/vacancy"
-                app:titleMarginBottom="15dp">
+                app:contentInsetStartWithNavigation="0dp">
+
+                <TextView
+                    android:id="@+id/toolbarText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    style="@style/TextStyleToolbar"
+                    android:gravity="center_vertical"
+                    android:text="@string/vacancy" />
 
                 <ImageView
                     android:id="@+id/button_add_to_favorites"

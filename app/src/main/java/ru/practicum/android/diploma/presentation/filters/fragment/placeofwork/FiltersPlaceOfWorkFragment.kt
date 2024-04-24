@@ -1,6 +1,8 @@
 package ru.practicum.android.diploma.presentation.filters.fragment.placeofwork
 
+import FiltersPlaceOfWorkViewModel
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +10,13 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterChoosePlaceOfWorkBinding
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
+import ru.practicum.android.diploma.presentation.filters.fragment.main.FiltersFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
 import ru.practicum.android.diploma.presentation.search.fragment.gone
 import ru.practicum.android.diploma.presentation.search.fragment.visible
@@ -21,8 +25,8 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     private var _binding: FragmentFilterChoosePlaceOfWorkBinding? = null
     private val binding get() = _binding!!
-    private var country: Country? = null
-    private var region: Area? = null
+
+    private val viewModel: FiltersPlaceOfWorkViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +39,18 @@ class FiltersPlaceOfWorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
         initListeners()
         initFilters()
-        if (country != null) {
-            binding.buttonPick.visible()
+        viewModel.selectedCountry.observe(viewLifecycleOwner) { country ->
+            if (country != null) {
+                binding.buttonPick.visibility = View.VISIBLE
+                setCountry(country)
+                viewModel.selectedRegion.observe(viewLifecycleOwner, ::setRegion)
+            } else {
+                binding.buttonPick.visibility = View.GONE
+                setRegion(null)
+            }
         }
     }
 
@@ -54,29 +64,44 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         }
 
         binding.region.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
-                bundleOf(FiltersCountryFragment.COUNTRY_KEY to country?.id)
-            )
+            if (binding.country.text.isEmpty()) {
+                findNavController().navigate(
+                    R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
+                    bundleOf(FiltersFragment.COUNTRY_KEY to null)
+                )
+            } else {
+                viewModel.selectedCountry.value?.let { country ->
+                    findNavController().navigate(
+                        R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
+                        bundleOf(FiltersFragment.COUNTRY_KEY to country.id)
+                    )
+                }
+            }
         }
 
         binding.buttonPick.setOnClickListener {
-            parentFragmentManager.setFragmentResult(
-                REQUEST_KEY,
-                bundleOf(
-                    COUNTRY_KEY to country,
-                    REGION_KEY to region
+            viewModel.selectedCountry.value?.let { country ->
+                parentFragmentManager.setFragmentResult(
+                    REQUEST_KEY,
+                    bundleOf(
+                        FiltersFragment.COUNTRY_KEY to country,
+                        FiltersFragment.REGION_KEY to viewModel.selectedRegion.value
+                    )
                 )
-            )
-            findNavController().popBackStack()
+                findNavController().popBackStack()
+            }
         }
     }
 
     private fun initView() {
-        country = country ?: arguments?.getParcelable(FiltersCountryFragment.COUNTRY_KEY)
-        region = region ?: arguments?.getParcelable(FiltersRegionFragment.REGION_KEY)
-        setRegion(region)
-        setCountry(country)
+        Log.d("Bundle region", "${arguments?.getString(FiltersFragment.REGION_KEY)}")
+        Log.d("Bundle country", "${arguments?.getString(FiltersFragment.COUNTRY_KEY)}")
+        if (arguments?.getParcelable(FiltersFragment.COUNTRY_KEY) as? Country != null) {
+            viewModel.setSelectedCountry(arguments?.getParcelable(FiltersFragment.COUNTRY_KEY))
+        }
+        if (arguments?.getParcelable(FiltersFragment.REGION_KEY) as? Area != null) {
+            viewModel.setSelectedRegion(arguments?.getParcelable(FiltersFragment.REGION_KEY))
+        }
     }
 
     private fun initFilters() {
@@ -84,14 +109,10 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             FiltersCountryFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
-            clearArguments()
-            val newCountry = bundle.getParcelable<Country>(FiltersCountryFragment.COUNTRY_KEY)
-            setCountry(newCountry)
-            val checkNewCountry = newCountry != country
-            country = newCountry
-            if (checkNewCountry) {
-                region = null
-                setRegion(null)
+            val newCountry = bundle.getParcelable<Country>(FiltersFragment.COUNTRY_KEY)
+            viewModel.setSelectedCountry(newCountry)
+            if (newCountry != null && newCountry != viewModel.selectedCountry.value) {
+                viewModel.setSelectedRegion(null)
             }
         }
 
@@ -99,15 +120,14 @@ class FiltersPlaceOfWorkFragment : Fragment() {
             FiltersRegionFragment.REQUEST_KEY,
             viewLifecycleOwner
         ) { _, bundle ->
-            clearArguments()
-            region = bundle.getParcelable(FiltersRegionFragment.REGION_KEY)
-            country = bundle.getParcelable<Area?>(FiltersCountryFragment.COUNTRY_KEY)?.let {
+            val newRegion = bundle.getParcelable<Area>(FiltersFragment.REGION_KEY)
+            viewModel.setSelectedRegion(newRegion)
+            val newCountry = bundle.getParcelable<Area?>(FiltersFragment.COUNTRY_KEY)?.let {
                 Country(
                     id = it.id, parentId = it.parentId ?: "", name = it.name
                 )
-            } ?: country
-            setRegion(region)
-            setCountry(country)
+            }
+            viewModel.setSelectedCountry(newCountry)
         }
     }
 
@@ -115,30 +135,34 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         if (actualCountry != null) {
             binding.countryTop.visible()
             binding.country.text = actualCountry.name
-            binding.buttonPick.visible()
-            binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
+            binding.workplaceArrow.setImageDrawable(
                 AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.close_24px
+                    requireContext(),
+                    R.drawable.close_changing_color_24px
                 )
-            })
+            )
             binding.workplaceArrow.setOnClickListener {
-                clearArguments()
-                country = null
-                region = null
-                setCountry(null)
-                setRegion(null)
+                viewModel.setSelectedCountry(null)
+                viewModel.setSelectedRegion(null)
+                binding.countryTop.gone()
+                binding.country.text = ""
+                binding.region.text = ""
+                binding.workplaceArrow.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        requireContext(),
+                        R.drawable.arrow_forward_24px
+                    )
+                )
             }
         } else {
             binding.country.text = ""
-            binding.buttonPick.gone()
             binding.countryTop.gone()
-            binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
+            binding.workplaceArrow.setImageDrawable(
                 AppCompatResources.getDrawable(
-                    it1,
+                    requireContext(),
                     R.drawable.arrow_forward_24px
                 )
-            })
+            )
             binding.workplaceArrow.setOnClickListener {
                 findNavController().navigate(R.id.action_filterPlaceOfWorkFragment_to_filtersCountryFragment)
             }
@@ -149,46 +173,37 @@ class FiltersPlaceOfWorkFragment : Fragment() {
         if (actualArea != null) {
             binding.regionTop.visible()
             binding.region.text = actualArea.name
-            binding.buttonPick.visible()
-            binding.regionArrow.setImageDrawable(context?.let { it1 ->
+            binding.regionArrow.setImageDrawable(
                 AppCompatResources.getDrawable(
-                    it1,
-                    R.drawable.close_24px
+                    requireContext(),
+                    R.drawable.close_changing_color_24px
                 )
-            })
+            )
             binding.regionArrow.setOnClickListener {
-                clearArguments()
-                region = null
-                setRegion(null)
+                binding.region.text = ""
+                viewModel.setSelectedRegion(null)
             }
         } else {
             binding.region.text = ""
-            if (country == null) {
-                binding.buttonPick.gone()
-            }
             binding.regionTop.gone()
-            binding.regionArrow.setImageDrawable(context?.let { it1 ->
+            binding.regionArrow.setImageDrawable(
                 AppCompatResources.getDrawable(
-                    it1,
+                    requireContext(),
                     R.drawable.arrow_forward_24px
                 )
-            })
+            )
             binding.regionArrow.setOnClickListener {
-                findNavController().navigate(
-                    R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
-                    bundleOf(FiltersCountryFragment.COUNTRY_KEY to country?.id)
-                )
+                viewModel.selectedCountry.value?.let { country ->
+                    findNavController().navigate(
+                        R.id.action_filterPlaceOfWorkFragment_to_filtersRegionFragment,
+                        bundleOf(FiltersFragment.COUNTRY_KEY to country.id)
+                    )
+                }
             }
         }
     }
 
-    private fun clearArguments() {
-        arguments = null
-    }
-
     companion object {
         const val REQUEST_KEY = "PLACE_KEY"
-        const val COUNTRY_KEY = "COUNTRY"
-        const val REGION_KEY = "REGION"
     }
 }

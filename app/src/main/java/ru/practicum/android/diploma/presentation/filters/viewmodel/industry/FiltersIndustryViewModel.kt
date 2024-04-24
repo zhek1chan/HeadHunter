@@ -10,12 +10,15 @@ import ru.practicum.android.diploma.data.Constant
 import ru.practicum.android.diploma.domain.filters.FiltersInteractor
 import ru.practicum.android.diploma.domain.models.Industry
 import ru.practicum.android.diploma.domain.models.SubIndustry
-import ru.practicum.android.diploma.presentation.filters.fragment.industry.RequestIndustriesState
+import ru.practicum.android.diploma.presentation.filters.state.industry.RequestIndustriesState
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.recycleview.IndustriesAdapterItem
+import ru.practicum.android.diploma.presentation.filters.state.industry.FiltersIndustryState
 
 class FiltersIndustryViewModel(private val interactor: FiltersInteractor) : ViewModel() {
     private val _state = MutableLiveData<RequestIndustriesState>()
     val state: LiveData<RequestIndustriesState> = _state
+    private val _industryState = MutableLiveData<FiltersIndustryState>()
+    val industryState: LiveData<FiltersIndustryState> = _industryState
     private var list = ArrayList<SubIndustry>()
 
     fun getIndustries() {
@@ -78,5 +81,17 @@ class FiltersIndustryViewModel(private val interactor: FiltersInteractor) : View
             _state.value =
                 RequestIndustriesState.Success(list.map { IndustriesAdapterItem(it) })
         }
+    }
+
+    fun setCurrentIndustry(industry: SubIndustry?) {
+        _industryState.value = FiltersIndustryState.CurrentIndustry(industry)
+    }
+
+    fun setIndustryId(id: String?) {
+        _industryState.value = FiltersIndustryState.IndustryId(id)
+    }
+
+    fun setIndustryIndex(index: Int) {
+        _industryState.value = FiltersIndustryState.IndustryIndex(index)
     }
 }

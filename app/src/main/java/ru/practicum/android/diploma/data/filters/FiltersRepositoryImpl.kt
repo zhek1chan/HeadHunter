@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.data.network.CountriesRequest
 import ru.practicum.android.diploma.data.network.IndustriesRequest
 import ru.practicum.android.diploma.data.network.NetworkClient
 import ru.practicum.android.diploma.data.network.RegionsRequest
+import ru.practicum.android.diploma.domain.filters.FiltersRepository
 import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.domain.models.Filters

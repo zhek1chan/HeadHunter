@@ -23,10 +23,8 @@ import ru.practicum.android.diploma.domain.models.Area
 import ru.practicum.android.diploma.domain.models.Country
 import ru.practicum.android.diploma.domain.models.Filters
 import ru.practicum.android.diploma.domain.models.SubIndustry
-import ru.practicum.android.diploma.presentation.filters.fragment.country.FiltersCountryFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.industry.FiltersIndustryFragment
 import ru.practicum.android.diploma.presentation.filters.fragment.placeofwork.FiltersPlaceOfWorkFragment
-import ru.practicum.android.diploma.presentation.filters.fragment.region.FiltersRegionFragment
 import ru.practicum.android.diploma.presentation.filters.viewmodel.main.FiltersViewModel
 import ru.practicum.android.diploma.presentation.search.fragment.gone
 import ru.practicum.android.diploma.presentation.search.fragment.visible
@@ -83,8 +81,8 @@ class FiltersFragment : Fragment() {
             viewLifecycleOwner
         ) { _, bundle ->
             val country =
-                BundleCompat.getParcelable(bundle, FiltersPlaceOfWorkFragment.COUNTRY_KEY, Country::class.java)
-            val region = BundleCompat.getParcelable(bundle, FiltersPlaceOfWorkFragment.REGION_KEY, Area::class.java)
+                BundleCompat.getParcelable(bundle, COUNTRY_KEY, Country::class.java)
+            val region = BundleCompat.getParcelable(bundle, REGION_KEY, Area::class.java)
             viewModel.setNewCounterAndRegion(country, region)
         }
     }
@@ -99,8 +97,8 @@ class FiltersFragment : Fragment() {
             findNavController().navigate(
                 R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
                 bundleOf(
-                    FiltersCountryFragment.COUNTRY_KEY to country,
-                    FiltersRegionFragment.REGION_KEY to region
+                    COUNTRY_KEY to country,
+                    REGION_KEY to region
                 )
             )
         }
@@ -174,11 +172,11 @@ class FiltersFragment : Fragment() {
             binding.workplaceArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
-                    R.drawable.close_24px
+                    R.drawable.close_changing_color_24px
                 )
             })
             val textLocation = country + if (region?.isNotEmpty() == true) {
-                getString(R.string.divider) + region
+                getString(R.string.divider) + getString(R.string.space) + region
             } else {
                 ""
             }
@@ -190,8 +188,8 @@ class FiltersFragment : Fragment() {
                 findNavController().navigate(
                     R.id.action_filterFragment_to_filterPlaceOfWorkFragment,
                     bundleOf(
-                        FiltersCountryFragment.COUNTRY_KEY to country,
-                        FiltersRegionFragment.REGION_KEY to region
+                        COUNTRY_KEY to country,
+                        REGION_KEY to region
                     )
                 )
             }
@@ -226,11 +224,11 @@ class FiltersFragment : Fragment() {
             }
         }
 
-        if (binding.industry.text.toString() != "") {
+        if (binding.industry.text.toString().isNotEmpty()) {
             binding.industryArrow.setImageDrawable(context?.let { it1 ->
                 AppCompatResources.getDrawable(
                     it1,
-                    R.drawable.close_24px
+                    R.drawable.close_changing_color_24px
                 )
             })
         } else {
@@ -293,5 +291,10 @@ class FiltersFragment : Fragment() {
         } else {
             binding.buttonClearExpectedSalary.visible()
         }
+    }
+
+    companion object {
+        const val REGION_KEY = "REGION"
+        const val COUNTRY_KEY = "COUNTRY"
     }
 }

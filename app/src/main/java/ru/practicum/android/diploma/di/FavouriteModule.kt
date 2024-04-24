@@ -44,16 +44,16 @@ val FavouriteModule = module {
     single<CheckVacancyOnLikeRepository> {
         CheckVacancyOnLikeRepositoryImpl(get())
     }
-    single<SaveVacancyInteractor> {
+    factory<SaveVacancyInteractor> {
         SaveVacancyInteractorImpl(get())
     }
-    single<GetVacancyInteractor> {
+    factory<GetVacancyInteractor> {
         GetVacancyInteractorImpl(get())
     }
-    single<DeleteVacancyInteractor> {
+    factory<DeleteVacancyInteractor> {
         DeleteVacancyInteractorImpl(get())
     }
-    single<CheckVacancyOnLikeInteractor> {
+    factory<CheckVacancyOnLikeInteractor> {
         CheckVacancyOnLikeInteractorImpl(get())
     }
 }

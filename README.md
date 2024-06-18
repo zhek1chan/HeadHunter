@@ -24,7 +24,9 @@
 
 ## Пример использования
 
-<video src="https://github.com/zhek1chan/HeadHunter/blob/develop/example_usage/example_usage.mp4" width=180/> <br>
+<video controls="" width="180" height="480" muted="" loop="" autoplay="">
+<source src="https://github.com/zhek1chan/HeadHunter/blob/develop/example_usage/example_usage.mp4" type="video/mp4">
+</video>
 
 ## Участники
 

@@ -29,16 +29,18 @@
 ## Участники
 
 <a href="https://github.com/zhek1chan">
-  <img src="https://github.com/zhek1chan.png?size=50">
+  <img src="https://github.com/zhek1chan.png?size=50"/>
 </a> Ермолов Евгений - Экран поиска, пагинация поиска, экран избранны вакансий, настройка фильтрации <br>
 <a href="https://github.com/sergen355">
-  <img src="https://github.com/sergen355.png?size=50">
+  <img src="https://github.com/sergen355.png?size=50"/>
 </a> Сергей Ермаков - Настройка фильтрации, экран деталей вакансии, экран фильтра региона <br>
 <a href="https://github.com/niketch1">
-  <img src="https://github.com/niketch1.png?size=50">
+  <img src="https://github.com/niketch1.png?size=50"  width="50" 
+     height="50"/>
 </a> Маркович Никита - Экран команды, настройка фильтрации, обработка ошибок поиска<br>
 <a href="https://github.com/EngiBarnaby">
-  <img src="https://github.com/EngiBarnaby.png?size=50">
+  <img src="https://github.com/EngiBarnaby.png?size=50"  width="50" 
+     height="50"/>
 </a> Сальников Артём - Логика фильтрации, экран фильтра отраслей
 
 ## Установка

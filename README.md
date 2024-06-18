@@ -24,7 +24,7 @@
 
 ## Пример использования
 
-
+<video src="https://github.com/zhek1chan/HeadHunter/blob/develop/example_usage/example_usage.mp4" width=180/> <br>
 
 ## Участники
 

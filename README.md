@@ -5,8 +5,10 @@
 - Kotlin
 - Room
 - Retrofit
+- OkHttp
 - Kotlin Coroutines
 - Koin
+- Glide
 - ViewBinding
 - Jetpack Navigation
 - RecyclerView, DiffUtil
